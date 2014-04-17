@@ -8,39 +8,6 @@ import pylab
 import numpy
 import string
 
-def DifferenceBetweenTwoArrays(arrayA, arrayB):
-    accumulatedDifference = 0
-    indexOfTheElementWeAreLookingAtRightNow = 0
-    while indexOfTheElementWeAreLookingAtRightNow < len(arrayA):
-        elementOfA = arrayA[indexOfTheElementWeAreLookingAtRightNow]
-        elementOfB = arrayB[indexOfTheElementWeAreLookingAtRightNow]
-        differenceBetweenTheseTwoslots = abs(float(elementOfA) - float(elementOfB))
-        accumulatedDifference = accumulatedDifference + differenceBetweenTheseTwoslots
-        indexOfTheElementWeAreLookingAtRightNow = indexOfTheElementWeAreLookingAtRightNow + 1
-    averageDifference = accumulatedDifference/len(arrayA)
-    #print accumulatedDifference, averageDifference
-    return(averageDifference)
-    
-    
-def AverageDifferenceInAListsOfLists(matrix):
-    accumulatedDifference = 0
-    indexOfFirstElement = 0
-    thingsThatHaveBeenAdded = 0
-    while indexOfFirstElement < len(matrix):
-        indexOfSecondElement = indexOfFirstElement + 1
-        while indexOfSecondElement < len(matrix):
-            thingsThatHaveBeenAdded = thingsThatHaveBeenAdded + 1 
-            #print firstList, secondList
-            firstList = matrix[indexOfFirstElement]
-            secondList = matrix[indexOfSecondElement]
-            differenceBetweenTheseTwo = DifferenceBetweenTwoArrays(firstList, secondList)
-            #print "difference between these two", differenceBetweenTheseTwo
-            accumulatedDifference = accumulatedDifference + differenceBetweenTheseTwo
-            indexOfSecondElement = indexOfSecondElement + 1    
-        indexOfFirstElement = indexOfFirstElement + 1         
-    averageDifference = accumulatedDifference/thingsThatHaveBeenAdded
-    return (averageDifference)
-
 def plotter(valuesInXAxis, valuesInYAxis, plotsSoFar, generalLabelForLeyend, yAxis):
     #print "the x values are:", valuesInXAxis
     sizeMe=15
