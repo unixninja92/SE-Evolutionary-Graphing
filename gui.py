@@ -18,7 +18,7 @@ class GUI:
 
         self.baseVBox = gtk.VBox()
         self.window.add(self.baseVBox)
-        self.show()
+        self.baseVBox.show()
 
         self.hbox1 = gtk.HBox()
         self.baseVBox.add(self.hbox1)
