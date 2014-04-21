@@ -20,17 +20,15 @@ class GUI:
         self.window.add(self.baseVBox)
         self.baseVBox.show()
 
-        self.hbox1 = gtk.HBox()
-        self.baseVBox.add(self.hbox1)
-        self.hbox1.show()
-        
-        self.label1 = gtk.Label("label1")
-        self.hbox1.add(self.label1)
-        self.label1.show()
+        self.titleBox = DatHBox("Title")
+        self.baseVBox.add(self.titleBox.getHBox())
 
-        self.entry1 = gtk.Entry()
-        self.hbox1.add(self.entry1)
-        self.entry1.show()
+        self.xTitleBox = DatHBox("X-Axis Label")
+        self.baseVBox.add(self.xTitleBox.getHBox())
+
+        self.yTitleBox = DatHBox("Y-Axis Label")
+        self.baseVBox.add(self.yTitleBox.getHBox())
+
 
         # Creates a new button with the label "Hello World".
         #self.button = gtk.Buttoton("Hello World")
@@ -58,6 +56,22 @@ class GUI:
         # All PyGTK applications must have a gtk.main(). Control ends here
         # and waits for an event to occur (like a key press or mouse event).
         gtk.main()
+
+class DatHBox:
+    def __init__(self, l):
+        self.hbox = gtk.HBox()
+        self.label = gtk.Label(l)
+        self.entry = gtk.Entry()
+        
+        self.hbox.add(self.label)
+        self.hbox.add(self.entry)
+
+        self.label.show()
+        self.entry.show()
+        self.hbox.show()
+
+    def getHBox(self):
+        return self.hbox
 
 # If the program is run directly or passed as an argument to the python
 # interpreter then create a HelloWorld instance and show it
