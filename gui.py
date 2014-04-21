@@ -29,6 +29,44 @@ class GUI:
         self.yTitleBox = DatHBox("Y-Axis Label")
         self.baseVBox.add(self.yTitleBox.getHBox())
 
+        self.intervalsTitleBox = DatHBox("Set Interval Label")
+        self.baseVBox.add(self.intervalsTitleBox.getHBox())
+        
+        self.font = gtk.ComboBox()
+        self.fontLabel = gtk.Label("Font")
+        self.fontBox = gtk.HBox()
+        self.fontBox.add(self.fontLabel)
+        self.fontBox.add(self.font)
+        self.baseVBox.add(self.fontBox)
+        self.font.show()
+        self.fontLabel.show()
+        self.fontBox.show()
+
+        self.fontSize = gtk.ComboBox()
+        self.fontSizeLabel = gtk.Label("Font Size")
+        self.fontSizeBox = gtk.HBox()
+        self.fontSizeBox.add(self.fontSizeLabel)
+        self.fontSizeBox.add(self.fontSize)
+        self.baseVBox.add(self.fontSizeBox)
+        self.fontSize.show()
+        self.fontSizeLabel.show()
+        self.fontSizeBox.show()
+
+        self.fontColor = gtk.ComboBox()
+        self.fontColorLabel = gtk.Label("Font Color")
+        self.fontColorBox = gtk.HBox()
+        self.fontColorBox.add(self.fontColorLabel)
+        self.fontColorBox.add(self.fontColor)
+        self.baseVBox.add(self.fontColorBox)
+        self.fontColor.show()
+        self.fontColorLabel.show()
+        self.fontColorBox.show()
+
+        self.g = Gnuplot.Gnuplot(debug=1)
+
+        self.g.title(self.titleBox.getEntry())
+        self.g.plot('sin(x)')
+        #raw_input('Please press return to continue...\n')
 
         # Creates a new button with the label "Hello World".
         #self.button = gtk.Buttoton("Hello World")
@@ -72,6 +110,9 @@ class DatHBox:
 
     def getHBox(self):
         return self.hbox
+
+    def getEntry(self):
+        return self.entry.get_text()
 
 # If the program is run directly or passed as an argument to the python
 # interpreter then create a HelloWorld instance and show it
