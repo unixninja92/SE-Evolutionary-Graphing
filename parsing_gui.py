@@ -49,19 +49,19 @@ class DataParsingGUI:
         self.window.show()
 
     def addFiles(self, widget, runNum):
-        self.fileSelect = gtk.FileChooserDialog(title = "", action = gtk.FILE_CHOOSER_ACTION_OPEN, buttons = (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_OPEN, gtk.RESPONSE_OK))
-        self.fileSelect.set_select_multiple(True)
+        fileSelect = gtk.FileChooserDialog(title = "", action = gtk.FILE_CHOOSER_ACTION_OPEN, buttons = (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_OPEN, gtk.RESPONSE_OK))
+        fileSelect.set_select_multiple(True)
         
-        response = self.fileSelect.run()
+        response = fileSelect.run()
         if response == gtk.RESPONSE_OK:
-            runs[runNum].append(self.fileSelect.get_filenames())
+            runs[runNum].append(fileSelect.get_filenames())
         #elif respons == gtk.RESPONSE_CANCEL:
-        self.fileSelect.destroy()
+        fileSelect.destroy()
         
     def newRun(self, widget, data):
         runs.append([])
-        self.runNum = len(runs)-1
-        self.box = runBox(self.runNum, self.runHBox)
+        runNum = len(runs)-1
+        self.box = runBox(runNum, self.runHBox)
 #        self.box.addToWindow(self.runHBox)
 #        self.box.show()
 
