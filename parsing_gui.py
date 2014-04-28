@@ -16,14 +16,14 @@ class DataParsingGUI:
         self.window.connect("delete_event", self.delete_event)
         self.window.connect("destroy", self.destroy)
         self.window.set_border_width(10)
-        self.window.set_size_request(200, 200)
+        self.window.set_size_request(400, 300)
 
         self.baseVBox = gtk.VBox()
         self.window.add(self.baseVBox)
         self.baseVBox.show()
 
         self.scrollRun = gtk.ScrolledWindow()
-        #self.scrollRun.set_size_request(200,100)
+        self.scrollRun.set_size_request(400,250)
         self.scrollRun.set_policy(gtk.POLICY_ALWAYS, gtk.POLICY_AUTOMATIC)
         self.baseVBox.add(self.scrollRun)
         self.scrollRun.show()
@@ -103,6 +103,3 @@ class runBox:
 if __name__ == "__main__":
     hello = DataParsingGUI()
     hello.main()
-
-
-#Have list of currently selected files for each run, and allow user to add folders or files to the list. Then allow user to add more runs.
