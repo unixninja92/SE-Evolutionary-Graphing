@@ -52,8 +52,10 @@ class DataParsingGUI:
         self.fileSelect = gtk.FileChooserDialog(title = "", action = gtk.FILE_CHOOSER_ACTION_OPEN, buttons = (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_OPEN, gtk.RESPONSE_OK))
         self.fileSelect.set_select_multiple(True)
         
-        self.files = self.fileSelect.run()
-        runs[runNum].append(self.fileSelect.get_filenames())
+        response = self.fileSelect.run()
+        if response == gtk.RESPONSE_OK:
+            runs[runNum].append(self.fileSelect.get_filenames())
+        #elif respons == gtk.RESPONSE_CANCEL:
         self.fileSelect.destroy()
         
     def newRun(self, widget, data):
