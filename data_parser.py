@@ -39,7 +39,7 @@ class DataParser(object):
 			self.DirectoriesToParse = []
 			tempArray = []
 			for DirectoryName in args:
-				if DirectoryName == "EndOfAverageCharacter":
+				if DirectoryName == "EndOfAverageCharacter": ###YET TO BE IMPLEMENTED###
 					self.DirectoriesToParse.append(tempArray)
 				else:
 					tempArray.append(DirectoryName)
