@@ -32,16 +32,18 @@ class DataParsingGUI:
         self.scrollRun.add_with_viewport(self.runHBox)
         self.runHBox.show()
 
+        self.box = []
+
         self.runInteraction = gtk.HBox()
         self.baseVBox.add(self.runInteraction)
         self.runInteraction.show()
 
-        self.newRunButton = gtk.Button("Add Run")
+        self.newRunButton = gtk.Button("Add Data Set")
         self.newRunButton.connect("clicked", self.newRun, None)
         self.runInteraction.add(self.newRunButton)
         self.newRunButton.show()
 
-        self.addButton = gtk.Button("Add File")
+        self.addButton = gtk.Button("Add Folder")
         self.addButton.connect("clicked", self.addFiles, 1)
         self.runInteraction.add(self.addButton)
         self.addButton.show()
@@ -58,10 +60,11 @@ class DataParsingGUI:
         #elif respons == gtk.RESPONSE_CANCEL:
         fileSelect.destroy()
         
+        #have thing for both data that needs to be parsed and 
     def newRun(self, widget, data):
         runs.append([])
         runNum = len(runs)-1
-        self.box = runBox(runNum, self.runHBox)
+        self.box.append(runBox(runNum, self.runHBox))
 #        self.box.addToWindow(self.runHBox)
 #        self.box.show()
 
@@ -72,6 +75,7 @@ class DataParsingGUI:
 
 class runBox:
     def __init__(self, run, box):
+        #just folder name
         self.treestore = gtk.TreeStore(str)
         for parent in range(4):
             piter = self.treestore.append(None, ['parent %i' % parent])
