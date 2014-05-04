@@ -2,10 +2,10 @@ import gtk
 
 runs = []
 # global runNum
-runNum = -1
 
 
 class DataParsingGUI:
+    runNum = -1
     def delete_event(self, widget, event, data=None):
         return False
 
@@ -43,12 +43,12 @@ class DataParsingGUI:
 
         self.parsedFrame = gtk.Frame("Parsed Data File")
         self.parsedFrame.set_shadow_type(gtk.SHADOW_OUT)
-        self.runInteraction.pack_start(self.parsedFrame, True, True, 1)
         self.parsedFrame.show()
 
         self.parsedLabel = gtk.Label("None")
         self.parsedFrame.add(self.parsedLabel)
         self.parsedLabel.show()
+        self.runInteraction.pack_start(self.parsedFrame, True, True, 1)
 
         self.addButton = gtk.Button("Add Parsed Data File")
         self.addButton.connect("clicked", self.addFile, None)
@@ -60,16 +60,20 @@ class DataParsingGUI:
         self.runInteraction.pack_start(self.newRunButton, True, False, 1)
         self.newRunButton.show()
 
+        self.parseDataButton = gtk.Button("Parse Data")
+        self.runInteraction.pack_start(self.parseDataButton, True, False, 1)
+        self.parseDataButton.show()
+
         self.window.show()
 
     def addFile(self, widget, data):
-        global runNum
+        # global runNum
         fileSelect = gtk.FileChooserDialog(title = "", action = gtk.FILE_CHOOSER_ACTION_OPEN, buttons = (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_OPEN, gtk.RESPONSE_OK))
         runs.append([])
-        runNum += 1
+        self.runNum += 1
         response = fileSelect.run()
         if response == gtk.RESPONSE_OK:
-            runs[runNum].append(fileSelect.get_filename())
+            runs[self.runNum].append(fileSelect.get_filename())
             self.parsedLabel.set_text(fileSelect.get_filename())
             self.addButton.set_sensitive(False)
         #elif respons == gtk.RESPONSE_CANCEL:
@@ -78,10 +82,10 @@ class DataParsingGUI:
         #have thing for both data that needs to be parsed and 
     def newRun(self, widget, data):
         self.addButton.set_sensitive(False)
-        global runNum
+        # global runNum
         runs.append([])
-        runNum += 1
-        self.box.append(runBox(self.runHBox))
+        self.runNum += 1
+        self.box.append(runBox(self.runNum, self.runHBox))
 #        self.box.addToWindow(self.runHBox)
         # self.box.show()
 
@@ -91,8 +95,8 @@ class DataParsingGUI:
         gtk.main()
 
 class runBox:
-    def __init__(self, box):
-
+    def __init__(self, run, box):
+        self.runNum = run
         self.runFrame = gtk.Frame()
         self.runFrame.set_shadow_type(gtk.SHADOW_ETCHED_IN)
 
@@ -102,7 +106,7 @@ class runBox:
         self.runHBox = gtk.HBox()
         self.runVBox.pack_start(self.runHBox, False, False, 0)
 
-        self.runLabel = gtk.Label('Data Set %i' % runNum)
+        self.runLabel = gtk.Label('Data Set %i' % self.runNum)
         self.runHBox.pack_start(self.runLabel, True, True, 1)
         self.runLabel.show()
 
@@ -126,7 +130,7 @@ class runBox:
         
 
         self.fileCol = gtk.TreeViewColumn()
-        self.fileCol.Title = "Run " + str(runNum)
+        self.fileCol.Title = "Run " + str(self.runNum)
 
         self.fileCell = gtk.CellRendererText()
         self.fileCol.pack_start(self.fileCell, True)
@@ -161,7 +165,7 @@ class runBox:
             # print(fileSelect.get_filenames())
             # runs[runNum].append(fileSelect.get_filenames())
             for f in fileSelect.get_filenames():
-                runs[runNum].append(f)
+                runs[self.runNum].append(f)
                 self.treestore.append(None, [f])
         #elif respons == gtk.RESPONSE_CANCEL:
         fileSelect.destroy()
