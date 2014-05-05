@@ -1,11 +1,10 @@
 import gtk
 
-runs = []
-# global runNum
+sets = []
 
 
 class DataParsingGUI:
-    runNum = -1
+    numSets = -1
     def delete_event(self, widget, event, data=None):
         return False
 
@@ -25,21 +24,21 @@ class DataParsingGUI:
         self.window.add(self.baseVBox)
         self.baseVBox.show()
 
-        self.scrollRun = gtk.ScrolledWindow()
-        self.scrollRun.set_size_request(400,250)
-        self.scrollRun.set_policy(gtk.POLICY_ALWAYS, gtk.POLICY_AUTOMATIC)
-        self.baseVBox.pack_start(self.scrollRun, True, True, 0)
-        self.scrollRun.show()
+        self.scrollSets = gtk.ScrolledWindow()
+        self.scrollSets.set_size_request(400,250)
+        self.scrollSets.set_policy(gtk.POLICY_ALWAYS, gtk.POLICY_AUTOMATIC)
+        self.baseVBox.pack_start(self.scrollSets, True, True, 0)
+        self.scrollSets.show()
 
-        self.runHBox = gtk.HBox()
-        self.scrollRun.add_with_viewport(self.runHBox)
-        self.runHBox.show()
+        self.setHBox = gtk.HBox()
+        self.scrollSets.add_with_viewport(self.setHBox)
+        self.setHBox.show()
 
         self.box = []
 
-        self.runInteraction = gtk.HBox()
-        self.baseVBox.pack_start(self.runInteraction, False, False, 1)
-        self.runInteraction.show()
+        self.setInteraction = gtk.HBox()
+        self.baseVBox.pack_start(self.setInteraction, False, False, 1)
+        self.setInteraction.show()
 
         self.parsedFrame = gtk.Frame("Parsed Data File")
         self.parsedFrame.set_shadow_type(gtk.SHADOW_OUT)
@@ -48,32 +47,31 @@ class DataParsingGUI:
         self.parsedLabel = gtk.Label("None")
         self.parsedFrame.add(self.parsedLabel)
         self.parsedLabel.show()
-        self.runInteraction.pack_start(self.parsedFrame, True, True, 1)
+        self.setInteraction.pack_start(self.parsedFrame, True, True, 1)
 
         self.addButton = gtk.Button("Add Parsed Data File")
         self.addButton.connect("clicked", self.addFile, None)
-        self.runInteraction.pack_start(self.addButton, True, False, 1)
+        self.setInteraction.pack_start(self.addButton, True, False, 1)
         self.addButton.show()
 
-        self.newRunButton = gtk.Button("Add Data Set")
-        self.newRunButton.connect("clicked", self.newRun, None)
-        self.runInteraction.pack_start(self.newRunButton, True, False, 1)
-        self.newRunButton.show()
+        self.newSetButton = gtk.Button("Add Data Set")
+        self.newSetButton.connect("clicked", self.newRun, None)
+        self.setInteraction.pack_start(self.newSetButton, True, False, 1)
+        self.newSetButton.show()
 
         self.parseDataButton = gtk.Button("Parse Data")
-        self.runInteraction.pack_start(self.parseDataButton, True, False, 1)
+        self.setInteraction.pack_start(self.parseDataButton, True, False, 1)
         self.parseDataButton.show()
 
         self.window.show()
 
     def addFile(self, widget, data):
-        # global runNum
         fileSelect = gtk.FileChooserDialog(title = "", action = gtk.FILE_CHOOSER_ACTION_OPEN, buttons = (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_OPEN, gtk.RESPONSE_OK))
-        runs.append([])
-        self.runNum += 1
+        sets.append([])
+        self.numSets += 1
         response = fileSelect.run()
         if response == gtk.RESPONSE_OK:
-            runs[self.runNum].append(fileSelect.get_filename())
+            sets[self.numSets].append(fileSelect.get_filename())
             self.parsedLabel.set_text(fileSelect.get_filename())
             self.addButton.set_sensitive(False)
         #elif respons == gtk.RESPONSE_CANCEL:
@@ -82,11 +80,10 @@ class DataParsingGUI:
         #have thing for both data that needs to be parsed and 
     def newRun(self, widget, data):
         self.addButton.set_sensitive(False)
-        # global runNum
-        runs.append([])
-        self.runNum += 1
-        self.box.append(runBox(self.runNum, self.runHBox))
-#        self.box.addToWindow(self.runHBox)
+        sets.append([])
+        self.numSets += 1
+        self.box.append(setBox(self.numSets, self.setHBox))
+#        self.box.addToWindow(self.setHBox)
         # self.box.show()
 
     def main(self):
@@ -94,29 +91,29 @@ class DataParsingGUI:
         # and waits for an event to occur (like a key press or mouse event).
         gtk.main()
 
-class runBox:
-    def __init__(self, run, box):
-        self.runNum = run
-        self.runFrame = gtk.Frame()
-        self.runFrame.set_shadow_type(gtk.SHADOW_ETCHED_IN)
+class setBox:
+    def __init__(self, setNum, box):
+        self.numSet = setNum
+        self.setFrame = gtk.Frame()
+        self.setFrame.set_shadow_type(gtk.SHADOW_ETCHED_IN)
 
-        self.runVBox = gtk.VBox()
-        self.runFrame.add(self.runVBox)
+        self.setVBox = gtk.VBox()
+        self.setFrame.add(self.setVBox)
 
-        self.runHBox = gtk.HBox()
-        self.runVBox.pack_start(self.runHBox, False, False, 0)
+        self.setHBox = gtk.HBox()
+        self.setVBox.pack_start(self.setHBox, False, False, 0)
 
-        self.runLabel = gtk.Label('Data Set %i' % self.runNum)
-        self.runHBox.pack_start(self.runLabel, True, True, 1)
-        self.runLabel.show()
+        self.setLabel = gtk.Label('Data Set %i' % self.numSet)
+        self.setHBox.pack_start(self.setLabel, True, True, 1)
+        self.setLabel.show()
 
         self.addButton = gtk.Button("+")
         self.addButton.connect("clicked", self.addFiles, 1)
-        self.runHBox.pack_start(self.addButton, False, False, 0)
+        self.setHBox.pack_start(self.addButton, False, False, 0)
         self.addButton.show()
 
         self.removeButton = gtk.Button("-")
-        self.runHBox.pack_start(self.removeButton, False, False, 0)
+        self.setHBox.pack_start(self.removeButton, False, False, 0)
         self.removeButton.show()
 
         self.treestore = gtk.TreeStore(str)
@@ -125,36 +122,36 @@ class runBox:
             # for child in range(3):
             #     self.treestore.append(piter, ['child %i of parent %i' %(child, parent)])
 
-        self.runList = gtk.TreeView(self.treestore)
+        self.setList = gtk.TreeView(self.treestore)
 
         
 
         self.fileCol = gtk.TreeViewColumn()
-        self.fileCol.Title = "Run " + str(self.runNum)
+        self.fileCol.Title = "Run " + str(self.numSet)
 
         self.fileCell = gtk.CellRendererText()
         self.fileCol.pack_start(self.fileCell, True)
 
-        self.fileIter = self.runList.append_column(self.fileCol)
+        self.fileIter = self.setList.append_column(self.fileCol)
         self.fileCol.add_attribute(self.fileCell, "text", 0)
 
-        print("new run!!")
+        print("new set!!")
 
-        self.runVBox.add(self.runList)
+        self.setVBox.add(self.setList)
 
-        box.pack_start(self.runFrame, True, True, 0)
+        box.pack_start(self.setFrame, True, True, 0)
 
-        self.runList.show()
-        self.runVBox.show()
-        self.runHBox.show()
-        self.runFrame.show()
+        self.setList.show()
+        self.setVBox.show()
+        self.setHBox.show()
+        self.setFrame.show()
         
     def show(self):
-        self.runHBox.show()
-        self.runList.show()
+        self.setHBox.show()
+        self.setList.show()
 
     def addToWindow(self, window):
-        window.add(self.runHBox)
+        window.add(self.setHBox)
 
     def addFiles(self, widget, data):
         fileSelect = gtk.FileChooserDialog(title = "", action = gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER, buttons = (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_OPEN, gtk.RESPONSE_OK))
@@ -163,13 +160,13 @@ class runBox:
         response = fileSelect.run()
         if response == gtk.RESPONSE_OK:
             # print(fileSelect.get_filenames())
-            # runs[runNum].append(fileSelect.get_filenames())
+            # sets[numSet].append(fileSelect.get_filenames())
             for f in fileSelect.get_filenames():
-                runs[self.runNum].append(f)
+                sets[self.numSet].append(f)
                 self.treestore.append(None, [f])
         #elif respons == gtk.RESPONSE_CANCEL:
         fileSelect.destroy()
-        print(runs)
+        print(sets)
         
 
 if __name__ == "__main__":
