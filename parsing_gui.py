@@ -26,7 +26,7 @@ class DataParsingGUI:
 
         self.scrollSets = gtk.ScrolledWindow()
         self.scrollSets.set_size_request(400,250)
-        self.scrollSets.set_policy(gtk.POLICY_ALWAYS, gtk.POLICY_AUTOMATIC)
+        self.scrollSets.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_NEVER)
         self.baseVBox.pack_start(self.scrollSets, True, True, 0)
         self.scrollSets.show()
 
@@ -34,7 +34,7 @@ class DataParsingGUI:
         self.scrollSets.add_with_viewport(self.setHBox)
         self.setHBox.show()
 
-        self.box = []
+        self.boxsets = []
 
         self.setInteraction = gtk.HBox()
         self.baseVBox.pack_start(self.setInteraction, False, False, 1)
@@ -67,8 +67,8 @@ class DataParsingGUI:
 
     def addFile(self, widget, data):
         fileSelect = gtk.FileChooserDialog(title = "", action = gtk.FILE_CHOOSER_ACTION_OPEN, buttons = (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_OPEN, gtk.RESPONSE_OK))
-        sets.append([])
         self.numSets += 1
+        sets.append([])
         response = fileSelect.run()
         if response == gtk.RESPONSE_OK:
             sets[self.numSets].append(fileSelect.get_filename())
@@ -80,9 +80,9 @@ class DataParsingGUI:
         #have thing for both data that needs to be parsed and 
     def newRun(self, widget, data):
         self.addButton.set_sensitive(False)
+        self.numSets += 1 
         sets.append([])
-        self.numSets += 1
-        self.box.append(setBox(self.numSets, self.setHBox))
+        self.boxsets.append(setBox(self.numSets, self.setHBox, self.boxsets, sets[self.numSets]))
 #        self.box.addToWindow(self.setHBox)
         # self.box.show()
 
@@ -92,29 +92,31 @@ class DataParsingGUI:
         gtk.main()
 
 class setBox:
-    def __init__(self, setNum, box):
+    def __init__(self, setNum, box, boxsets, data):
+        self.boxsets = boxsets
         self.numSet = setNum
+        self.fileList = data
+
         self.setFrame = gtk.Frame()
         self.setFrame.set_shadow_type(gtk.SHADOW_ETCHED_IN)
 
         self.setVBox = gtk.VBox()
         self.setFrame.add(self.setVBox)
 
-        self.setHBox = gtk.HBox()
-        self.setVBox.pack_start(self.setHBox, False, False, 0)
+        self.setTopBox = gtk.HBox()
+        self.setVBox.pack_start(self.setTopBox, False, False, 0)
+
+
+
 
         self.setLabel = gtk.Label('Data Set %i' % self.numSet)
-        self.setHBox.pack_start(self.setLabel, True, True, 1)
+        self.setTopBox.pack_start(self.setLabel, True, True, 1)
         self.setLabel.show()
 
-        self.addButton = gtk.Button("+")
-        self.addButton.connect("clicked", self.addFiles, 1)
-        self.setHBox.pack_start(self.addButton, False, False, 0)
-        self.addButton.show()
-
-        self.removeButton = gtk.Button("-")
-        self.setHBox.pack_start(self.removeButton, False, False, 0)
-        self.removeButton.show()
+        self.closeButton = gtk.Button("x")
+        self.closeButton.connect("clicked", self.destroy, None)
+        self.setTopBox.pack_start(self.closeButton, False, False, 1)
+        self.closeButton.show()
 
         self.treestore = gtk.TreeStore(str)
         # for parent in range(8):
@@ -126,7 +128,7 @@ class setBox:
 
         
 
-        self.fileCol = gtk.TreeViewColumn()
+        self.fileCol = gtk.TreeViewColumn("Folders")
         self.fileCol.Title = "Run " + str(self.numSet)
 
         self.fileCell = gtk.CellRendererText()
@@ -139,19 +141,26 @@ class setBox:
 
         self.setVBox.add(self.setList)
 
+        self.setBottonBox = gtk.HBox()
+        self.setVBox.pack_start(self.setBottonBox, False, False, 0)
+
+        self.addButton = gtk.Button("+")
+        self.addButton.connect("clicked", self.addFiles, 1)
+        self.setBottonBox.pack_start(self.addButton, False, False, 0)
+        self.addButton.show()
+
+        self.removeButton = gtk.Button("-")
+        self.setBottonBox.pack_start(self.removeButton, False, False, 0)
+        self.removeButton.show()
+
         box.pack_start(self.setFrame, True, True, 0)
 
         self.setList.show()
         self.setVBox.show()
-        self.setHBox.show()
+        self.setTopBox.show()
+        self.setBottonBox.show()
         self.setFrame.show()
         
-    def show(self):
-        self.setHBox.show()
-        self.setList.show()
-
-    def addToWindow(self, window):
-        window.add(self.setHBox)
 
     def addFiles(self, widget, data):
         fileSelect = gtk.FileChooserDialog(title = "", action = gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER, buttons = (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_OPEN, gtk.RESPONSE_OK))
@@ -162,11 +171,18 @@ class setBox:
             # print(fileSelect.get_filenames())
             # sets[numSet].append(fileSelect.get_filenames())
             for f in fileSelect.get_filenames():
-                sets[self.numSet].append(f)
+                self.fileList.append(f)
+                # sets[self.numSet].append(f)
                 self.treestore.append(None, [f])
         #elif respons == gtk.RESPONSE_CANCEL:
         fileSelect.destroy()
         print(sets)
+
+    def destroy(self, widget, data):
+        # self.setFrame.hide()
+        # del self.boxsets[self.boxsets.index(self)]
+        del self.fileList[:]
+        self.setFrame.destroy()
         
 
 if __name__ == "__main__":
