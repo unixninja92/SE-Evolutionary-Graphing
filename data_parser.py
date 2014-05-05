@@ -1,5 +1,3 @@
-class ParseError(Exception): pass
-
 class DataParser(object):
 	"""Takes settings from GUI, imports data, and parses it accordingly"""
 	
@@ -13,7 +11,7 @@ class DataParser(object):
 
 	def checkPreviousConfig(self):
 		# checks if there is a valid previous configuration
-		return True
+		return False
 
 	def getPreviousConfig(self):
 		# gets the previous configuration
@@ -24,7 +22,7 @@ class DataParser(object):
 		self.ComputeGeneticDifference = ComputeGeneticDifference
 		self.ComputePhenotypicDifference = ComputePhenotypicDifference
 
-	def setConfig(self,DirectoriesToParse,FileToSave,ConfigLocation,StartingGeneration,ComputeGeneticDifference,ComputePhenotypicDifference,DirectoryLists):
+	def setConfig(self,DirectoriesToParse,FileToSave,ConfigLocation,StartingGeneration,ComputeGeneticDifference,ComputePhenotypicDifference,):
 		# sets and saves a new configuration
 		self.DirectoriesToParse = DirectoriesToParse
 		self.FileToSave = FileToSave
@@ -32,23 +30,6 @@ class DataParser(object):
 		self.StartingGeneration = StartingGeneration
 		self.ComputeGeneticDifference = ComputeGeneticDifference
 		self.ComputePhenotypicDifference = ComputePhenotypicDifference
-		self.getDataToParse(DirectoryLists)
-
-	def getDataToParse(self,DirectoryLists):
-		# gets data from given directories
-		listOfDirectoryLists = args
-		if listOfDirectoryLists:
-			self.DirectoriesToParse = []
-			tempArray = []
-			for DirectoryList in listOfDirectoryLists:
-				if DirectoryList:
-					self.DirectoriesToParse.append(DirectoryList)
-				else:
-					pass
-			parseData()
-		else:
-			ex = NoDirectoryError("No Directories Given")
-			raise ex
 
 	def importPreviousRun(self,FilePath): # This should return the result of previous runs
 		pass
@@ -72,71 +53,73 @@ class DataParser(object):
 		# parses the data averaging all the data directories in the column and storing the averages
 		ParsedData = []
 		FileData = []
+		self.DirectoriesToParse = self.getDataToParse(self.DirectoriesToParse)
 		for DirectoryList in self.DirectoriesToParse:
-			if type(DirectoryList) is str:
-				PreviousDataLists = importPreviousRun(DirectoryList)
-				for DataList in PreviousDataLists:
-					ParsedData.append(DataList)
-			else: ###ADAPTED FROM THE FUNCTION GetOneDataRun###
-				for DirectoryName in DirectoryList:
-				    candidateFiles = DirectoryName + "/Generation*.txt" 
-				    listOfFiles = glob.glob(candidateFiles) # this line looks at the directory and returns anything that matches.
-				    numberOfFilesToProcess = len(listOfFiles)
-				    print "there are", numberOfFilesToProcess, "files to process." ###OUTPUT TO GUI###
-				    thisFileNumberNext = 1
-				    aOfBests = []
-				    aOfAverages = []
-				    aOfXValues = []
-				    aOfDiversities = []
-				    aOfPhenotypeDiversity = []
-				    indexOfFirstFile = self.StartingGeneration
-				    if indexOfFirstFile == "":
-				        indexOfFirstFile = 1
-				    indexOfFirstFile = int(indexOfFirstFile)
-				    #for each file...
-				    while thisFileNumberNext <= numberOfFilesToProcess:
-				        # create the file name, so they are in numeric order
-				        # instead of alphabetic order (i.e. 49 > 5)
-				        currentFileName = directoryWithDataFiles + "/Generation" + str(thisFileNumberNext + indexOfFirstFile - 1) + ".txt"
-				        # create a "handle" into the file.
-				        fileHandle = open(currentFileName)
-				        # put the file into an array.
-				        thisFileArray = fileHandle.readlines()
-				        # close the file. Too many files open can cause a program to crash
-				        # but it has to be TOO MANY, like if you fall into an infinite loop.
-				        fileHandle.close()
-				        #grab the last line
-				        lineWithSummary = thisFileArray[-1]
-				        #print "the summary line for file", currentFileName, "is", lineWithSummary
-				        thisFileNumberNext = thisFileNumberNext + 1
-				        # break the line (which is currently one long string) into an array, using white spaces as delimiters.
-				        arrayWithSummary = lineWithSummary.split()
-				        # the sixth element is the average
-				        averageFitness = arrayWithSummary[5]
-				        #take the semicolon out
-				        #this is called taking a slice. 
-				        # it returns a piece of the array. 
-				        # in this case the piece being returned goes from the first element,
-				        # since I left the first position blank,
-				        # up to everything except the last element.
-				        # in general A[beginning:end] returns the elements of that array
-				        # starting with position beginning and up to (but not including) end.  
-				        averageFitness = averageFitness[:-1] 
-				        # the ninth element is the best
-				        bestFitness = arrayWithSummary[8]
-				        #print "generation", thisFileNumberNext, "Average:", averageFitness, "Best:", bestFitness 
-				        # put the values into arrays
-				        aOfAverages.append(averageFitness)
-				        aOfBests.append(bestFitness)
-				        aOfXValues.append(thisFileNumberNext + indexOfFirstFile - 1)
-				    # we're done reading data from the files
-				    if ComputeGeneticDifference:
-				        aOfDiversities = ComputeGeneticDifference(directoryWithDataFiles, indexOfFirstFile)
-				    if ComputePhenotypicDifference:
-				        aOfPhenotypeDiversity = ComputePhenotypicDifference(directoryWithDataFiles)
-				        #print "phenotypic difference array:", aOfPhenotypeDiversity
-				    FileData.append([aOfBests, aOfAverages, aOfXValues, aOfDiversities, aOfPhenotypeDiversity])
-			ParsedData.append(averageData(FileData))
+			if DirectoryList:
+				if type(DirectoryList) is str:
+					PreviousDataLists = importPreviousRun(DirectoryList)
+					for DataList in PreviousDataLists:
+						ParsedData.append(DataList)
+				else: ###ADAPTED FROM THE FUNCTION GetOneDataRun###
+					for DirectoryName in DirectoryList:
+					    candidateFiles = DirectoryName + "/Generation*.txt" 
+					    listOfFiles = glob.glob(candidateFiles) # this line looks at the directory and returns anything that matches.
+					    numberOfFilesToProcess = len(listOfFiles)
+					    print "there are", numberOfFilesToProcess, "files to process." ###OUTPUT TO GUI###
+					    thisFileNumberNext = 1
+					    aOfBests = []
+					    aOfAverages = []
+					    aOfXValues = []
+					    aOfDiversities = []
+					    aOfPhenotypeDiversity = []
+					    indexOfFirstFile = self.StartingGeneration
+					    if indexOfFirstFile == "":
+					        indexOfFirstFile = 1
+					    indexOfFirstFile = int(indexOfFirstFile)
+					    #for each file...
+					    while thisFileNumberNext <= numberOfFilesToProcess:
+					        # create the file name, so they are in numeric order
+					        # instead of alphabetic order (i.e. 49 > 5)
+					        currentFileName = directoryWithDataFiles + "/Generation" + str(thisFileNumberNext + indexOfFirstFile - 1) + ".txt"
+					        # create a "handle" into the file.
+					        fileHandle = open(currentFileName)
+					        # put the file into an array.
+					        thisFileArray = fileHandle.readlines()
+					        # close the file. Too many files open can cause a program to crash
+					        # but it has to be TOO MANY, like if you fall into an infinite loop.
+					        fileHandle.close()
+					        #grab the last line
+					        lineWithSummary = thisFileArray[-1]
+					        #print "the summary line for file", currentFileName, "is", lineWithSummary
+					        thisFileNumberNext = thisFileNumberNext + 1
+					        # break the line (which is currently one long string) into an array, using white spaces as delimiters.
+					        arrayWithSummary = lineWithSummary.split()
+					        # the sixth element is the average
+					        averageFitness = arrayWithSummary[5]
+					        #take the semicolon out
+					        #this is called taking a slice. 
+					        # it returns a piece of the array. 
+					        # in this case the piece being returned goes from the first element,
+					        # since I left the first position blank,
+					        # up to everything except the last element.
+					        # in general A[beginning:end] returns the elements of that array
+					        # starting with position beginning and up to (but not including) end.  
+					        averageFitness = averageFitness[:-1] 
+					        # the ninth element is the best
+					        bestFitness = arrayWithSummary[8]
+					        #print "generation", thisFileNumberNext, "Average:", averageFitness, "Best:", bestFitness 
+					        # put the values into arrays
+					        aOfAverages.append(averageFitness)
+					        aOfBests.append(bestFitness)
+					        aOfXValues.append(thisFileNumberNext + indexOfFirstFile - 1)
+					    # we're done reading data from the files
+					    if ComputeGeneticDifference:
+					        aOfDiversities = ComputeGeneticDifference(directoryWithDataFiles, indexOfFirstFile)
+					    if ComputePhenotypicDifference:
+					        aOfPhenotypeDiversity = ComputePhenotypicDifference(directoryWithDataFiles)
+					        #print "phenotypic difference array:", aOfPhenotypeDiversity
+					    FileData.append([aOfBests, aOfAverages, aOfXValues, aOfDiversities, aOfPhenotypeDiversity])
+				ParsedData.append(averageData(FileData))
 
 	def __init__(self):
 		if self.checkPreviousConfig(): # if a previous configuration exists
