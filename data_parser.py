@@ -10,8 +10,8 @@ class DataParser(object):
     FileToSave = "defaultOut.txt"
     ConfigLocation = "."
     StartingGeneration = 1
-    ComputeGeneticDifference = False
-    ComputePhenotypicDifference = False
+    GeneticDifference = False
+    PhenotypicDifference = False
 
 
     def checkPreviousConfig(self):
@@ -27,38 +27,45 @@ class DataParser(object):
 #         self.ComputeGeneticDifference = ComputeGeneticDifference
 #         self.ComputePhenotypicDifference = ComputePhenotypicDifference
 
-    def setConfig(self,DirectoriesToParse,FileToSave,ConfigLocation,StartingGeneration,ComputeGeneticDifference,ComputePhenotypicDifference):
+    def setConfig(self,DirectoriesToParse,FileToSave,ConfigLocation,StartingGeneration,GeneticDifference,PhenotypicDifference):
         # sets and saves a new configuration
         self.DirectoriesToParse = DirectoriesToParse
         self.FileToSave = FileToSave
         self.ConfigLocation = ConfigLocation
         self.StartingGeneration = StartingGeneration
-        self.ComputeGeneticDifference = ComputeGeneticDifference
-        self.ComputePhenotypicDifference = ComputePhenotypicDifference
+        self.GeneticDifference = GeneticDifference
+        self.PhenotypicDifference = PhenotypicDifference
 
     def importPreviousRun(self,FilePath): # This should return the result of previous runs
         pass
 
-    def averageData(self,DataArrayToAverage):
-        AveragedData = []
-        PreviousData = DataArrayToAverage[0]
-        for DataTuple in DataArrayToAverage[1:]:
+    def averageData(self,DataArraysToAverage):
+        AveragedData = DataArraysToAverage[0]
+        for DataArray in DataArraysToAverage[1:]:
             # average the arrays and reset previous to current
-            AveragedData[0] = PreviousData[0] + DataTuple[0]
-            AveragedData[1] = PreviousData[1] + DataTuple[1]
-            AveragedData[2] = PreviousData[2] + DataTuple[2]
-            AveragedData[3] = PreviousData[3] + DataTuple[3]
-            AveragedData[4] = PreviousData[4] + DataTuple[4]
-            PreviousData = DataTuple
-        for Data in AveragedData:
-            Data = Data/len(DataArrayToAverage)
-        return AveragedData    
+            for i in range(0,len(DataArray)):
+                Data = DataArray[i]
+                if type(Data) is list:
+                    for j in range(0,len(Data)):
+                        PrevData = float(AveragedData[i][j])
+                        CurrData = float(Data[j])
+                        AveragedData[i][j] = (PrevData + CurrData)
+                else:
+                    AveragedData[i] += Data
+        Divisor = len(DataArraysToAverage)
+        for i in range(0,len(AveragedData)):
+            Data = AveragedData[i]
+            if type(Data) is list:
+                for j in range(0,len(Data)):
+                    AveragedData[i][j] /= Divisor
+            else:
+                AveragedData[i] /= Divisor
+        return AveragedData
 
     def parseData(self):
         # parses the data averaging all the data directories in the column and storing the averages
         ParsedData = []
         FileData = []
-        self.DirectoriesToParse = self.getDataToParse(self.DirectoriesToParse)
         for DirectoryList in self.DirectoriesToParse:
             if DirectoryList:
                 if type(DirectoryList) is str:
@@ -118,13 +125,14 @@ class DataParser(object):
                             aOfBests.append(bestFitness)
                             aOfXValues.append(thisFileNumberNext + indexOfFirstFile - 1)
                         # we're done reading data from the files
-                        if self.ComputeGeneticDifference:
-                            aOfDiversities = self.ComputeGeneticDifference(DirectoryName, indexOfFirstFile)
-                        if self.ComputePhenotypicDifference:
-                            aOfPhenotypeDiversity = self.ComputePhenotypicDifference(DirectoryName)
+#                         if self.GeneticDifference:
+#                             aOfDiversities = self.ComputeGeneticDifference(DirectoryName, indexOfFirstFile)
+#                         if self.PhenotypicDifference:
+#                             aOfPhenotypeDiversity = self.ComputePhenotypicDifference(DirectoryName)
                             #print "phenotypic difference array:", aOfPhenotypeDiversity
                         FileData.append([aOfBests, aOfAverages, aOfXValues, aOfDiversities, aOfPhenotypeDiversity])
                 ParsedData.append(self.averageData(FileData))
+        ###Process the parsed data###
 
     def __init__(self):
         if self.checkPreviousConfig(): # if a previous configuration exists
@@ -334,3 +342,34 @@ class DataParser(object):
             indexOfFirstElement = indexOfFirstElement + 1         
         averageDifference = accumulatedDifference/thingsThatHaveBeenAdded
         return (averageDifference)
+    
+    def ExtractWeights(self, array):
+        outputArray = []
+        for line in array:
+            line = line.strip()
+            fields = line.split()
+            howManyThingsInThisLine = len(fields)
+            if (howManyThingsInThisLine == 2):
+                if (self.is_number(fields[0])) and  (self.is_number(fields[1])):
+                    # the second number is a weight
+                    valueToPut = float(fields[1])
+                    outputArray.append(valueToPut)
+                    # at this point we have an array of weights
+                    return(outputArray)
+                
+    def is_number(self, s):
+        # this function comes from
+        # http://www.pythoncentral.io/how-to-check-if-a-string-is-a-number-in-python-including-unicode/
+        try:
+            float(s)
+            return True
+        except ValueError:
+            pass
+        try:
+            import unicodedata
+            unicodedata.numeric(s)
+            return True
+        except (TypeError, ValueError):
+            pass
+ 
+        return False
