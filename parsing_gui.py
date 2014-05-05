@@ -25,7 +25,7 @@ class DataParsingGUI:
         self.baseVBox.show()
 
         self.scrollSets = gtk.ScrolledWindow()
-        self.scrollSets.set_size_request(400,250)
+        # self.scrollSets.set_size_request(800,250)
         self.scrollSets.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_NEVER)
         self.baseVBox.pack_start(self.scrollSets, True, True, 0)
         self.scrollSets.show()
@@ -33,6 +33,11 @@ class DataParsingGUI:
         self.setHBox = gtk.HBox()
         self.scrollSets.add_with_viewport(self.setHBox)
         self.setHBox.show()
+
+        self.emptyLabel = gtk.Label("No Data Sets Added")
+        self.setHBox.add(self.emptyLabel)
+        self.emptyLabel.show()
+        self.empty = True
 
         self.boxsets = []
 
@@ -79,6 +84,9 @@ class DataParsingGUI:
         
         #have thing for both data that needs to be parsed and 
     def newRun(self, widget, data):
+        if self.empty:
+            self.emptyLabel.hide()
+            self.empty = False
         self.addButton.set_sensitive(False)
         self.numSets += 1 
         sets.append([])
@@ -118,6 +126,13 @@ class setBox:
         self.setTopBox.pack_start(self.closeButton, False, False, 1)
         self.closeButton.show()
 
+
+        self.scrollSets = gtk.ScrolledWindow()
+        self.scrollSets.set_size_request(375,250)
+        self.scrollSets.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
+        self.setVBox.pack_start(self.scrollSets, True, True, 0)
+        self.scrollSets.show()
+
         self.treestore = gtk.TreeStore(str)
         # for parent in range(8):
             # piter = self.treestore.append(None, ['parent %i' % parent])
@@ -139,7 +154,7 @@ class setBox:
 
         print("new set!!")
 
-        self.setVBox.add(self.setList)
+        self.scrollSets.add(self.setList)
 
         self.setBottonBox = gtk.HBox()
         self.setVBox.pack_start(self.setBottonBox, False, False, 0)
@@ -150,6 +165,7 @@ class setBox:
         self.addButton.show()
 
         self.removeButton = gtk.Button("-")
+        self.removeButton.connect("clicked", self.removeFiles, None)
         self.setBottonBox.pack_start(self.removeButton, False, False, 0)
         self.removeButton.show()
 
@@ -177,6 +193,16 @@ class setBox:
         #elif respons == gtk.RESPONSE_CANCEL:
         fileSelect.destroy()
         print(sets)
+
+    def removeFiles(self, widget, data):
+        tree_selection = self.setList.get_selection()
+        (model, pathlist) = tree_selection.get_selected_rows()
+        tree_iter = model.get_iter(pathlist[0])
+        filePath = model.get_value(tree_iter,0)
+        self.treestore.remove(tree_iter)
+        del self.fileList[self.fileList.index(filePath)]
+        print("remove")
+        print(filePath)
 
     def destroy(self, widget, data):
         # self.setFrame.hide()
