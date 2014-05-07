@@ -41,7 +41,11 @@ class GraphSettingsGUI:
         
         self.font = gtk.ComboBox()
         #Additional Change Wednesday
-        self.font.set_popdown_strings(fontTypeList)
+        self.fontComboBox = gtk.combo_box_new_text()
+        for (i = 0, i < 4, i++, j = 0, j < 4, j++):
+            self.fontComboBox.insert_text(j, i)
+        self.fontComboBoxClicked = self.fontComboBox.get_active_text()
+        
         #
         self.fontLabel = gtk.Label("Font")
         self.fontBox = gtk.HBox()
@@ -54,7 +58,10 @@ class GraphSettingsGUI:
 
         self.fontSize = gtk.ComboBox()
         #Additional Change Wednesday
-        self.fontSize.set_popdown_strings(fontSizeList)
+        self.fontSizeComboBox = gtk.combo_box_new_text()
+        for (i = 0, i < 7, i++, j = 0, j < 7, j++):
+            self.fontSizeComboBox.insert_text(j, fontSizeList[i])
+        self.fontSizeComboBoxClicked = self.fontSizeComboBox.get_active_text()
         #
         self.fontSizeLabel = gtk.Label("Font Size")
         self.fontSizeBox = gtk.HBox()
@@ -67,7 +74,10 @@ class GraphSettingsGUI:
 
         self.fontColor = gtk.ComboBox()
         #Additional Change Wednesday
-        self.fontColor.set_popdown_strings(fontColorList)
+        self.fontColorComboBox = gtk.combo_box_new_text()
+        for (i = 0, i < 5, i++, j = 0, j < 5, j++):
+            self.fontColorComboBox.insert_text(j, fontColorList[i])
+        self.fontColorComboBoxClicked = self.fontColorComboBox.get_active_text()
         #
         self.fontColorLabel = gtk.Label("Font Color")
         self.fontColorBox = gtk.HBox()
@@ -81,7 +91,10 @@ class GraphSettingsGUI:
         #Additional Changes Wednesday
         
         self.graphType = gtk.ComboBox()
-        self.graphType.set_popdown_strings(graphTypeList)
+        self.graphTypeComboBox = gtk.combo_box_new_text()
+        for (i = 0, i < 4, i++, j = 0, j < 4, j++):
+            self.graphTypeComboBox.insert_text(j, graphTypeList[i])
+        self.graphTypeComboBoxClicked = self.graphTypeComboBox.get_active_text()
         self.graphTypeLabel = gtk.Label("Graph Type")
         self.graphTypeBox = gtk.HBox()
         self.graphTypeBox.add(self.graphTypeLabel)
@@ -119,10 +132,10 @@ class GraphSettingsGUI:
         #
         
 
-        # self.g = Gnuplot.Gnuplot(debug=1)
+        self.g = Gnuplot.Gnuplot(debug=1)
 
-        # self.g.title(self.titleBox.getEntry())
-        # self.g.plot('sin(x)')
+        self.g.title(self.titleBox.getEntry())
+        self.g.plot('sin(x)')
         
     
 
