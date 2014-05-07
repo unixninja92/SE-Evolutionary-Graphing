@@ -114,7 +114,7 @@ class GraphSettingsGUI:
         
         
         self.dataParserButton = gtk.Button("Open Data Parser")
-        self.dataParserButton.connect("clicked", self.hello, None) #   <---Not sure how to open data parser
+        self.dataParserButton.connect("clicked", self.hello, None) #   <---Open Data Parser()
         self.dataParserButtonBox = gtk.HBox()
         self.dataParserButtonBox.add(self.dataParserButton)
         self.baseVBox.add(self.dataParserButtonBox)
@@ -125,7 +125,7 @@ class GraphSettingsGUI:
         self.baseVBox.add(self.fileToParseEntry.getHBox())
         
         self.graphItButton = gtk.Button("Graph It!")
-        self.graphItButton.connect("clicked", self.hello, None) #   <---Not sure how to implement graphing
+        self.graphItButton.connect("clicked", self.hello, None) #   <---Run Graph It()
         self.graphItButtonBox = gtk.HBox()
         self.graphItButtonBox.add(self.graphItButton)
         self.baseVBox.add(self.graphItButtonBox)
