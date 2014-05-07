@@ -168,6 +168,7 @@ class GraphSettingsGUI:
         self.showAverageToggle.show()
         
         self.baseVBox.add(self.parseSettingsBaseBox)
+        self.parseSettingsBaseBox.show()
         
         
         #self.showRangeToggle = gtk.CheckButton("Show Range?")
