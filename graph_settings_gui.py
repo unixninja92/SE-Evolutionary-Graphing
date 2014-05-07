@@ -42,8 +42,10 @@ class GraphSettingsGUI:
         self.font = gtk.ComboBox()
         #Additional Change Wednesday
         self.fontComboBox = gtk.combo_box_new_text()
-        for (i = 0, i < 4, i++, j = 0, j < 4, j++):
-            self.fontComboBox.insert_text(j, i)
+        for x in range(0, 4):
+            i = x
+            j = x
+            self.fontComboBox.insert_text(j, fontTypeList[i])
         self.fontComboBoxClicked = self.fontComboBox.get_active_text()
         
         #
@@ -59,7 +61,9 @@ class GraphSettingsGUI:
         self.fontSize = gtk.ComboBox()
         #Additional Change Wednesday
         self.fontSizeComboBox = gtk.combo_box_new_text()
-        for (i = 0, i < 7, i++, j = 0, j < 7, j++):
+        for x in range(0, 7):
+            i = x
+            j = x
             self.fontSizeComboBox.insert_text(j, fontSizeList[i])
         self.fontSizeComboBoxClicked = self.fontSizeComboBox.get_active_text()
         #
@@ -75,7 +79,9 @@ class GraphSettingsGUI:
         self.fontColor = gtk.ComboBox()
         #Additional Change Wednesday
         self.fontColorComboBox = gtk.combo_box_new_text()
-        for (i = 0, i < 5, i++, j = 0, j < 5, j++):
+        for x in range(0, 5):
+            i = x
+            j = x
             self.fontColorComboBox.insert_text(j, fontColorList[i])
         self.fontColorComboBoxClicked = self.fontColorComboBox.get_active_text()
         #
@@ -92,7 +98,9 @@ class GraphSettingsGUI:
         
         self.graphType = gtk.ComboBox()
         self.graphTypeComboBox = gtk.combo_box_new_text()
-        for (i = 0, i < 4, i++, j = 0, j < 4, j++):
+        for x in range(0, 3):
+            i = x
+            j = x
             self.graphTypeComboBox.insert_text(j, graphTypeList[i])
         self.graphTypeComboBoxClicked = self.graphTypeComboBox.get_active_text()
         self.graphTypeLabel = gtk.Label("Graph Type")
