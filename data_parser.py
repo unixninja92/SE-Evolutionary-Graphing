@@ -12,7 +12,7 @@ class ConfigInfo(object):
         self.GLSystem = [False] #[whetherLSystemOrNot, Enter number of non-terminals, Enter number of terminals, Enter expansion rate]
         self.PhenotypicDifference = False
 
-    def setConfig(self,DirectoriesToParse,StartingGeneration,GeneticDifference,GLSystem,PhenotypicDifference,FileToSave,ConfigLocation):
+    def setConfig(self,StartingGeneration,GeneticDifference,GLSystem,PhenotypicDifference,):
         # sets and saves a new configuration
         self.StartingGeneration = StartingGeneration
         self.GeneticDifference = GeneticDifference
@@ -31,7 +31,7 @@ class DataParser(object):
         self.DirectoriesToParse = DirectoriesToParse
         self.FileToSave = os.path.abspath(FileToSave)
         self.ConfigLocation = ConfigLocation
-        self.Config.setConfig(DirectoriesToParse, StartingGeneration, GeneticDifference, GLSystem, PhenotypicDifference, FileToSave, ConfigLocation)
+        self.Config.setConfig(StartingGeneration, GeneticDifference, GLSystem, PhenotypicDifference)
         configLocation = open(self.ConfigLocation,"w+")
         pickle.dump(self.Config,configLocation,2)
 
