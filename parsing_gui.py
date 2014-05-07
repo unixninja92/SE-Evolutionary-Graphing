@@ -93,16 +93,9 @@ class DataParsingGUI:
         self.baseVBox.pack_start(self.extractBox1, False, False, 5)
         self.extractBox1.show()
 
-        self.parsedFileLabel = gtk.Label("Staring Generation:")
-        self.extractBox1.pack_start(self.parsedFileLabel, False, False, 1)
-        self.parsedFileLabel.show()
-
-        self.startGenEntry = gui_components.NumericEntry()
-        self.startGenEntry.set_max_length(3)
-        self.startGenEntry.set_width_chars(3)
-        self.startGenEntry.set_text("1")
-        self.extractBox1.pack_start(self.startGenEntry, False, False, 1)
-        self.startGenEntry.show()
+        self.startGen = gui_components.LabelNumBox("Starting Generation:", 3)
+        self.startGen.set_text("1")
+        self.extractBox1.pack_start(self.startGen.getHBox(), False, False, 1)
 
         self.geneticDiff = gtk.CheckButton("Compute Genetic Differences")
         self.geneticDiff.connect("toggled", self.isGenetic, None)
@@ -113,13 +106,8 @@ class DataParsingGUI:
         self.extractBox1.pack_start(self.phenotypicDiff, True, False, 0)
         self.phenotypicDiff.show()
 
-        self.parsedFileLabel = gtk.Label("File Name:")
-        self.extractBox1.pack_start(self.parsedFileLabel, False, False, 1)
-        self.parsedFileLabel.show()
-
-        self.parsedFileEntry = gtk.Entry()
-        self.extractBox1.pack_start(self.parsedFileEntry, False, False, 1)
-        self.parsedFileEntry.show()
+        self.parsedFile = gui_components.LabelEntryBox("File Name:")
+        self.extractBox1.pack_start(self.parsedFile.getHBox(), False, False, 1)
 
         #More info about new data file
 
@@ -161,7 +149,7 @@ class DataParsingGUI:
             self.parsedLabel.set_text(fileSelect.get_filename())
             self.addButton.set_sensitive(False)
             self.dataToParse.importPreviousRun(fileSelect.get_filename())
-            self.startGenEntry.set_text(self.dataToParse.StartingGeneration)
+            self.startGen.set_text(self.dataToParse.StartingGeneration)
             self.phenotypicDiff.set_active(self.dataToParse.PhenotypicDifference)
         #elif respons == gtk.RESPONSE_CANCEL:
         fileSelect.destroy()
@@ -177,7 +165,7 @@ class DataParsingGUI:
         self.boxsets.append(setBox(self.numSets, self.setHBox, self.boxsets, sets[self.numSets]))
 
     def parseData(self, widget, data):
-        self.dataToParse.setConfig(sets, self.parsedFileEntry.get_text(), ".", self.startGenEntry.get_text(), self.geneticDiff.get_active(), self.phenotypicDiff.get_active())
+        self.dataToParse.setConfig(sets, self.parsedFileEntry.get_text(), ".", self.startGen.get_text(), self.geneticDiff.get_active(), self.phenotypicDiff.get_active())
         # this.dataToParse.parseData()
 
     def isGenetic(self, widget, data):
