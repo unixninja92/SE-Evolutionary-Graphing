@@ -35,8 +35,9 @@ class DataParser(object):
         configLocation = open(self.ConfigLocation,"w+")
         pickle.dump(self.Config,configLocation,2)
 
-    def importPreviousRun(self,FilePath): # This should return the result of previous runs
+    def importPreviousRun(self,FilePath): # This returns the result of previous runs
         self.DataList = pickle.load(FilePath)
+        self.Config = pickle.load(self.FileToSave[:-4] + "Config" + ".pkl")
 
     def averageData(self,DataArraysToAverage):
         AveragedData = DataArraysToAverage[0]
