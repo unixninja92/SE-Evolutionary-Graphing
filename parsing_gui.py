@@ -151,9 +151,34 @@ class DataParsingGUI:
             sets[self.numSets].append(fileSelect.get_filename())
             self.parsedLabel.set_text(fileSelect.get_filename())
             self.addButton.set_sensitive(False)
+
             self.dataToParse.importPreviousRun(fileSelect.get_filename())
-            self.startGen.set_text(self.dataToParse.StartingGeneration)
-            self.phenotypicDiff.set_active(self.dataToParse.PhenotypicDifference)
+
+            self.startGen.set_text(self.dataToParse.Config.StartingGeneration)
+            self.startGen.set_sensitive(False)
+
+            self.phenotypicDiff.set_active(self.dataToParse.Config.PhenotypicDifference)
+            self.phenotypicDiff.set_sensitive(False)
+
+            self.geneticDiff.set_text(self.dataToParse.Config.GeneticDifference)
+            self.geneticDiff.set_sensitive(False)
+
+            gLSystem = self.dataToParse.Config.GLSystem
+            isLSystem = gLSystem[0]
+
+            self.lSystem.set_text(isLSystem)
+            self.lSystem.set_sensitive(False)
+
+            if isLSystem:
+                self.nonterminalBox.set_text(gLSystem[1])
+                self.nonterminalBox.set_sensitive(False)
+
+                self.terminalBox.set_text(gLSystem[2])
+                self.terminalBox.set_sensitive(False)
+
+                self.expansionBox.set_text(gLSystem[3])
+                self.expansionBox.set_sensitive(False)
+
         #elif respons == gtk.RESPONSE_CANCEL:
         fileSelect.destroy()
         
