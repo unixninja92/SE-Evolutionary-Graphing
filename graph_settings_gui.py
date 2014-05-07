@@ -113,29 +113,23 @@ class GraphSettingsGUI:
         self.graphTypeBox.show()
         
         
-        self.dataParserButton = gtk.Button()
+        self.dataParserButton = gtk.Button("Open Data Parser")
         self.dataParserButton.connect("clicked", self.hello, None) #   <---Not sure how to open data parser
-        self.dataParserButtonLabel = gtk.Label("Open Data Parser")
         self.dataParserButtonBox = gtk.HBox()
-        self.dataParserButtonBox.add(self.dataParserButtonLabel)
         self.dataParserButtonBox.add(self.dataParserButton)
         self.baseVBox.add(self.dataParserButtonBox)
         self.dataParserButton.show()
-        self.dataParserButtonLabel.show()
         self.dataParserButtonBox.show()
         
         self.fileToParseEntry = gui_components.LabelEntryBox("Enter File Directory")
         self.baseVBox.add(self.fileToParseEntry.getHBox())
         
-        self.graphItButton = gtk.Button()
+        self.graphItButton = gtk.Button("Graph It!")
         self.graphItButton.connect("clicked", self.hello, None) #   <---Not sure how to implement graphing
-        self.graphItButtonLabel = gtk.Label("Graph It!")
         self.graphItButtonBox = gtk.HBox()
-        self.graphItButtonBox.add(self.graphItButtonLabel)
         self.graphItButtonBox.add(self.graphItButton)
         self.baseVBox.add(self.graphItButtonBox)
         self.graphItButton.show()
-        self.graphItButtonLabel.show()
         self.graphItButtonBox.show()
         #
         
