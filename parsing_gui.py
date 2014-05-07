@@ -133,38 +133,17 @@ class DataParsingGUI:
         self.extractBox2.pack_start(self.lSystem, True, False, 2)
         self.lSystem.show()
 
-        self.terminalLabel = gtk.Label("Number of Terminals:")
-        self.terminalLabel.set_sensitive(False)
-        self.extractBox2.pack_start(self.terminalLabel, False, False, 1)
-        self.terminalLabel.show()
+        self.terminalBox = gui_components.LabelNumBox("Number of Terminals:", 4)
+        self.terminalBox.set_sensitive(False)
+        self.extractBox2.pack_start(self.terminalBox.getHBox(), True, False, 0)
 
-        self.terminalEntry = gui_components.NumericEntry()
-        self.terminalEntry.set_width_chars(4)
-        self.terminalEntry.set_sensitive(False)
-        self.extractBox2.pack_start(self.terminalEntry, False, False, 0)
-        self.terminalEntry.show()
+        self.nonterminalBox = gui_components.LabelNumBox("Number of Non-Terminals:", 4)
+        self.nonterminalBox.set_sensitive(False)
+        self.extractBox2.pack_start(self.nonterminalBox.getHBox(), True, False, 0)
 
-        self.nonterminalLabel = gtk.Label("Number of Non-Terminals:")
-        self.nonterminalLabel.set_sensitive(False)
-        self.extractBox2.pack_start(self.nonterminalLabel, False, False, 1)
-        self.nonterminalLabel.show()
-
-        self.nonterminalEntry = gui_components.NumericEntry()
-        self.nonterminalEntry.set_width_chars(4)
-        self.nonterminalEntry.set_sensitive(False)
-        self.extractBox2.pack_start(self.nonterminalEntry, False, False, 0)
-        self.nonterminalEntry.show()
-
-        self.expansionLabel = gtk.Label("Expansion Rate:")
-        self.expansionLabel.set_sensitive(False)
-        self.extractBox2.pack_start(self.expansionLabel, False, False, 1)
-        self.expansionLabel.show()
-
-        self.expansionEntry = gui_components.NumericEntry()
-        self.expansionEntry.set_width_chars(4)
-        self.expansionEntry.set_sensitive(False)
-        self.extractBox2.pack_start(self.expansionEntry, False, False, 0)
-        self.expansionEntry.show()
+        self.expansionBox = gui_components.LabelNumBox("Expansion Rate:", 4)
+        self.expansionBox.set_sensitive(False)
+        self.extractBox2.pack_start(self.expansionBox.getHBox(), True, False, 0)
 
         self.parseDataButton = gtk.Button("Parse Data")
         self.extractBox2.pack_end(self.parseDataButton, False, True, 1)
@@ -196,24 +175,28 @@ class DataParsingGUI:
         self.numSets += 1 
         sets.append([])
         self.boxsets.append(setBox(self.numSets, self.setHBox, self.boxsets, sets[self.numSets]))
-#        self.box.addToWindow(self.setHBox)
-        # self.box.show()
 
     def parseData(self, widget, data):
         self.dataToParse.setConfig(sets, self.parsedFileEntry.get_text(), ".", self.startGenEntry.get_text(), self.geneticDiff.get_active(), self.phenotypicDiff.get_active())
         # this.dataToParse.parseData()
 
     def isGenetic(self, widget, data):
-        self.lSystem.set_sensitive(not self.lSystem.get_sensitive())
+        sensitive = self.geneticDiff.get_active()
+        if not sensitive:
+            self.terminalBox.set_sensitive(False)
+            self.nonterminalBox.set_sensitive(False)
+            self.expansionBox.set_sensitive(False)
+        elif self.lSystem.get_active():
+            self.terminalBox.set_sensitive(True)
+            self.nonterminalBox.set_sensitive(True)
+            self.expansionBox.set_sensitive(True)
+        self.lSystem.set_sensitive(sensitive)
 
     def isLSystem(self, widget, data):
-        boolean = not self.terminalLabel.get_sensitive()
-        self.terminalLabel.set_sensitive(boolean)
-        self.terminalEntry.set_sensitive(boolean)
-        self.nonterminalEntry.set_sensitive(boolean)
-        self.nonterminalLabel.set_sensitive(boolean)
-        self.expansionLabel.set_sensitive(boolean)
-        self.expansionEntry.set_sensitive(boolean)
+        sensitive = self.lSystem.get_active()
+        self.terminalBox.set_sensitive(sensitive)
+        self.nonterminalBox.set_sensitive(sensitive)
+        self.expansionBox.set_sensitive(sensitive)
 
     def main(self):
         # All PyGTK applications must have a gtk.main(). Control ends here
