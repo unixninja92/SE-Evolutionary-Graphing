@@ -65,8 +65,10 @@ class DataParsingGUI:
         #Add pre-parsed data file or add data sets
 
         self.setInteraction = gtk.HBox()
+        self.setInteraction.set_spacing(5)
         self.baseVBox.pack_start(self.setInteraction, False, False, 5)
         self.setInteraction.show()
+
 
         self.parsedFrame = gtk.Frame("Parsed Data File")
         self.parsedFrame.set_shadow_type(gtk.SHADOW_OUT)
@@ -75,16 +77,16 @@ class DataParsingGUI:
         self.parsedLabel = gtk.Label("None")
         self.parsedFrame.add(self.parsedLabel)
         self.parsedLabel.show()
-        self.setInteraction.pack_start(self.parsedFrame, True, True, 1)
+        self.setInteraction.pack_start(self.parsedFrame, False, True, 1)
 
         self.addButton = gtk.Button("Add Parsed Data File")
         self.addButton.connect("clicked", self.addFile, None)
-        self.setInteraction.pack_start(self.addButton, True, False, 1)
+        self.setInteraction.pack_start(self.addButton, False, False, 1)
         self.addButton.show()
 
         self.newSetButton = gtk.Button("Add Data Set")
         self.newSetButton.connect("clicked", self.newRun, None)
-        self.setInteraction.pack_start(self.newSetButton, True, False, 1)
+        self.setInteraction.pack_end(self.newSetButton, False, False, 1)
         self.newSetButton.show()
 
         #Information about parsed data file that will be created when parse data is pressed
@@ -107,7 +109,7 @@ class DataParsingGUI:
         self.phenotypicDiff.show()
 
         self.parsedFile = gui_components.LabelEntryBox("File Name:")
-        self.extractBox1.pack_start(self.parsedFile.getHBox(), False, False, 1)
+        self.extractBox1.pack_end(self.parsedFile.getHBox(), False, False, 1)
 
         #More info about new data file
 
