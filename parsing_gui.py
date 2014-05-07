@@ -168,7 +168,7 @@ class DataParsingGUI:
         self.boxsets.append(setBox(self.numSets, self.setHBox, self.boxsets, sets[self.numSets]))
 
     def parseData(self, widget, data):
-        self.dataToParse.setConfig(sets, self.parsedFile.get_text(), ".", self.startGen.get_text(), self.geneticDiff.get_active(), self.phenotypicDiff.get_active())
+        self.dataToParse.setConfig(sets, self.startGen.get_text(), self.geneticDiff.get_active(), [self.lSystem.get_active(), self.nonterminalBox.get_text(), self.terminalBox.get_text(), self.expansionBox.get_text()], self.phenotypicDiff.get_active())
         progressDialog = gtk.Dialog("Parsing Data...", None, 0, (gtk.STOCK_CANCEL, gtk.RESPONSE_REJECT))
         progressBar = gtk.ProgressBar()
         progressBar.set_text("1/100 files")

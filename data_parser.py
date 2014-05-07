@@ -12,7 +12,7 @@ class ConfigInfo(object):
         self.GLSystem = [False] #[whetherLSystemOrNot, Enter number of non-terminals, Enter number of terminals, Enter expansion rate]
         self.PhenotypicDifference = False
 
-    def setConfig(self,StartingGeneration,GeneticDifference,GLSystem,PhenotypicDifference,):
+    def setConfig(self,StartingGeneration,GeneticDifference,GLSystem,PhenotypicDifference):
         # sets and saves a new configuration
         self.StartingGeneration = StartingGeneration
         self.GeneticDifference = GeneticDifference
