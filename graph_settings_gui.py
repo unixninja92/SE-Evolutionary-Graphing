@@ -1,5 +1,5 @@
 import gtk
-import Gnuplot
+#import Gnuplot
 import gui_components
 
 class GraphSettingsGUI:
@@ -119,10 +119,10 @@ class GraphSettingsGUI:
         #
         
 
-        self.g = Gnuplot.Gnuplot(debug=1)
+        # self.g = Gnuplot.Gnuplot(debug=1)
 
-        self.g.title(self.titleBox.getEntry())
-        self.g.plot('sin(x)')
+        # self.g.title(self.titleBox.getEntry())
+        # self.g.plot('sin(x)')
         
     
 
@@ -137,5 +137,5 @@ class GraphSettingsGUI:
 # If the program is run directly or passed as an argument to the python
 # interpreter then create a HelloWorld instance and show it
 if __name__ == "__main__":
-    hello = GUI()
+    hello = GraphSettingsGUI()
     hello.main()

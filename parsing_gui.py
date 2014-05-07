@@ -136,6 +136,7 @@ class DataParsingGUI:
         self.extractBox2.pack_start(self.expansionBox.getHBox(), True, False, 0)
 
         self.parseDataButton = gtk.Button("Parse Data")
+        self.parseDataButton.connect("clicked", self.parseData, None)
         self.extractBox2.pack_end(self.parseDataButton, False, True, 1)
         self.parseDataButton.show()
 
@@ -167,7 +168,17 @@ class DataParsingGUI:
         self.boxsets.append(setBox(self.numSets, self.setHBox, self.boxsets, sets[self.numSets]))
 
     def parseData(self, widget, data):
-        self.dataToParse.setConfig(sets, self.parsedFileEntry.get_text(), ".", self.startGen.get_text(), self.geneticDiff.get_active(), self.phenotypicDiff.get_active())
+        self.dataToParse.setConfig(sets, self.parsedFile.get_text(), ".", self.startGen.get_text(), self.geneticDiff.get_active(), self.phenotypicDiff.get_active())
+        progressDialog = gtk.Dialog("Parsing Data...", None, 0, (gtk.STOCK_CANCEL, gtk.RESPONSE_REJECT))
+        progressBar = gtk.ProgressBar()
+        progressBar.set_text("1/100 files")
+        progressBar.set_fraction(0.01)
+        progressBar.set_pulse_step(0.01)
+        # progressBar.pulse()
+        progressBar.show()
+        progressDialog.vbox.pack_start(progressBar, True, True, 0)
+        response = progressDialog.run()
+        progressDialog.destroy()
         # this.dataToParse.parseData()
 
     def isGenetic(self, widget, data):
