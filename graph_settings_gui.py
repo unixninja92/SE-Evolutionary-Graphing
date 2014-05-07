@@ -39,51 +39,51 @@ class GraphSettingsGUI:
         self.yTitleBox = gui_components.LabelEntryBox("Y-Axis Label")
         self.baseVBox.add(self.yTitleBox.getHBox())
         
-        self.font = gtk.ComboBox()
+        #self.font = gtk.ComboBox()
         #Additional Change Wednesday
         self.fontComboBox = gtk.combo_box_new_text()
-        for x in range(0, 4):
+        for x in range(0, 5):
             i = x
             j = x
             self.fontComboBox.insert_text(j, fontTypeList[i])
-        self.fontComboBoxClicked = self.fontComboBox.get_active_text()
+        self.fontComboBoxEntry = self.fontComboBox.get_active_text()
         
         #
         self.fontLabel = gtk.Label("Font")
         self.fontBox = gtk.HBox()
         self.fontBox.add(self.fontLabel)
-        self.fontBox.add(self.font)
+        self.fontBox.add(self.fontComboBox)
         self.baseVBox.add(self.fontBox)
-        self.font.show()
+        self.fontComboBox.show()
         self.fontLabel.show()
         self.fontBox.show()
 
-        self.fontSize = gtk.ComboBox()
+        #self.fontSize = gtk.ComboBox()
         #Additional Change Wednesday
         self.fontSizeComboBox = gtk.combo_box_new_text()
-        for x in range(0, 7):
+        for x in range(0, 8):
             i = x
             j = x
             self.fontSizeComboBox.insert_text(j, fontSizeList[i])
-        self.fontSizeComboBoxClicked = self.fontSizeComboBox.get_active_text()
+        self.fontSizeComboBoxEntry = self.fontSizeComboBox.get_active_text()
         #
         self.fontSizeLabel = gtk.Label("Font Size")
         self.fontSizeBox = gtk.HBox()
         self.fontSizeBox.add(self.fontSizeLabel)
-        self.fontSizeBox.add(self.fontSize)
+        self.fontSizeBox.add(self.fontSizeComboBox)
         self.baseVBox.add(self.fontSizeBox)
-        self.fontSize.show()
+        self.fontSizeComboBox.show()
         self.fontSizeLabel.show()
         self.fontSizeBox.show()
 
         #self.fontColor = gtk.ComboBox()
         #Additional Change Wednesday
         self.fontColorComboBox = gtk.combo_box_new_text()
-        for x in range(0, 5):
+        for x in range(0, 6):
             i = x
             j = x
             self.fontColorComboBox.insert_text(j, fontColorList[i])
-        self.fontColorComboBoxClicked = self.fontColorComboBox.get_active_text()
+        self.fontColorComboBoxEntry = self.fontColorComboBox.get_active_text()
         #
         self.fontColorLabel = gtk.Label("Font Color")
         self.fontColorBox = gtk.HBox()
@@ -96,19 +96,19 @@ class GraphSettingsGUI:
         
         #Additional Changes Wednesday
         
-        self.graphType = gtk.ComboBox()
+        #self.graphType = gtk.ComboBox()
         self.graphTypeComboBox = gtk.combo_box_new_text()
-        for x in range(0, 3):
+        for x in range(0, 4):
             i = x
             j = x
             self.graphTypeComboBox.insert_text(j, graphTypeList[i])
-        self.graphTypeComboBoxClicked = self.graphTypeComboBox.get_active_text()
+        self.graphTypeComboBoxEntry = self.graphTypeComboBox.get_active_text()
         self.graphTypeLabel = gtk.Label("Graph Type")
         self.graphTypeBox = gtk.HBox()
         self.graphTypeBox.add(self.graphTypeLabel)
-        self.graphTypeBox.add(self.graphType)
+        self.graphTypeBox.add(self.graphTypeComboBox)
         self.baseVBox.add(self.graphTypeBox)
-        self.graphType.show()
+        self.graphTypeComboBox.show()
         self.graphTypeLabel.show()
         self.graphTypeBox.show()
         
