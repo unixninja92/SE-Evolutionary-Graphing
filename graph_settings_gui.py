@@ -1,5 +1,6 @@
 import gtk
 import Gnuplot
+import gui_components
 
 class GraphSettingsGUI:
 
@@ -20,16 +21,16 @@ class GraphSettingsGUI:
         self.window.add(self.baseVBox)
         self.baseVBox.show()
 
-        self.titleBox = DatHBox("Title")
+        self.titleBox = gui_components.LabelEntryBox("Title")
         self.baseVBox.add(self.titleBox.getHBox())
 
-        self.xTitleBox = DatHBox("X-Axis Label")
+        self.xTitleBox = gui_components.LabelEntryBox("X-Axis Label")
         self.baseVBox.add(self.xTitleBox.getHBox())
 
-        self.yTitleBox = DatHBox("Y-Axis Label")
+        self.yTitleBox = gui_components.LabelEntryBox("Y-Axis Label")
         self.baseVBox.add(self.yTitleBox.getHBox())
 
-        self.intervalsTitleBox = DatHBox("Set Interval Label")
+        self.intervalsTitleBox = gui_components.LabelEntryBox("Set Interval Label")
         self.baseVBox.add(self.intervalsTitleBox.getHBox())
         
         self.font = gtk.ComboBox()
@@ -95,24 +96,6 @@ class GraphSettingsGUI:
         # and waits for an event to occur (like a key press or mouse event).
         gtk.main()
 
-class DatHBox:
-    def __init__(self, l):
-        self.hbox = gtk.HBox()
-        self.label = gtk.Label(l)
-        self.entry = gtk.Entry()
-        
-        self.hbox.add(self.label)
-        self.hbox.add(self.entry)
-
-        self.label.show()
-        self.entry.show()
-        self.hbox.show()
-
-    def getHBox(self):
-        return self.hbox
-
-    def getEntry(self):
-        return self.entry.get_text()
 
 # If the program is run directly or passed as an argument to the python
 # interpreter then create a HelloWorld instance and show it
