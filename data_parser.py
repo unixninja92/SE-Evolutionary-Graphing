@@ -371,9 +371,3 @@ class DataParser(object):
             pass
  
         return False
-    
-
-if __name__ == '__main__':
-    x = DataParser()
-    x.setConfig([["/home/mitchel/Documents/Jaime/runnerup_then_champion","/home/mitchel/Documents/Jaime/runnerup_then_champion"], ["/home/mitchel/Documents/Jaime/champion_then_runnerup"]], 1, False, [False], False, "/home/mitchel/Desktop/thing.pkl")
-    x.parseData()
