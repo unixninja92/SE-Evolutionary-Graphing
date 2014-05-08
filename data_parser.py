@@ -82,7 +82,7 @@ class DataParser(object):
                     candidateFiles = DirectoryName + "/Generation*.txt" 
                     listOfFiles = glob.glob(candidateFiles) # this line looks at the directory and returns anything that matches.
                     numberOfFilesToProcess = len(listOfFiles)
-#                     print "there are", numberOfFilesToProcess, "files to process." ###OUTPUT TO GUI###
+                    print "there are", numberOfFilesToProcess, "files to process." ###OUTPUT TO GUI###
                     thisFileNumberNext = 1
                     aOfBests = []
                     aOfAverages = []
@@ -124,7 +124,7 @@ class DataParser(object):
                         averageFitness = averageFitness[:-1] 
                         # the ninth element is the best
                         bestFitness = arrayWithSummary[8]
-                        #print "generation", thisFileNumberNext, "Average:", averageFitness, "Best:", bestFitness 
+                        print "generation", thisFileNumberNext, "Average:", averageFitness, "Best:", bestFitness 
                         # put the values into arrays
                         aOfAverages.append(averageFitness)
                         aOfBests.append(bestFitness)
@@ -141,6 +141,7 @@ class DataParser(object):
         DataConfigOut = open(self.FileToSave[:-4] + "Config" + ".pkl","w+b")
         pickle.dump(ParsedData,DataOut,2)
         pickle.dump(self.Config,DataConfigOut,2)
+        print ParsedData
         ###Process the parsed data###
 
     def __init__(self):

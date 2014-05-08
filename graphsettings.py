@@ -1,13 +1,14 @@
+import matplotlib.pyplot as plt
+import pickle
+import pylab
+import glob
+import string
+
 __author__ = 'thomasguttman'
 
 class GraphSettings:
-    import matplotlib.pyplot as plt
-    import pickle
-    import pylab
-    import glob
-    import string
 
-    parseddata = pickle.load(gettext.data_to_load)
+    # parseddata = pickle.load(gettext.data_to_load)
 
     def plotter(valuesInXAxis, valuesInYAxis, plotsSoFar, generalLabelForLeyend, yAxis):
     #print "the x values are:", valuesInXAxis
