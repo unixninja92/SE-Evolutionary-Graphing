@@ -28,8 +28,8 @@ class DataParser(object):
 
     def getPreviousConfig(self,ConfigFile="ParseConfig.pkl"):
         '''gets the previous configuration'''
-        ConfigIn = open(ConfigFile,"w+")
-        self.Config = pickle.load(ConfigIn)
+        ConfigIn = open(ConfigFile)
+        self.Config = pickle.load(ConfigIn,"rb")
 
     def setConfig(self,DirectoriesToParse,StartingGeneration,GeneticDifference,GLSystem,PhenotypicDifference,FileToSave = "ParsedData" + datetime.datetime.now().strftime("%y-%m-%d-%H") + ".pkl",ConfigLocation = "ParseConfig.pkl"):
         # sets and saves a new configuration
@@ -37,15 +37,15 @@ class DataParser(object):
         self.FileToSave = os.path.abspath(FileToSave)
         self.ConfigLocation = ConfigLocation
         self.Config.setConfig(StartingGeneration, GeneticDifference, GLSystem, PhenotypicDifference)
-        configLocation = open(self.ConfigLocation,"w+")
+        configLocation = open(self.ConfigLocation,"w+b")
         pickle.dump(self.Config,configLocation,2)
 
     def importPreviousRun(self,FilePath): # This should return the result of previous runs
-        DataIn = open(FilePath,"w+")
-        DataConfigIn = open(FilePath[:-4] + "Config" + ".pkl","w+")
+        DataIn = open(FilePath,"rb")
+        DataConfigIn = open(FilePath[:-4] + "Config" + ".pkl","rb")
         self.DataList = pickle.load(DataIn)
         self.Config = pickle.load(DataConfigIn)
-        
+
     def averageData(self,DataArraysToAverage):
         AveragedData = DataArraysToAverage[0]
         for DataArray in DataArraysToAverage[1:]:
@@ -71,7 +71,7 @@ class DataParser(object):
                 AveragedData[i] = currentData / Divisor
         return AveragedData
 
-    def parseData(self, progress):
+    def parseData(self):
         # parses the data averaging all the data directories in the column and storing the averages
         ParsedData = self.DataList
         for DirectoryList in self.DirectoriesToParse:
@@ -82,8 +82,7 @@ class DataParser(object):
                     candidateFiles = DirectoryName + "/Generation*.txt" 
                     listOfFiles = glob.glob(candidateFiles) # this line looks at the directory and returns anything that matches.
                     numberOfFilesToProcess = len(listOfFiles)
-                    progress.initFileBar(numberOfFilesToProcess)
-                    # print "there are", numberOfFilesToProcess, "files to process." ###OUTPUT TO GUI###
+#                     print "there are", numberOfFilesToProcess, "files to process." ###OUTPUT TO GUI###
                     thisFileNumberNext = 1
                     aOfBests = []
                     aOfAverages = []
@@ -125,24 +124,23 @@ class DataParser(object):
                         averageFitness = averageFitness[:-1] 
                         # the ninth element is the best
                         bestFitness = arrayWithSummary[8]
-                        # print "generation", thisFileNumberNext, "Average:", averageFitness, "Best:", bestFitness 
+                        #print "generation", thisFileNumberNext, "Average:", averageFitness, "Best:", bestFitness 
                         # put the values into arrays
                         aOfAverages.append(averageFitness)
                         aOfBests.append(bestFitness)
                         aOfXValues.append(thisFileNumberNext + indexOfFirstFile - 1)
-                        progress.updateFileBar()
                     # we're done reading data from the files
                     if self.Config.GeneticDifference:
                         aOfDiversities = self.ComputeGeneticDifference(DirectoryName, indexOfFirstFile)
                     if self.Config.PhenotypicDifference:
-                        aOfPhenotypeDiversity = self.ComputePhenotypicDifference(DirectoryName, progress)
+                        aOfPhenotypeDiversity = self.ComputePhenotypicDifference(DirectoryName)
                         #print "phenotypic difference array:", aOfPhenotypeDiversity
                     FileData.append([aOfBests, aOfAverages, aOfXValues, aOfDiversities, aOfPhenotypeDiversity])
                 ParsedData.append(self.averageData(FileData))
-        DataOut = open(self.FileToSave,"w+")
-        DataConfigOut = open(self.FileToSave[:-4] + "Config" + ".pkl","w+")
+        DataOut = open(self.FileToSave,"w+b")
+        DataConfigOut = open(self.FileToSave[:-4] + "Config" + ".pkl","w+b")
         pickle.dump(ParsedData,DataOut,2)
-        pickle.dump(ParsedData,DataConfigOut,2)
+        pickle.dump(self.Config,DataConfigOut,2)
         ###Process the parsed data###
 
     def __init__(self):
