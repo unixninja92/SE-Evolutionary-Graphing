@@ -117,15 +117,6 @@ class GraphSettingsGUI:
         self.graphTypeLabel.show()
         self.graphTypeBox.show()
         
-        
-        self.dataParserButton = gtk.Button("Manipulate Data Files")
-        self.dataParserButton.connect("clicked", self.hello, None) #   <---Open Data Parser()
-        self.dataParserButtonBox = gtk.HBox()
-        self.dataParserButtonBox.add(self.dataParserButton)
-        self.baseVBox2.add(self.dataParserButtonBox)
-        self.dataParserButton.show()
-        self.dataParserButtonBox.show()
-        
         self.parseSettingsBaseBox = gtk.HBox()
         
         self.showRangeToggle = gtk.CheckButton("Show Range?")
@@ -172,6 +163,15 @@ class GraphSettingsGUI:
         self.parseSettingsBaseBox.show()
         
         
+        self.dataParserButton = gtk.Button("Manipulate Data Files")
+        self.dataParserButton.connect("clicked", self.hello, None) #   <---Open Data Parser()
+        self.dataParserButtonBox = gtk.HBox()
+        self.dataParserButtonBox.add(self.dataParserButton)
+        self.baseVBox2.add(self.dataParserButtonBox)
+        self.dataParserButton.show()
+        self.dataParserButtonBox.show()
+        
+        
         #self.showRangeToggle = gtk.CheckButton("Show Range?")
         #self.showRangeToggle.connect("toggled", self.hello, None)
         #self.parseSettingsBaseBox.add(self.showRangeToggle)
@@ -180,7 +180,7 @@ class GraphSettingsGUI:
         self.graphItButton.connect("clicked", self.hello, None) #   <---Run Graph It()
         self.graphItButtonBox = gtk.HBox()
         self.graphItButtonBox.add(self.graphItButton)
-        self.baseVBox2.add(self.graphItButtonBox)
+        self.baseVBox.add(self.graphItButtonBox)
         self.graphItButton.show()
         self.graphItButtonBox.show()
         
