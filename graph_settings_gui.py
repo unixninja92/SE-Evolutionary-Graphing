@@ -1,6 +1,6 @@
 import gtk
-#import Gnuplot
 import gui_components
+#import graphsettings
 
 class GraphSettingsGUI:
     
@@ -14,7 +14,6 @@ class GraphSettingsGUI:
         gtk.main_quit()
 
     def __init__(self):
-        #Recent Changes 1:56 PM Wednesday
         fontSizeList = ["10", "12", "14", "16", "18", "20", "22", "24",]
         fontTypeList = ["Arial", "Times New Roman", "Calibri", "Sans Serif", "Comic Sans"]
         fontColorList = ["Red", "Orange", "Yellow", "Green", "Blue", "Purple"]
@@ -25,19 +24,25 @@ class GraphSettingsGUI:
         self.window.connect("delete_event", self.delete_event)
         self.window.connect("destroy", self.destroy)
         self.window.set_border_width(10)
-
+        
+        self.baseHBoxForVBox = gtk.HBox()
+        self.window.add(self.baseHBoxForVBox)
+        self.baseHBoxForVBox.show()
         self.baseVBox = gtk.VBox()
-        self.window.add(self.baseVBox)
+        self.baseHBoxForVBox.add(self.baseVBox)
         self.baseVBox.show()
+        self.baseVBox2 = gtk.VBox()
+        self.baseHBoxForVBox.add(self.baseVBox2)
+        self.baseVBox2.show()
 
         self.titleBox = gui_components.LabelEntryBox("Title")
-        self.baseVBox.add(self.titleBox.getHBox())
+        self.baseVBox2.add(self.titleBox.getHBox())
 
         self.xTitleBox = gui_components.LabelEntryBox("X-Axis Label")
-        self.baseVBox.add(self.xTitleBox.getHBox())
+        self.baseVBox2.add(self.xTitleBox.getHBox())
 
         self.yTitleBox = gui_components.LabelEntryBox("Y-Axis Label")
-        self.baseVBox.add(self.yTitleBox.getHBox())
+        self.baseVBox2.add(self.yTitleBox.getHBox())
         
         #self.font = gtk.ComboBox()
         #Additional Change Wednesday
@@ -53,7 +58,7 @@ class GraphSettingsGUI:
         self.fontBox = gtk.HBox()
         self.fontBox.add(self.fontLabel)
         self.fontBox.add(self.fontComboBox)
-        self.baseVBox.add(self.fontBox)
+        self.baseVBox2.add(self.fontBox)
         self.fontComboBox.show()
         self.fontLabel.show()
         self.fontBox.show()
@@ -71,7 +76,7 @@ class GraphSettingsGUI:
         self.fontSizeBox = gtk.HBox()
         self.fontSizeBox.add(self.fontSizeLabel)
         self.fontSizeBox.add(self.fontSizeComboBox)
-        self.baseVBox.add(self.fontSizeBox)
+        self.baseVBox2.add(self.fontSizeBox)
         self.fontSizeComboBox.show()
         self.fontSizeLabel.show()
         self.fontSizeBox.show()
@@ -89,7 +94,7 @@ class GraphSettingsGUI:
         self.fontColorBox = gtk.HBox()
         self.fontColorBox.add(self.fontColorLabel)
         self.fontColorBox.add(self.fontColorComboBox)
-        self.baseVBox.add(self.fontColorBox)
+        self.baseVBox2.add(self.fontColorBox)
         self.fontColorComboBox.show()
         self.fontColorLabel.show()
         self.fontColorBox.show()
@@ -107,13 +112,61 @@ class GraphSettingsGUI:
         self.graphTypeBox = gtk.HBox()
         self.graphTypeBox.add(self.graphTypeLabel)
         self.graphTypeBox.add(self.graphTypeComboBox)
-        self.baseVBox.add(self.graphTypeBox)
+        self.baseVBox2.add(self.graphTypeBox)
         self.graphTypeComboBox.show()
         self.graphTypeLabel.show()
         self.graphTypeBox.show()
         
+        self.parseSettingsBaseBox = gtk.HBox()
+        self.parseSettingsBaseBox2 = gtk.HBox()
         
-        self.dataParserButton = gtk.Button("Open Data Parser")
+        self.showRangeToggle = gtk.CheckButton("Show Range?")
+        self.showRangeToggle.connect("toggled", self.hello, None)
+        self.parseSettingsBaseBox.add(self.showRangeToggle)
+        self.showRangeToggle.show()
+        
+        self.showApproximationToggle = gtk.CheckButton("Show Approximation?")
+        self.showApproximationToggle.connect("toggled", self.hello, None)
+        self.parseSettingsBaseBox.add(self.showApproximationToggle)
+        self.showApproximationToggle.show()
+        
+        self.showSDToggle = gtk.CheckButton("Show Standard Deviation?")
+        self.showSDToggle.connect("toggled", self.hello, None)
+        self.parseSettingsBaseBox2.add(self.showSDToggle)
+        self.showSDToggle.show()
+        
+        self.showGDToggle = gtk.CheckButton("Show Genetic Diversity?")
+        self.showGDToggle.connect("toggled", self.hello, None)
+        self.parseSettingsBaseBox2.add(self.showGDToggle)
+        self.showGDToggle.show()
+        
+        self.showPDToggle = gtk.CheckButton("Show Phenotypic Diversity?")
+        self.showPDToggle.connect("toggled", self.hello, None)
+        self.parseSettingsBaseBox2.add(self.showPDToggle)
+        self.showPDToggle.show()
+        
+        self.compareGDPDToggle = gtk.CheckButton("Compare G.D. and P.D.?")
+        self.compareGDPDToggle.connect("toggled", self.hello, None)
+        self.parseSettingsBaseBox2.add(self.compareGDPDToggle)
+        self.compareGDPDToggle.show()
+        
+        self.showBestToggle = gtk.CheckButton("Show Best Values?")
+        self.showBestToggle.connect("toggled", self.hello, None)
+        self.parseSettingsBaseBox.add(self.showBestToggle)
+        self.showBestToggle.show()
+        
+        self.showAverageToggle = gtk.CheckButton("Show Average?")
+        self.showAverageToggle.connect("toggled", self.hello, None)
+        self.parseSettingsBaseBox.add(self.showAverageToggle)
+        self.showAverageToggle.show()
+        
+        self.baseVBox.add(self.parseSettingsBaseBox)
+        self.parseSettingsBaseBox.show()
+        self.baseVBox.add(self.parseSettingsBaseBox2)
+        self.parseSettingsBaseBox2.show()
+        
+        
+        self.dataParserButton = gtk.Button("Manipulate Data Files")
         self.dataParserButton.connect("clicked", self.hello, None) #   <---Open Data Parser()
         self.dataParserButtonBox = gtk.HBox()
         self.dataParserButtonBox.add(self.dataParserButton)
@@ -121,17 +174,26 @@ class GraphSettingsGUI:
         self.dataParserButton.show()
         self.dataParserButtonBox.show()
         
-        self.fileToParseEntry = gui_components.LabelEntryBox("Enter File Directory")
-        self.baseVBox.add(self.fileToParseEntry.getHBox())
+        
+        #self.showRangeToggle = gtk.CheckButton("Show Range?")
+        #self.showRangeToggle.connect("toggled", self.hello, None)
+        #self.parseSettingsBaseBox.add(self.showRangeToggle)
         
         self.graphItButton = gtk.Button("Graph It!")
         self.graphItButton.connect("clicked", self.hello, None) #   <---Run Graph It()
         self.graphItButtonBox = gtk.HBox()
         self.graphItButtonBox.add(self.graphItButton)
-        self.baseVBox.add(self.graphItButtonBox)
+        self.baseVBox2.add(self.graphItButtonBox)
         self.graphItButton.show()
         self.graphItButtonBox.show()
-        #
+        
+        
+        #previousSettings = False
+        #if(previousSettings == False):
+        #    return False
+        #else:
+        #    return #loadDefaults
+        
         
 
         #self.g = Gnuplot.Gnuplot(debug=1)
