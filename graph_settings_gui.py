@@ -119,8 +119,7 @@ class GraphSettingsGUI:
         self.graphTypeLabel.show()
         self.graphTypeBox.show()
         
-        self.parseSettingsBaseBox = gtk.HBox()
-        self.parseSettingsBaseBox2 = gtk.HBox()
+        self.parseSettingsBaseBox = gtk.VBox()
         
         self.showRangeToggle = gtk.CheckButton("Show Range?")
         self.showRangeToggle.connect("toggled", self.hello, None)
@@ -134,22 +133,22 @@ class GraphSettingsGUI:
         
         self.showSDToggle = gtk.CheckButton("Show Standard Deviation?")
         self.showSDToggle.connect("toggled", self.hello, None)
-        self.parseSettingsBaseBox2.add(self.showSDToggle)
+        self.parseSettingsBaseBox.add(self.showSDToggle)
         self.showSDToggle.show()
         
         self.showGDToggle = gtk.CheckButton("Show Genetic Diversity?")
         self.showGDToggle.connect("toggled", self.hello, None)
-        self.parseSettingsBaseBox2.add(self.showGDToggle)
+        self.parseSettingsBaseBox.add(self.showGDToggle)
         self.showGDToggle.show()
         
         self.showPDToggle = gtk.CheckButton("Show Phenotypic Diversity?")
         self.showPDToggle.connect("toggled", self.hello, None)
-        self.parseSettingsBaseBox2.add(self.showPDToggle)
+        self.parseSettingsBaseBox.add(self.showPDToggle)
         self.showPDToggle.show()
         
         self.compareGDPDToggle = gtk.CheckButton("Compare G.D. and P.D.?")
         self.compareGDPDToggle.connect("toggled", self.hello, None)
-        self.parseSettingsBaseBox2.add(self.compareGDPDToggle)
+        self.parseSettingsBaseBox.add(self.compareGDPDToggle)
         self.compareGDPDToggle.show()
         
         self.showBestToggle = gtk.CheckButton("Show Best Values?")
@@ -164,8 +163,6 @@ class GraphSettingsGUI:
         
         self.baseVBox.add(self.parseSettingsBaseBox)
         self.parseSettingsBaseBox.show()
-        self.baseVBox.add(self.parseSettingsBaseBox2)
-        self.parseSettingsBaseBox2.show()
         
         
         self.dataParserButton = gtk.Button("Manipulate Data Files")
