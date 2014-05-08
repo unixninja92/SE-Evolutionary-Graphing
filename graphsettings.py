@@ -6,8 +6,6 @@ import string
 import os.path
 import os
 
-__author__ = 'thomasguttman'
-
 class SettingsInfo:
     def __init__(self):
         self.aproximaion = False
@@ -35,7 +33,7 @@ class SettingsInfo:
 class GraphSettings:
     def __init__(self):
         self.settingsFileName = "lastGraphSettings.pkl"
-        this.loadSettings()
+        self.loadSettings()
 
     def loadSettings(self):
         if(os.path.isfile(self.settingsFileName)):
