@@ -117,10 +117,6 @@ class GraphSettings:
             StandardDeviations.append(numpy.std(npArrayOfASingleGeneration))
             generationsProcessed = generationsProcessed + 1
         return (Averages, Minimums, Maximums, StandardDeviations)
-
-    #def savegraphsettings():
-
-     #   if boolean1:
     
     
     def graph(self):
@@ -181,19 +177,4 @@ class GraphSettings:
         ax1.tick_params(axis='both', which='major', labelsize=sizeMe)
         #ax1.legend(loc='upper left' , fancybox=True, prop={'size':sizeMe}).get_frame().set_alpha(0.5)
         pylab.show()
-
-
-
-
-
-
-#booleans needed as checkboxs:
-#show approximation for this data?
-#plot ranges for this data?
-#plot standard deviation?
-#genetic diversity
-#phenotipic diversity
-#compare genetic and phenotipic diversity?
-#best values?
-#averages?
-#What do you prefer in the second Y axis, (F)itness values or (d)iversity
+        

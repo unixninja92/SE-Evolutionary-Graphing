@@ -5,23 +5,6 @@ import subprocess
 
 sets = []
 
-#compute gnetic difference and/or phenotipic difference
-#if L-systems (only for gentic)
-#   - num terminals
-#   - num non-terminals
-#   - expansion rate
-#ask for filname (autogen one first)
-#ask for first generation(index) to use
-
-
-#Finds:
-#   -bests 
-#   -averages
-#   -XValues
-#   -deversities 
-#   -gnetic diversity 
-#   -phenotipic diversity 
-
 
 class DataParsingGUI:
     numSets = -1
@@ -179,8 +162,7 @@ class DataParsingGUI:
 
                 self.expansionBox.set_text(gLSystem[3])
                 self.expansionBox.set_sensitive(False)
-
-        #elif respons == gtk.RESPONSE_CANCEL:
+                
         fileSelect.destroy()
         
         #have thing for both data that needs to be parsed and 
@@ -198,20 +180,7 @@ class DataParsingGUI:
         progress = ParserProgress()
         self.dataToParse.parseData(progress)
         proc = subprocess.Popen(["python graph_settings_gui.py %s" % self.dataToParse.FileToSave], bufsize=2048, shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
-        # proc.wait()
         self.window.destroy()
-        # progress.destroy()
-
-        # progressDialog = gtk.Dialog("Parsing Data...", None, 0, (gtk.STOCK_CANCEL, gtk.RESPONSE_REJECT))
-        # progressBar = gtk.ProgressBar()
-        # progressBar.set_text("1/100 files")
-        # progressBar.set_fraction(0.01)
-        # progressBar.set_pulse_step(0.01)
-        # progressBar.pulse()
-        # progressBar.show()
-        # progressDialog.vbox.pack_start(progressBar, True, True, 0)
-        # response = progressDialog.run()
-        # progressDialog.destroy()
 
     def isGenetic(self, widget, data):
         sensitive = self.geneticDiff.get_active()
@@ -271,14 +240,8 @@ class setBox:
         self.scrollSets.show()
 
         self.treestore = gtk.TreeStore(str)
-        # for parent in range(8):
-            # piter = self.treestore.append(None, ['parent %i' % parent])
-            # for child in range(3):
-            #     self.treestore.append(piter, ['child %i of parent %i' %(child, parent)])
 
         self.setList = gtk.TreeView(self.treestore)
-
-        
 
         self.fileCol = gtk.TreeViewColumn("Folders")
         self.fileCol.Title = "Run " + str(self.numSet)
@@ -321,13 +284,9 @@ class setBox:
         
         response = fileSelect.run()
         if response == gtk.RESPONSE_OK:
-            # print(fileSelect.get_filenames())
-            # sets[numSet].append(fileSelect.get_filenames())
             for f in fileSelect.get_filenames():
                 self.fileList.append(f)
-                # sets[self.numSet].append(f)
                 self.treestore.append(None, [f])
-        #elif respons == gtk.RESPONSE_CANCEL:
         fileSelect.destroy()
         print(sets)
 
@@ -342,8 +301,6 @@ class setBox:
         print(filePath)
 
     def destroy(self, widget, data):
-        # self.setFrame.hide()
-        # del self.boxsets[self.boxsets.index(self)]
         del self.fileList[:]
         self.setFrame.destroy()
         

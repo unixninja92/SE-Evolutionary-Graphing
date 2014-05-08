@@ -28,7 +28,7 @@ class GraphSettingsGUI:
         self.parseDataLoad = sys.argv[1]
         
         self.importedSettings = graphsettings.GraphSettings(self.parseDataLoad)
-        #
+        
         self.window = gtk.Window(gtk.WINDOW_TOPLEVEL)
 
         self.window.connect("delete_event", self.delete_event)
@@ -57,9 +57,7 @@ class GraphSettingsGUI:
         self.yTitleBox = gui_components.LabelEntryBox("Y-Axis Label")
         self.yTitleBox.set_text(self.importedSettings.Settings.yAxis)
         self.baseVBox2.pack_start(self.yTitleBox.getHBox(), False, False, 5)
-        
-        #self.font = gtk.ComboBox()
-        #Additional Change Wednesday
+         
         self.fontComboBox = gtk.combo_box_new_text()
         for x in range(0, 5):
             i = x
@@ -68,7 +66,6 @@ class GraphSettingsGUI:
         self.fontComboBox.set_active(self.importedSettings.Settings.fontType)
         self.fontComboBoxEntry = self.fontComboBox.get_active_text()
         
-        #
         self.fontLabel = gtk.Label("Font")
         self.fontBox = gtk.HBox()
         self.fontBox.pack_start(self.fontLabel, False, False, 5)
@@ -78,8 +75,6 @@ class GraphSettingsGUI:
         self.fontLabel.show()
         self.fontBox.show()
 
-        #self.fontSize = gtk.ComboBox()
-        #Additional Change Wednesday
         self.fontSizeComboBox = gtk.combo_box_new_text()
         for x in range(0, 8):
             i = x
@@ -87,7 +82,7 @@ class GraphSettingsGUI:
             self.fontSizeComboBox.insert_text(j, fontSizeList[i])
         self.fontSizeComboBox.set_active(self.importedSettings.Settings.size)
         self.fontSizeComboBoxEntry = self.fontSizeComboBox.get_active_text()
-        #
+        
         self.fontSizeLabel = gtk.Label("Font Size")
         self.fontSizeBox = gtk.HBox()
         self.fontSizeBox.pack_start(self.fontSizeLabel, False, False, 5)
@@ -97,8 +92,6 @@ class GraphSettingsGUI:
         self.fontSizeLabel.show()
         self.fontSizeBox.show()
 
-        #self.fontColor = gtk.ComboBox()
-        #Additional Change Wednesday
         self.fontColorComboBox = gtk.combo_box_new_text()
         for x in range(0, 6):
             i = x
@@ -106,7 +99,7 @@ class GraphSettingsGUI:
             self.fontColorComboBox.insert_text(j, fontColorList[i])
         self.fontColorComboBox.set_active(self.importedSettings.Settings.color)
         self.fontColorComboBoxEntry = self.fontColorComboBox.get_active_text()
-        #
+        
         self.fontColorLabel = gtk.Label("Font Color")
         self.fontColorBox = gtk.HBox()
         self.fontColorBox.pack_start(self.fontColorLabel, False, False, 5)
@@ -116,9 +109,6 @@ class GraphSettingsGUI:
         self.fontColorLabel.show()
         self.fontColorBox.show()
         
-        #Additional Changes Wednesday
-        
-        #self.graphType = gtk.ComboBox()
         self.graphTypeComboBox = gtk.combo_box_new_text()
         for x in range(0, 4):
             i = x
@@ -187,8 +177,7 @@ class GraphSettingsGUI:
         
         self.baseVBox.pack_start(self.parseSettingsBaseBox, False, False, 5)
         self.parseSettingsBaseBox.show()
-        
-        
+
         self.dataParserButton = gtk.Button("Manipulate Data Files")
         self.dataParserButton.connect("clicked", self.hello, None) #   <---Open Data Parser()
         self.dataParserButtonBox = gtk.HBox()
@@ -197,7 +186,6 @@ class GraphSettingsGUI:
         self.dataParserButton.show()
         self.dataParserButtonBox.show()
         
-        
         self.graphItButton = gtk.Button("Graph It!")
         self.graphItButton.connect("clicked", self.graphItOpen, None) #   <---Run Graph It()
         self.graphItButtonBox = gtk.HBox()
@@ -205,24 +193,6 @@ class GraphSettingsGUI:
         self.baseVBox2.pack_start(self.graphItButtonBox, False, False, 5)
         self.graphItButton.show()
         self.graphItButtonBox.show()
-        
-        
-        
-        #Placeholder for Default Settings Method
-        #previousSettings = False
-        #if(previousSettings == False):
-        #    return False
-        #else:
-        #    return #loadDefaults
-        
-        
-
-        #self.g = Gnuplot.Gnuplot(debug=1)
-
-        #self.g.title(self.titleBox.getEntry())
-        #self.g.plot('sin(x)')
-        
-    
 
         self.window.show()
 
