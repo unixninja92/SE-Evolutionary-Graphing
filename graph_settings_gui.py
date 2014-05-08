@@ -15,7 +15,7 @@ class GraphSettingsGUI:
         gtk.main_quit()
         
     def graphItOpen(self, widget, data=None):
-        self.importedSettings.Settings.setConfig(self.titleBox.get_text(), self.fontSizeComboBoxEntry, self.fontTypeComboBoxEntry, self.fontColorComboBoxEntry, self.graphTypeComboBoxEntry, self.xTitleBox.get_text(), self.yTitleBox.get_text(), self.showApproximationToggle.get_active(), self.showRangeToggle.get_active(), self.showSDToggle.get_active(), False, self.showGDToggle.get_active(), self.showPDToggle.get_active(), self.compareGDPDToggle.get_active(), self.showBestToggle.get_active(), self.showAverageToggle.get_active())
+        self.importedSettings.Settings.setConfig(self.titleBox.get_text(), self.fontSizeComboBoxEntry, self.fontComboBoxEntry, self.fontColorComboBoxEntry, self.graphTypeComboBoxEntry, self.xTitleBox.get_text(), self.yTitleBox.get_text(), self.showApproximationToggle.get_active(), self.showRangeToggle.get_active(), self.showSDToggle.get_active(), False, self.showGDToggle.get_active(), self.showPDToggle.get_active(), self.compareGDPDToggle.get_active(), self.showBestToggle.get_active(), self.showAverageToggle.get_active())
         self.importedSettings.saveSettings()
         self.importedSettings.graph()
 
