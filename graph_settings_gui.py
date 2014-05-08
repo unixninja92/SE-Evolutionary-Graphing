@@ -113,11 +113,11 @@ class GraphSettingsGUI:
         self.graphTypeBox.show()
         
         
-        self.fileToParseEntry = gui_components.LabelEntryBox("Enter File Directory")
+        self.fileToParseEntry = gui_components.LabelEntryBox("Enter File To Manipulate Directory")
         self.baseVBox.add(self.fileToParseEntry.getHBox())
         
         
-        self.dataParserButton = gtk.Button("Open Data Parser")
+        self.dataParserButton = gtk.Button("Manipulate Data Files")
         self.dataParserButton.connect("clicked", self.hello, None) #   <---Open Data Parser()
         self.dataParserButtonBox = gtk.HBox()
         self.dataParserButtonBox.add(self.dataParserButton)
