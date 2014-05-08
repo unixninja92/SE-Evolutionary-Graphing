@@ -3,20 +3,38 @@ import pickle
 import pylab
 import glob
 import string
+import os.path
 
 __author__ = 'thomasguttman'
 
 class GraphSettings:
+    self.aproximaion = False
+    self.ploteRanges = True
+    self.plotStandDev = False
+    self.fitnessOnYAxis = True
+    self.plotGenDiversity = False
+    self.plotPhenodiversity = False
+    # self.
+
 
     # parseddata = pickle.load(gettext.data_to_load)
+    self.settingFileName = "lastGraphSettings.pkl"
 
-    def plotter(valuesInXAxis, valuesInYAxis, plotsSoFar, generalLabelForLeyend, yAxis):
+    def loadSettings(self):
+        return True
+
+    def saveSettings(self):
+
+    def getSettings(self):
+        if(os.path.isfile(self.settingFileName))
+
+    def plotter(self, valuesInXAxis, valuesInYAxis, plotsSoFar, generalLabelForLeyend, yAxis):
     #print "the x values are:", valuesInXAxis
         sizeMe=15
         npArrayOfXValues = numpy.array(valuesInXAxis)
         yAxis.plot(valuesInXAxis, valuesInYAxis, arrayOfPlotCharacters[plotsSoFar], label=generalLabelForLeyend, lw=sizeMe/4, ms=sizeMe)
         yAxis.plot(valuesInXAxis, valuesInYAxis, lw=sizeMe/4, ms=sizeMe)
-        if booleanAproximaion:
+        if self.aproximaion:
             numericArray = []
             for x in valuesInYAxis:
                 numericArray.append(float(x))
@@ -30,17 +48,17 @@ class GraphSettings:
         #yAxis.plot(arrayOfXValues, pxp, '-')
     #return (ax)
 
-    def LinesDrawer(matrixOfValues, labelForLegend, plotsSoFar, yAxis, beginningXValue = 0):
+    def LinesDrawer(self, matrixOfValues, labelForLegend, plotsSoFar, yAxis, beginningXValue = 0):
     #print "the matrix is", matrixOfValues
         Averages, Minimums, Maximums, StandardDeviations = LinesGenerator(matrixOfValues)
         arrayOfXValues = range(beginningXValue, beginningXValue + len(Averages))
         ticker = arrayOfPlotCharacters[plotsSoFar]
         plotter(arrayOfXValues, Averages, plotsSoFar, labelForLegend, yAxis)
-        if booleanplotedranges:
+        if self.ploteRanges:
             lowRange  = [a - b for a, b in zip(Averages, Minimums)]
             highRange = [a - b for a, b in zip(Maximums, Averages)]
             pylab.errorbar(arrayOfXValues, Averages, yerr= [lowRange, highRange])
-        if booleanstanddev:
+        if self.plotStandDev:
             lowDev  = [a - b for a, b in zip(Averages, StandardDeviations)]
             highDev = [a + b for a, b in zip(Averages, StandardDeviations)]
             pylab.fill_between(arrayOfXValues, highDev, lowDev, facecolor='grey', alpha=0.5, )
@@ -49,7 +67,7 @@ class GraphSettings:
 
 
 
-    def LinesGenerator(matrixOfValues):
+    def LinesGenerator(self, matrixOfValues):
 
         generationsProcessed = 0
         Averages           = []
@@ -71,8 +89,8 @@ class GraphSettings:
      #   if boolean1:
     
     
-    def apply(graphsettings):
-        arrayOfPlotCharacters = ['o', 'D','+','*','0','1','2','3','4','5','>','<','^','|','d']
+    def apply(self, graphsettings):
+        # arrayOfPlotCharacters = ['o', 'D','+','*','0','1','2','3','4','5','>','<','^','|','d']
 # these are the characters that define how the plot lines will look like.
 # if there are more data sets than characters here, add more lines, or modify the code
 # so that it loops around.
@@ -81,10 +99,7 @@ class GraphSettings:
         plotsSoFar      = 0 # so that we know which control character to use for the lines.
         fig, ax1 = pylab.subplots()
         ax2 = ax1.twinx()
-        userResponse = raw_input("What do you prefer in the second Y axis, (F)itness values or (d)iversity?")
-        if userResponse == "":
-            userResponse = "F"
-        if userResponse.upper() == "F":
+        if self.fitnessOnYAxis:
             fitnessAxis   = ax2
             diversityAxis = ax1
         else:
@@ -109,9 +124,9 @@ class GraphSettings:
             labelForPhenotypicDiversities ="_Phenotypic_Diversity"
             labelForDiversityDifference ="_difference"
             labelForDiversityRatio      ="ration"
-            if booleangendiversity:
+            if self.plotGenDiversity:
                 plotsSoFar = LinesDrawer(matrixForGeneticDiversities, labelForGeneticDiversities, plotsSoFar, diversityAxis, arrayOfXValues[0])
-            if booleanphenodiversity:
+            if self.plotPhenodiversity:
                 plotsSoFar = LinesDrawer(matrixForPhenotypicDiversities, labelForPhenotypicDiversities, plotsSoFar, diversityAxis, arrayOfXValues[0])
             if booleancomparegp:
                 plotsSoFar = LinesDrawer(matrixForPhenotypicDiversities, labelForDiversityDifference, plotsSoFar, diversityAxis, arrayOfXValues[0])
