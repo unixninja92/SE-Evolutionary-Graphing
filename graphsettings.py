@@ -31,9 +31,11 @@ class SettingsInfo:
 
 
 class GraphSettings:
-    def __init__(self):
+    def __init__(self, dataFile):
         self.settingsFileName = "lastGraphSettings.pkl"
         self.loadSettings()
+        self.dataFilePath = dataFile
+        self.data = pickle.load(open(dataFilePath), "rb")
 
     def loadSettings(self):
         if(os.path.isfile(self.settingsFileName)):

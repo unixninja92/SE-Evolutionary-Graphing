@@ -197,7 +197,7 @@ class DataParsingGUI:
         self.dataToParse.setConfig(sets, self.startGen.get_text(), self.geneticDiff.get_active(), [self.lSystem.get_active(), self.nonterminalBox.get_text(), self.terminalBox.get_text(), self.expansionBox.get_text()], self.phenotypicDiff.get_active())
         progress = ParserProgress()
         self.dataToParse.parseData(progress)
-        proc = subprocess.Popen(["python graph_settings_gui.py"], bufsize=2048, shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+        proc = subprocess.Popen(["python graph_settings_gui.py %s" % self.parsedFile.get_text()], bufsize=2048, shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
         # proc.wait()
         self.window.destroy()
         # progress.destroy()
