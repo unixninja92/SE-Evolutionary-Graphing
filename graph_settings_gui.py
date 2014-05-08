@@ -26,7 +26,7 @@ class GraphSettingsGUI:
         self.window.set_border_width(10)
         
         self.baseHBoxForVBox = gtk.HBox()
-        self.window.add(self.baseHBoxForVBox())
+        self.window.add(self.baseHBoxForVBox)
         self.baseHBoxForVBox.show()
         self.baseVBox = gtk.VBox()
         self.baseHBoxForVBox.add(self.baseVBox)
