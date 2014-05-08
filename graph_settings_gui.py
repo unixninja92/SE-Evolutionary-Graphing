@@ -1,6 +1,6 @@
 import gtk
 import gui_components
-#import graphsettings
+import graphsettings
 
 class GraphSettingsGUI:
     
@@ -18,6 +18,8 @@ class GraphSettingsGUI:
         fontTypeList = ["Arial", "Times New Roman", "Calibri", "Sans Serif", "Comic Sans"]
         fontColorList = ["Red", "Orange", "Yellow", "Green", "Blue", "Purple"]
         graphTypeList = ["Line", "Scatterplot", "Bar", "Pie Chart"]
+        
+        self.importedSettings = graphsettings.GraphSettings()
         #
         self.window = gtk.Window(gtk.WINDOW_TOPLEVEL)
 
@@ -175,10 +177,6 @@ class GraphSettingsGUI:
         self.dataParserButtonBox.show()
         
         
-        #self.showRangeToggle = gtk.CheckButton("Show Range?")
-        #self.showRangeToggle.connect("toggled", self.hello, None)
-        #self.parseSettingsBaseBox.add(self.showRangeToggle)
-        
         self.graphItButton = gtk.Button("Graph It!")
         self.graphItButton.connect("clicked", self.hello, None) #   <---Run Graph It()
         self.graphItButtonBox = gtk.HBox()
@@ -188,6 +186,8 @@ class GraphSettingsGUI:
         self.graphItButtonBox.show()
         
         
+        
+        #Placeholder for Default Settings Method
         #previousSettings = False
         #if(previousSettings == False):
         #    return False
