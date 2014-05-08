@@ -123,7 +123,7 @@ class GraphSettings:
      #   if boolean1:
     
     
-    def apply(self):
+    def graph(self):
         # arrayOfPlotCharacters = ['o', 'D','+','*','0','1','2','3','4','5','>','<','^','|','d']
 # these are the characters that define how the plot lines will look like.
 # if there are more data sets than characters here, add more lines, or modify the code
