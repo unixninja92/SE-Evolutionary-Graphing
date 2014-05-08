@@ -4,10 +4,11 @@ import pylab
 import glob
 import string
 import os.path
+import os
 
 __author__ = 'thomasguttman'
 
-class GraphSettings:
+class SettingsInfo:
     def __init__(self):
         self.aproximaion = False
         self.ploteRanges = True
@@ -17,19 +18,34 @@ class GraphSettings:
         self.plotPhenodiversity = False
         self.comparegp = False
         self.plotBestVals = False
-        self.settingFileName = "lastGraphSettings.pkl"
+        self.plotAverages = False
 
+    def setConfig(self, aproximaion, ploteRanges, plotStandDev, fitnessOnYAxis, plotGenDiversity, plotPhenodiversity, comparegp, plotBestVals, plotAverages):
+        self.aproximaion = aproximaion
+        self.ploteRanges = ploteRanges
+        self.plotStandDev = plotStandDev
+        self.fitnessOnYAxis = fitnessOnYAxis
+        self.plotGenDiversity = plotGenDiversity
+        self.plotPhenodiversity = plotPhenodiversity
+        self.comparegp = comparegp
+        self.plotBestVals = plotBestVals
+        self.plotAverages = plotAverages
+
+
+class GraphSettings:
+    def __init__(self):
+        self.settingsFileName = "lastGraphSettings.pkl"
+        this.loadSettings()
 
     def loadSettings(self):
-        return True
+        if(os.path.isfile(self.settingsFileName)):
+            self.Settings = pickle.load(open(self.settingsFileName),"rb")
+        else:
+            self.Settings = SettingsInfo()
 
     def saveSettings(self):
-        return True
+        pickle.dump(self.Settings, open(self.settingsFileName, "w+b"), 2)
 
-    def getSettings(self):
-        if(os.path.isfile(self.settingFileName)):
-            True
-        False
 
     def plotter(self, valuesInXAxis, valuesInYAxis, plotsSoFar, generalLabelForLeyend, yAxis):
     #print "the x values are:", valuesInXAxis
@@ -92,7 +108,7 @@ class GraphSettings:
      #   if boolean1:
     
     
-    def apply(self, graphsettings):
+    def apply(self):
         # arrayOfPlotCharacters = ['o', 'D','+','*','0','1','2','3','4','5','>','<','^','|','d']
 # these are the characters that define how the plot lines will look like.
 # if there are more data sets than characters here, add more lines, or modify the code
