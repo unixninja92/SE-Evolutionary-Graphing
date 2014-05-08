@@ -8,7 +8,7 @@ import os
 
 class SettingsInfo:
     def __init__(self):
-        self.aproximaion = False
+        self.approximation = False
         self.ploteRanges = True
         self.plotStandDev = False
         self.fitnessOnYAxis = True
@@ -18,8 +18,8 @@ class SettingsInfo:
         self.plotBestVals = False
         self.plotAverages = False
 
-    def setConfig(self, aproximaion, ploteRanges, plotStandDev, fitnessOnYAxis, plotGenDiversity, plotPhenodiversity, comparegp, plotBestVals, plotAverages):
-        self.aproximaion = aproximaion
+    def setConfig(self, approximation, ploteRanges, plotStandDev, fitnessOnYAxis, plotGenDiversity, plotPhenodiversity, comparegp, plotBestVals, plotAverages):
+        self.approximation = approximation
         self.ploteRanges = ploteRanges
         self.plotStandDev = plotStandDev
         self.fitnessOnYAxis = fitnessOnYAxis
@@ -35,7 +35,8 @@ class GraphSettings:
         self.settingsFileName = "lastGraphSettings.pkl"
         self.loadSettings()
         self.dataFilePath = dataFile
-        self.data = pickle.load(open(dataFilePath), "rb")
+        print dataFile
+        self.data = pickle.load(open(self.dataFilePath, "rb"))
 
     def loadSettings(self):
         if(os.path.isfile(self.settingsFileName)):
