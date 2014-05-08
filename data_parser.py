@@ -3,6 +3,10 @@ import string
 import pickle
 import datetime
 import os
+import threading
+# import parsing_gui
+
+
 
 class ConfigInfo(object):
 
@@ -64,7 +68,7 @@ class DataParser(object):
                 AveragedData[i] = currentData / Divisor
         return AveragedData
 
-    def parseData(self):
+    def parseData(self, progress):
         # parses the data averaging all the data directories in the column and storing the averages
         ParsedData = self.DataList
         for DirectoryList in self.DirectoriesToParse:
@@ -75,7 +79,8 @@ class DataParser(object):
                     candidateFiles = DirectoryName + "/Generation*.txt" 
                     listOfFiles = glob.glob(candidateFiles) # this line looks at the directory and returns anything that matches.
                     numberOfFilesToProcess = len(listOfFiles)
-#                     print "there are", numberOfFilesToProcess, "files to process." ###OUTPUT TO GUI###
+                    progress.initFileBar(numberOfFilesToProcess)
+                    # print "there are", numberOfFilesToProcess, "files to process." ###OUTPUT TO GUI###
                     thisFileNumberNext = 1
                     aOfBests = []
                     aOfAverages = []
@@ -117,16 +122,17 @@ class DataParser(object):
                         averageFitness = averageFitness[:-1] 
                         # the ninth element is the best
                         bestFitness = arrayWithSummary[8]
-                        #print "generation", thisFileNumberNext, "Average:", averageFitness, "Best:", bestFitness 
+                        # print "generation", thisFileNumberNext, "Average:", averageFitness, "Best:", bestFitness 
                         # put the values into arrays
                         aOfAverages.append(averageFitness)
                         aOfBests.append(bestFitness)
                         aOfXValues.append(thisFileNumberNext + indexOfFirstFile - 1)
+                        progress.updateFileBar()
                     # we're done reading data from the files
                     if self.Config.GeneticDifference:
                         aOfDiversities = self.ComputeGeneticDifference(DirectoryName, indexOfFirstFile)
                     if self.Config.PhenotypicDifference:
-                        aOfPhenotypeDiversity = self.ComputePhenotypicDifference(DirectoryName)
+                        aOfPhenotypeDiversity = self.ComputePhenotypicDifference(DirectoryName, progress)
                         #print "phenotypic difference array:", aOfPhenotypeDiversity
                     FileData.append([aOfBests, aOfAverages, aOfXValues, aOfDiversities, aOfPhenotypeDiversity])
                 ParsedData.append(self.averageData(FileData))
@@ -181,7 +187,7 @@ class DataParser(object):
         averageDifference = accumulatedDifference/thingsThatHaveBeenAdded
         return (averageDifference)    
 
-    def ComputePhenotypicDifference(self, directory):
+    def ComputePhenotypicDifference(self, directory, progress):
         # generate a list of files to process
         #candidateFiles = directory + "/Generation*/Element*/weights.text"
         candidateGenerations = directory + "/Generation*[^.]*"
@@ -191,6 +197,7 @@ class DataParser(object):
 #         print "found this many generations:", len(listOfGenerations)
         # for each of those files...
         numberOfGenerationsToProcess = len(listOfGenerations)
+        progress.initFileBar(numberOfGenerationsToProcess)
         arrayOfDiversityValues = []
         thisGenerationNumberNext = 0
         while thisGenerationNumberNext < numberOfGenerationsToProcess:
@@ -215,6 +222,7 @@ class DataParser(object):
             diversityInThisGeneration = self.AverageDifferenceInAListsOfLists(arrayOfArrayOfWeights)
             arrayOfDiversityValues.append(diversityInThisGeneration)
             thisGenerationNumberNext = thisGenerationNumberNext + 1
+            progress.updateFileBar()
         return(arrayOfDiversityValues)     
 
     def ComputeGeneticDifference(self, directory, indexOfFirst):

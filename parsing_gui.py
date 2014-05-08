@@ -1,6 +1,7 @@
 import gtk
 import data_parser
 import gui_components
+import subprocess
 
 sets = []
 
@@ -194,17 +195,23 @@ class DataParsingGUI:
 
     def parseData(self, widget, data):
         self.dataToParse.setConfig(sets, self.startGen.get_text(), self.geneticDiff.get_active(), [self.lSystem.get_active(), self.nonterminalBox.get_text(), self.terminalBox.get_text(), self.expansionBox.get_text()], self.phenotypicDiff.get_active())
-        progressDialog = gtk.Dialog("Parsing Data...", None, 0, (gtk.STOCK_CANCEL, gtk.RESPONSE_REJECT))
-        progressBar = gtk.ProgressBar()
-        progressBar.set_text("1/100 files")
-        progressBar.set_fraction(0.01)
-        progressBar.set_pulse_step(0.01)
+        progress = ParserProgress()
+        self.dataToParse.parseData(progress)
+        proc = subprocess.Popen(["python graph_settings_gui.py"], bufsize=2048, shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+        # proc.wait()
+        self.window.destroy()
+        # progress.destroy()
+
+        # progressDialog = gtk.Dialog("Parsing Data...", None, 0, (gtk.STOCK_CANCEL, gtk.RESPONSE_REJECT))
+        # progressBar = gtk.ProgressBar()
+        # progressBar.set_text("1/100 files")
+        # progressBar.set_fraction(0.01)
+        # progressBar.set_pulse_step(0.01)
         # progressBar.pulse()
-        progressBar.show()
-        progressDialog.vbox.pack_start(progressBar, True, True, 0)
-        response = progressDialog.run()
-        progressDialog.destroy()
-        # this.dataToParse.parseData()
+        # progressBar.show()
+        # progressDialog.vbox.pack_start(progressBar, True, True, 0)
+        # response = progressDialog.run()
+        # progressDialog.destroy()
 
     def isGenetic(self, widget, data):
         sensitive = self.geneticDiff.get_active()
@@ -340,7 +347,44 @@ class setBox:
         del self.fileList[:]
         self.setFrame.destroy()
         
+class ParserProgress:
+    def __init__(self):
+        self.window = gtk.Window()
+        self.window.set_default_size(200, 100)
+        self.window.connect("destroy", lambda w: self.window.hide())
+        # self.window.set_decorated(False)
 
+        vbox = gtk.VBox(False, 5)
+
+        self.dirbar = gtk.ProgressBar()
+        vbox.pack_start(self.dirbar)
+
+        self.filebar = gtk.ProgressBar()
+        self.filebar.set_text("1/?")
+        # self.filebar.set_fraction(.01)
+        vbox.pack_start(self.filebar)
+
+        self.window.add(vbox)
+        self.window.show_all()
+
+    def initFileBar(self, numFiles):
+        print("int file bar")
+        self.numFiles = numFiles
+        self.currentFile = 1
+        self.fraction = 1.0/numFiles
+        print("fraction: %f" % self.fraction)
+        self.filebar.set_text("1/%i" % self.numFiles)
+        self.filebar.set_fraction(self.fraction)
+
+
+    def updateFileBar(self):
+        value = self.filebar.get_fraction() + self.fraction
+        self.currentFile += 1
+        self.filebar.set_text("{0}/{1}".format(self.currentFile, self.numFiles))
+        self.filebar.set_fraction(value)
+
+    def destroy(self):
+        self.window.destroy()
 
 
 if __name__ == "__main__":
