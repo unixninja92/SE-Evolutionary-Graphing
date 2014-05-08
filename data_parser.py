@@ -28,7 +28,8 @@ class DataParser(object):
 
     def getPreviousConfig(self,ConfigFile="ParseConfig.pkl"):
         '''gets the previous configuration'''
-        self.Config = pickle.load(ConfigFile)
+        ConfigIn = open(ConfigFile,"w+")
+        self.Config = pickle.load(ConfigIn)
 
     def setConfig(self,DirectoriesToParse,StartingGeneration,GeneticDifference,GLSystem,PhenotypicDifference,FileToSave = "ParsedData" + datetime.datetime.now().strftime("%y-%m-%d-%H") + ".pkl",ConfigLocation = "ParseConfig.pkl"):
         # sets and saves a new configuration
@@ -39,10 +40,12 @@ class DataParser(object):
         configLocation = open(self.ConfigLocation,"w+")
         pickle.dump(self.Config,configLocation,2)
 
-    def importPreviousRun(self,FilePath): # This returns the result of previous runs
-        self.DataList = pickle.load(FilePath)
-        self.Config = pickle.load(self.FileToSave[:-4] + "Config" + ".pkl")
-
+    def importPreviousRun(self,FilePath): # This should return the result of previous runs
+        DataIn = open(FilePath,"w+")
+        DataConfigIn = open(FilePath[:-4] + "Config" + ".pkl","w+")
+        self.DataList = pickle.load(DataIn)
+        self.Config = pickle.load(DataConfigIn)
+        
     def averageData(self,DataArraysToAverage):
         AveragedData = DataArraysToAverage[0]
         for DataArray in DataArraysToAverage[1:]:
