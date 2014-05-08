@@ -188,8 +188,8 @@ class GraphSettingsGUI:
         previousSettings = False
         if(previousSettings == False):
             return False
-            else
-                return #loadDefaults
+        else:
+            return #loadDefaults
         #
         
 
