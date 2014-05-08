@@ -71,7 +71,7 @@ class DataParser(object):
                 AveragedData[i] = currentData / Divisor
         return AveragedData
 
-    def parseData(self):
+    def parseData(self, progress):
         # parses the data averaging all the data directories in the column and storing the averages
         ParsedData = self.DataList
         for DirectoryList in self.DirectoriesToParse:
@@ -133,7 +133,7 @@ class DataParser(object):
                     if self.Config.GeneticDifference:
                         aOfDiversities = self.ComputeGeneticDifference(DirectoryName, indexOfFirstFile)
                     if self.Config.PhenotypicDifference:
-                        aOfPhenotypeDiversity = self.ComputePhenotypicDifference(DirectoryName)
+                        aOfPhenotypeDiversity = self.ComputePhenotypicDifference(DirectoryName, progress)
                         #print "phenotypic difference array:", aOfPhenotypeDiversity
                     FileData.append([aOfBests, aOfAverages, aOfXValues, aOfDiversities, aOfPhenotypeDiversity])
                 ParsedData.append(self.averageData(FileData))
