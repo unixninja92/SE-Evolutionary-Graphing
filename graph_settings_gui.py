@@ -1,6 +1,7 @@
 import gtk
 #import Gnuplot
 import gui_components
+import graphsettings
 
 class GraphSettingsGUI:
     
@@ -14,7 +15,6 @@ class GraphSettingsGUI:
         gtk.main_quit()
 
     def __init__(self):
-        #Recent Changes 1:56 PM Wednesday
         fontSizeList = ["10", "12", "14", "16", "18", "20", "22", "24",]
         fontTypeList = ["Arial", "Times New Roman", "Calibri", "Sans Serif", "Comic Sans"]
         fontColorList = ["Red", "Orange", "Yellow", "Green", "Blue", "Purple"]
@@ -182,6 +182,12 @@ class GraphSettingsGUI:
         self.baseVBox.add(self.graphItButtonBox)
         self.graphItButton.show()
         self.graphItButtonBox.show()
+        
+        previousSettings = False
+        if(previousSettings == False):
+            return False
+            else:
+                return #loadDefaults
         #
         
 
