@@ -68,70 +68,69 @@ class GraphSettings:
     def savegraphsettings():
 
         if boolean1:
-
-
-
+    
+    
     def apply(graphsettings):
-            arrayOfPlotCharacters = ['o', 'D','+','*','0','1','2','3','4','5','>','<','^','|','d']
+        arrayOfPlotCharacters = ['o', 'D','+','*','0','1','2','3','4','5','>','<','^','|','d']
 # these are the characters that define how the plot lines will look like.
 # if there are more data sets than characters here, add more lines, or modify the code
 # so that it loops around.
 # these control characters can be found at http://www.loria.fr/~rougier/teaching/matplotlib/#line-styles
-            arrayOfPlotCharacters = ['o', 'D','*','+','X','0','1','2','3','4','5','>','<','^','|','d']
-            plotsSoFar      = 0 # so that we know which control character to use for the lines.
-            fig, ax1 = pylab.subplots()
-            ax2 = ax1.twinx()
-            userResponse = raw_input("What do you prefer in the second Y axis, (F)itness values or (d)iversity?")
-            if userResponse == "":
-                userResponse = "F"
-            if userResponse.upper() == "F":
-                fitnessAxis   = ax2
-                diversityAxis = ax1
-            else:
-                fitnessAxis   = ax1
-                diversityAxis = ax2
-            keepGettingData = True
-            while keepGettingData: # this loop controls how many lines are going to be drawn in the plot.
-                bigArrayOfBests    = []
-                bigArrayOfAverages = []
-                bigArrayOfGeneticDiversities = []
-                bigArrayOfPhenotypicDiversities = []
-                averageWithMoreData = True
-                matrixForBests    = [[]] # first index for the generation, second index for the values.
-                matrixForAverages = [[]]
-                matrixForGeneticDiversities =[[]]
-                matrixForPhenotypicDiversities = [[]]
-                matrixForDiversityDifferences =[[]]
-                matrixForDiversityRatios = [[]]
-                labelForBests ="_Best"
-                labelForAverages ="_Average"
-                labelForGeneticDiversities ="_Genetic_Diversity"
-                labelForPhenotypicDiversities ="_Phenotypic_Diversity"
-                labelForDiversityDifference ="_difference"
-                labelForDiversityRatio      ="ration"
-                if booleangendiversity:
-                    plotsSoFar = LinesDrawer(matrixForGeneticDiversities, labelForGeneticDiversities, plotsSoFar, diversityAxis, arrayOfXValues[0])
-                if booleanphenodiversity:
-                    plotsSoFar = LinesDrawer(matrixForPhenotypicDiversities, labelForPhenotypicDiversities, plotsSoFar, diversityAxis, arrayOfXValues[0])
-                if booleancomparegp:
-                    plotsSoFar = LinesDrawer(matrixForPhenotypicDiversities, labelForDiversityDifference, plotsSoFar, diversityAxis, arrayOfXValues[0])
-                    plotsSoFar = plotsSoFar - 1
-                    plotsSoFar = LinesDrawer(matrixForPhenotypicDiversities, labelForDiversityRatio, plotsSoFar, diversityAxis, arrayOfXValues[0])
-                    plotsSoFar = plotsSoFar - 1
-                if booleanbestvals:
-                    plotsSoFar = LinesDrawer(matrixForBests, labelForBests, plotsSoFar, fitnessAxis, arrayOfXValues[0])
-                if booleanaverages:
-                   plotsSoFar = LinesDrawer(matrixForAverages, labelForAverages, plotsSoFar, fitnessAxis, arrayOfXValues[0])
-                keepGettingData = False
-            sizeMe = 50
-            fitnessAxis.set_ylabel('fitness score', fontsize=sizeMe)
-            ax1.set_xlabel("generation", fontsize=sizeMe)
-            diversityAxis.set_ylabel('diversity', fontsize=sizeMe)
-            ax2.legend(loc='upper right', fancybox=True, prop={'size':sizeMe}).get_frame().set_alpha(0.5)
-            ax2.tick_params(axis='both', which='major', labelsize=sizeMe)
-            ax1.tick_params(axis='both', which='major', labelsize=sizeMe)
-            #ax1.legend(loc='upper left' , fancybox=True, prop={'size':sizeMe}).get_frame().set_alpha(0.5)
-            pylab.show()
+        arrayOfPlotCharacters = ['o', 'D','*','+','X','0','1','2','3','4','5','>','<','^','|','d']
+        plotsSoFar      = 0 # so that we know which control character to use for the lines.
+        fig, ax1 = pylab.subplots()
+        ax2 = ax1.twinx()
+        userResponse = raw_input("What do you prefer in the second Y axis, (F)itness values or (d)iversity?")
+        if userResponse == "":
+            userResponse = "F"
+        if userResponse.upper() == "F":
+            fitnessAxis   = ax2
+            diversityAxis = ax1
+        else:
+            fitnessAxis   = ax1
+            diversityAxis = ax2
+        keepGettingData = True
+        while keepGettingData: # this loop controls how many lines are going to be drawn in the plot.
+            bigArrayOfBests    = []
+            bigArrayOfAverages = []
+            bigArrayOfGeneticDiversities = []
+            bigArrayOfPhenotypicDiversities = []
+            averageWithMoreData = True
+            matrixForBests    = [[]] # first index for the generation, second index for the values.
+            matrixForAverages = [[]]
+            matrixForGeneticDiversities =[[]]
+            matrixForPhenotypicDiversities = [[]]
+            matrixForDiversityDifferences =[[]]
+            matrixForDiversityRatios = [[]]
+            labelForBests ="_Best"
+            labelForAverages ="_Average"
+            labelForGeneticDiversities ="_Genetic_Diversity"
+            labelForPhenotypicDiversities ="_Phenotypic_Diversity"
+            labelForDiversityDifference ="_difference"
+            labelForDiversityRatio      ="ration"
+            if booleangendiversity:
+                plotsSoFar = LinesDrawer(matrixForGeneticDiversities, labelForGeneticDiversities, plotsSoFar, diversityAxis, arrayOfXValues[0])
+            if booleanphenodiversity:
+                plotsSoFar = LinesDrawer(matrixForPhenotypicDiversities, labelForPhenotypicDiversities, plotsSoFar, diversityAxis, arrayOfXValues[0])
+            if booleancomparegp:
+                plotsSoFar = LinesDrawer(matrixForPhenotypicDiversities, labelForDiversityDifference, plotsSoFar, diversityAxis, arrayOfXValues[0])
+                plotsSoFar = plotsSoFar - 1
+                plotsSoFar = LinesDrawer(matrixForPhenotypicDiversities, labelForDiversityRatio, plotsSoFar, diversityAxis, arrayOfXValues[0])
+                plotsSoFar = plotsSoFar - 1
+            if booleanbestvals:
+                plotsSoFar = LinesDrawer(matrixForBests, labelForBests, plotsSoFar, fitnessAxis, arrayOfXValues[0])
+            if booleanaverages:
+               plotsSoFar = LinesDrawer(matrixForAverages, labelForAverages, plotsSoFar, fitnessAxis, arrayOfXValues[0])
+            keepGettingData = False
+        sizeMe = 50
+        fitnessAxis.set_ylabel('fitness score', fontsize=sizeMe)
+        ax1.set_xlabel("generation", fontsize=sizeMe)
+        diversityAxis.set_ylabel('diversity', fontsize=sizeMe)
+        ax2.legend(loc='upper right', fancybox=True, prop={'size':sizeMe}).get_frame().set_alpha(0.5)
+        ax2.tick_params(axis='both', which='major', labelsize=sizeMe)
+        ax1.tick_params(axis='both', which='major', labelsize=sizeMe)
+        #ax1.legend(loc='upper left' , fancybox=True, prop={'size':sizeMe}).get_frame().set_alpha(0.5)
+        pylab.show()
 
 
 
