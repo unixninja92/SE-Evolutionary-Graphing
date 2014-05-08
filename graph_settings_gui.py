@@ -41,12 +41,16 @@ class GraphSettingsGUI:
         self.baseVBox2.show()
 
         self.titleBox = gui_components.LabelEntryBox("Title")
+        self.titleBox.set_active(self.importedSettings.Settings.title)
         self.baseVBox2.pack_start(self.titleBox.getHBox(), False, False, 5)
+        
 
         self.xTitleBox = gui_components.LabelEntryBox("X-Axis Label")
+        self.xTitleBox.set_active(self.importedSettings.Settings.xAxis)
         self.baseVBox2.pack_start(self.xTitleBox.getHBox(), False, False, 5)
 
         self.yTitleBox = gui_components.LabelEntryBox("Y-Axis Label")
+        self.yTitleBox.set_active(self.importedSettings.Settings.yAxis)
         self.baseVBox2.pack_start(self.yTitleBox.getHBox(), False, False, 5)
         
         #self.font = gtk.ComboBox()
@@ -56,6 +60,7 @@ class GraphSettingsGUI:
             i = x
             j = x
             self.fontComboBox.insert_text(j, fontTypeList[i])
+        self.fontComboBox.set_active(self.importedSettings.Settings.font)
         self.fontComboBoxEntry = self.fontComboBox.get_active_text()
         
         #
@@ -75,6 +80,7 @@ class GraphSettingsGUI:
             i = x
             j = x
             self.fontSizeComboBox.insert_text(j, fontSizeList[i])
+        self.fontSizeComboBox.set_active(self.importedSettings.Settings.size)
         self.fontSizeComboBoxEntry = self.fontSizeComboBox.get_active_text()
         #
         self.fontSizeLabel = gtk.Label("Font Size")
@@ -93,6 +99,7 @@ class GraphSettingsGUI:
             i = x
             j = x
             self.fontColorComboBox.insert_text(j, fontColorList[i])
+        self.fontColorComboBox.set_active(self.importedSettings.Settings.color)
         self.fontColorComboBoxEntry = self.fontColorComboBox.get_active_text()
         #
         self.fontColorLabel = gtk.Label("Font Color")
@@ -112,6 +119,7 @@ class GraphSettingsGUI:
             i = x
             j = x
             self.graphTypeComboBox.insert_text(j, graphTypeList[i])
+        self.graphTypeComboBox.set_active(self.importedSettings.Settings.graphType)
         self.graphTypeComboBoxEntry = self.graphTypeComboBox.get_active_text()
         self.graphTypeLabel = gtk.Label("Graph Type")
         self.graphTypeBox = gtk.HBox()
@@ -125,6 +133,7 @@ class GraphSettingsGUI:
         self.parseSettingsBaseBox = gtk.VBox()
         
         self.showRangeToggle = gtk.CheckButton("Show Range?")
+        self.showRangeToggle.set_active(self.importedSettings.Settings.ploteRanges)
         self.showRangeToggle.connect("toggled", self.hello, None)
         self.parseSettingsBaseBox.pack_start(self.showRangeToggle, False, False, 5)
         self.showRangeToggle.show()
