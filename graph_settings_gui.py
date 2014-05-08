@@ -184,12 +184,13 @@ class GraphSettingsGUI:
         self.graphItButton.show()
         self.graphItButtonBox.show()
         
-        previousSettings = False
-        if(previousSettings == False):
-            return False
-        else:
-            return #loadDefaults
-        #
+        
+        #previousSettings = False
+        #if(previousSettings == False):
+        #    return False
+        #else:
+        #    return #loadDefaults
+        
         
 
         #self.g = Gnuplot.Gnuplot(debug=1)
