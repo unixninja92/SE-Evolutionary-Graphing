@@ -36,13 +36,13 @@ class GraphSettingsGUI:
         self.baseVBox2.show()
 
         self.titleBox = gui_components.LabelEntryBox("Title")
-        self.baseVBox.add(self.titleBox.getHBox())
+        self.baseVBox2.add(self.titleBox.getHBox())
 
         self.xTitleBox = gui_components.LabelEntryBox("X-Axis Label")
-        self.baseVBox.add(self.xTitleBox.getHBox())
+        self.baseVBox2.add(self.xTitleBox.getHBox())
 
         self.yTitleBox = gui_components.LabelEntryBox("Y-Axis Label")
-        self.baseVBox.add(self.yTitleBox.getHBox())
+        self.baseVBox2.add(self.yTitleBox.getHBox())
         
         #self.font = gtk.ComboBox()
         #Additional Change Wednesday
@@ -58,7 +58,7 @@ class GraphSettingsGUI:
         self.fontBox = gtk.HBox()
         self.fontBox.add(self.fontLabel)
         self.fontBox.add(self.fontComboBox)
-        self.baseVBox.add(self.fontBox)
+        self.baseVBox2.add(self.fontBox)
         self.fontComboBox.show()
         self.fontLabel.show()
         self.fontBox.show()
@@ -76,7 +76,7 @@ class GraphSettingsGUI:
         self.fontSizeBox = gtk.HBox()
         self.fontSizeBox.add(self.fontSizeLabel)
         self.fontSizeBox.add(self.fontSizeComboBox)
-        self.baseVBox.add(self.fontSizeBox)
+        self.baseVBox2.add(self.fontSizeBox)
         self.fontSizeComboBox.show()
         self.fontSizeLabel.show()
         self.fontSizeBox.show()
@@ -94,7 +94,7 @@ class GraphSettingsGUI:
         self.fontColorBox = gtk.HBox()
         self.fontColorBox.add(self.fontColorLabel)
         self.fontColorBox.add(self.fontColorComboBox)
-        self.baseVBox.add(self.fontColorBox)
+        self.baseVBox2.add(self.fontColorBox)
         self.fontColorComboBox.show()
         self.fontColorLabel.show()
         self.fontColorBox.show()
@@ -112,7 +112,7 @@ class GraphSettingsGUI:
         self.graphTypeBox = gtk.HBox()
         self.graphTypeBox.add(self.graphTypeLabel)
         self.graphTypeBox.add(self.graphTypeComboBox)
-        self.baseVBox.add(self.graphTypeBox)
+        self.baseVBox2.add(self.graphTypeBox)
         self.graphTypeComboBox.show()
         self.graphTypeLabel.show()
         self.graphTypeBox.show()
@@ -159,7 +159,7 @@ class GraphSettingsGUI:
         self.parseSettingsBaseBox.add(self.showAverageToggle)
         self.showAverageToggle.show()
         
-        self.baseVBox2.add(self.parseSettingsBaseBox)
+        self.baseVBox.add(self.parseSettingsBaseBox)
         self.parseSettingsBaseBox.show()
         
         
@@ -167,7 +167,7 @@ class GraphSettingsGUI:
         self.dataParserButton.connect("clicked", self.hello, None) #   <---Open Data Parser()
         self.dataParserButtonBox = gtk.HBox()
         self.dataParserButtonBox.add(self.dataParserButton)
-        self.baseVBox2.add(self.dataParserButtonBox)
+        self.baseVBox.add(self.dataParserButtonBox)
         self.dataParserButton.show()
         self.dataParserButtonBox.show()
         
@@ -180,7 +180,7 @@ class GraphSettingsGUI:
         self.graphItButton.connect("clicked", self.hello, None) #   <---Run Graph It()
         self.graphItButtonBox = gtk.HBox()
         self.graphItButtonBox.add(self.graphItButton)
-        self.baseVBox.add(self.graphItButtonBox)
+        self.baseVBox2.add(self.graphItButtonBox)
         self.graphItButton.show()
         self.graphItButtonBox.show()
         
