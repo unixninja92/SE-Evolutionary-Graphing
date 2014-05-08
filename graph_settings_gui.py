@@ -1,7 +1,6 @@
 import gtk
-#import Gnuplot
 import gui_components
-import graphsettings
+#import graphsettings
 
 class GraphSettingsGUI:
     
