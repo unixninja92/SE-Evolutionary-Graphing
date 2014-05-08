@@ -13,6 +13,11 @@ class GraphSettingsGUI:
 
     def destroy(self, widget, data=None):
         gtk.main_quit()
+        
+    def graphItOpen():
+        self.importedSettings.Settings.setConfig(self.titleBox.get_text(), self.fontSizeComboBoxEntry, self.fontTypeComboBoxEntry, self.fontColorComboBoxEntry, self.graphTypeComboBoxEntry, self.xTitleBox.get_text(), self.yTitleBox.get_text(), self.showApproximationToggle.get_active(), self.showRangeToggle.get_active(), self.showSDToggle.get_active(), False, self.showGDToggle.get_active(), self.showPDToggle.get_active(), self.compareGDPDToggle.get_active(), self.showBestToggle.get_active(), self.showAverageToggle.get_active())
+        self.importedSettings.saveSettings()
+        self.importedSettings.graph()
 
     def __init__(self):
         fontSizeList = ["10", "12", "14", "16", "18", "20", "22", "24",]
@@ -41,16 +46,16 @@ class GraphSettingsGUI:
         self.baseVBox2.show()
 
         self.titleBox = gui_components.LabelEntryBox("Title")
-        self.titleBox.set_active(self.importedSettings.Settings.title)
+        self.titleBox.set_text(self.importedSettings.Settings.title)
         self.baseVBox2.pack_start(self.titleBox.getHBox(), False, False, 5)
         
 
         self.xTitleBox = gui_components.LabelEntryBox("X-Axis Label")
-        self.xTitleBox.set_active(self.importedSettings.Settings.xAxis)
+        self.xTitleBox.set_text(self.importedSettings.Settings.xAxis)
         self.baseVBox2.pack_start(self.xTitleBox.getHBox(), False, False, 5)
 
         self.yTitleBox = gui_components.LabelEntryBox("Y-Axis Label")
-        self.yTitleBox.set_active(self.importedSettings.Settings.yAxis)
+        self.yTitleBox.set_text(self.importedSettings.Settings.yAxis)
         self.baseVBox2.pack_start(self.yTitleBox.getHBox(), False, False, 5)
         
         #self.font = gtk.ComboBox()
@@ -194,7 +199,7 @@ class GraphSettingsGUI:
         
         
         self.graphItButton = gtk.Button("Graph It!")
-        self.graphItButton.connect("clicked", self.hello, None) #   <---Run Graph It()
+        self.graphItButton.connect("clicked", self.graphItOpen, None) #   <---Run Graph It()
         self.graphItButtonBox = gtk.HBox()
         self.graphItButtonBox.pack_start(self.graphItButton, False, False, 5)
         self.baseVBox2.pack_start(self.graphItButtonBox, False, False, 5)
