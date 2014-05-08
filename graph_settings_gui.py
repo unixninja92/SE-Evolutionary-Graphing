@@ -1,6 +1,7 @@
 import gtk
 import gui_components
 import graphsettings
+import sys
 
 class GraphSettingsGUI:
     
@@ -19,7 +20,9 @@ class GraphSettingsGUI:
         fontColorList = ["Red", "Orange", "Yellow", "Green", "Blue", "Purple"]
         graphTypeList = ["Line", "Scatterplot", "Bar", "Pie Chart"]
         
-        self.importedSettings = graphsettings.GraphSettings()
+        self.parseDataLoad = sys.argv[1]
+        
+        self.importedSettings = graphsettings.GraphSettings(self.parseDataLoad)
         #
         self.window = gtk.Window(gtk.WINDOW_TOPLEVEL)
 
@@ -127,36 +130,43 @@ class GraphSettingsGUI:
         self.showRangeToggle.show()
         
         self.showApproximationToggle = gtk.CheckButton("Show Approximation?")
+        self.showApproximationToggle.set_active(self.importedSettings.Settings.approximation)
         self.showApproximationToggle.connect("toggled", self.hello, None)
         self.parseSettingsBaseBox.pack_start(self.showApproximationToggle, False, False, 5)
         self.showApproximationToggle.show()
         
         self.showSDToggle = gtk.CheckButton("Show Standard Deviation?")
+        self.showSDToggle.set_active(self.importedSettings.Settings.plotStandDev)
         self.showSDToggle.connect("toggled", self.hello, None)
         self.parseSettingsBaseBox.pack_start(self.showSDToggle, False, False, 5)
         self.showSDToggle.show()
         
         self.showGDToggle = gtk.CheckButton("Show Genetic Diversity?")
+        self.showGDToggle.set_active(self.importedSettings.Settings.plotGenDiversity)
         self.showGDToggle.connect("toggled", self.hello, None)
         self.parseSettingsBaseBox.pack_start(self.showGDToggle, False, False, 5)
         self.showGDToggle.show()
         
         self.showPDToggle = gtk.CheckButton("Show Phenotypic Diversity?")
+        self.showPDToggle.set_active(self.importedSettings.Settings.plotPhenodiversity)
         self.showPDToggle.connect("toggled", self.hello, None)
         self.parseSettingsBaseBox.pack_start(self.showPDToggle, False, False, 5)
         self.showPDToggle.show()
         
         self.compareGDPDToggle = gtk.CheckButton("Compare G.D. and P.D.?")
+        self.compareGDPDToggle.set_active(self.importedSettings.Settings.comparegp)
         self.compareGDPDToggle.connect("toggled", self.hello, None)
         self.parseSettingsBaseBox.pack_start(self.compareGDPDToggle, False, False, 5)
         self.compareGDPDToggle.show()
         
         self.showBestToggle = gtk.CheckButton("Show Best Values?")
+        self.showBestToggle.set_active(self.importedSettings.Settings.plotBestVals)
         self.showBestToggle.connect("toggled", self.hello, None)
         self.parseSettingsBaseBox.pack_start(self.showBestToggle, False, False, 5)
         self.showBestToggle.show()
         
         self.showAverageToggle = gtk.CheckButton("Show Average?")
+        self.showAverageToggle.set_active(self.importedSettings.Settings.plotAverages)
         self.showAverageToggle.connect("toggled", self.hello, None)
         self.parseSettingsBaseBox.pack_start(self.showAverageToggle, False, False, 5)
         self.showAverageToggle.show()
