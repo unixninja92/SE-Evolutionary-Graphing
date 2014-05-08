@@ -65,9 +65,9 @@ class GraphSettings:
             generationsProcessed = generationsProcessed + 1
         return (Averages, Minimums, Maximums, StandardDeviations)
 
-    def savegraphsettings():
+    #def savegraphsettings():
 
-        if boolean1:
+     #   if boolean1:
     
     
     def apply(graphsettings):
