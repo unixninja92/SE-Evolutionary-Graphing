@@ -72,12 +72,11 @@ class GraphSettings:
 
 
     def apply(graphsettings):
-        arrayOfPlotCharacters = ['o', 'D','+','*','0','1','2','3','4','5','>','<','^','|','d']
-        if __name__ == '__main__':
-        # these are the characters that define how the plot lines will look like.
-        # if there are more data sets than characters here, add more lines, or modify the code
-        # so that it loops around.
-        # these control characters can be found at http://www.loria.fr/~rougier/teaching/matplotlib/#line-styles
+            arrayOfPlotCharacters = ['o', 'D','+','*','0','1','2','3','4','5','>','<','^','|','d']
+# these are the characters that define how the plot lines will look like.
+# if there are more data sets than characters here, add more lines, or modify the code
+# so that it loops around.
+# these control characters can be found at http://www.loria.fr/~rougier/teaching/matplotlib/#line-styles
             arrayOfPlotCharacters = ['o', 'D','*','+','X','0','1','2','3','4','5','>','<','^','|','d']
             plotsSoFar      = 0 # so that we know which control character to use for the lines.
             fig, ax1 = pylab.subplots()
