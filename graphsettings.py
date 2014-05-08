@@ -8,25 +8,28 @@ import os.path
 __author__ = 'thomasguttman'
 
 class GraphSettings:
-    self.aproximaion = False
-    self.ploteRanges = True
-    self.plotStandDev = False
-    self.fitnessOnYAxis = True
-    self.plotGenDiversity = False
-    self.plotPhenodiversity = False
-    # self.
+    def __init__(self):
+        self.aproximaion = False
+        self.ploteRanges = True
+        self.plotStandDev = False
+        self.fitnessOnYAxis = True
+        self.plotGenDiversity = False
+        self.plotPhenodiversity = False
+        self.comparegp = False
+        self.plotBestVals = False
+        self.settingFileName = "lastGraphSettings.pkl"
 
-
-    # parseddata = pickle.load(gettext.data_to_load)
-    self.settingFileName = "lastGraphSettings.pkl"
 
     def loadSettings(self):
         return True
 
     def saveSettings(self):
+        return True
 
     def getSettings(self):
-        if(os.path.isfile(self.settingFileName))
+        if(os.path.isfile(self.settingFileName)):
+            True
+        False
 
     def plotter(self, valuesInXAxis, valuesInYAxis, plotsSoFar, generalLabelForLeyend, yAxis):
     #print "the x values are:", valuesInXAxis
@@ -128,12 +131,12 @@ class GraphSettings:
                 plotsSoFar = LinesDrawer(matrixForGeneticDiversities, labelForGeneticDiversities, plotsSoFar, diversityAxis, arrayOfXValues[0])
             if self.plotPhenodiversity:
                 plotsSoFar = LinesDrawer(matrixForPhenotypicDiversities, labelForPhenotypicDiversities, plotsSoFar, diversityAxis, arrayOfXValues[0])
-            if booleancomparegp:
+            if self.comparegp:
                 plotsSoFar = LinesDrawer(matrixForPhenotypicDiversities, labelForDiversityDifference, plotsSoFar, diversityAxis, arrayOfXValues[0])
                 plotsSoFar = plotsSoFar - 1
                 plotsSoFar = LinesDrawer(matrixForPhenotypicDiversities, labelForDiversityRatio, plotsSoFar, diversityAxis, arrayOfXValues[0])
                 plotsSoFar = plotsSoFar - 1
-            if booleanbestvals:
+            if self.plotBestVals:
                 plotsSoFar = LinesDrawer(matrixForBests, labelForBests, plotsSoFar, fitnessAxis, arrayOfXValues[0])
             if booleanaverages:
                plotsSoFar = LinesDrawer(matrixForAverages, labelForAverages, plotsSoFar, fitnessAxis, arrayOfXValues[0])
