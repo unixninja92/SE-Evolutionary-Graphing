@@ -14,7 +14,7 @@ class GraphSettingsGUI:
     def destroy(self, widget, data=None):
         gtk.main_quit()
         
-    def graphItOpen():
+    def graphItOpen(self, widget, data=None):
         self.importedSettings.Settings.setConfig(self.titleBox.get_text(), self.fontSizeComboBoxEntry, self.fontTypeComboBoxEntry, self.fontColorComboBoxEntry, self.graphTypeComboBoxEntry, self.xTitleBox.get_text(), self.yTitleBox.get_text(), self.showApproximationToggle.get_active(), self.showRangeToggle.get_active(), self.showSDToggle.get_active(), False, self.showGDToggle.get_active(), self.showPDToggle.get_active(), self.compareGDPDToggle.get_active(), self.showBestToggle.get_active(), self.showAverageToggle.get_active())
         self.importedSettings.saveSettings()
         self.importedSettings.graph()
@@ -65,7 +65,7 @@ class GraphSettingsGUI:
             i = x
             j = x
             self.fontComboBox.insert_text(j, fontTypeList[i])
-        self.fontComboBox.set_active(self.importedSettings.Settings.font)
+        self.fontComboBox.set_active(self.importedSettings.Settings.fontType)
         self.fontComboBoxEntry = self.fontComboBox.get_active_text()
         
         #

@@ -18,10 +18,10 @@ class SettingsInfo:
         self.plotBestVals = False
         self.plotAverages = False
         self.title = "Untitled"
-        self.size = "12"
-        self.fontType = "Times New Roman"
-        self.color = "Red"
-        self.graphType = "Line"
+        self.size = 1
+        self.fontType = 1
+        self.color = 0
+        self.graphType = 0
         self.xAxis = "Untitled"
         self.yAxis = "Untitled"
 
@@ -45,7 +45,7 @@ class SettingsInfo:
 
 
 class GraphSettings:
-    def __init__(self):
+    def __init__(self, dataFile):
         self.settingsFileName = "lastGraphSettings.pkl"
         self.loadSettings()
         self.dataFilePath = dataFile
