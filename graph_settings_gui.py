@@ -25,10 +25,16 @@ class GraphSettingsGUI:
         self.window.connect("delete_event", self.delete_event)
         self.window.connect("destroy", self.destroy)
         self.window.set_border_width(10)
-
+        
+        self.baseHBoxForVBox = gtk.HBox()
+        self.window.add(self.baseHBoxForVBox())
+        self.baseHBoxForVBox.show()
         self.baseVBox = gtk.VBox()
-        self.window.add(self.baseVBox)
+        self.baseHBoxForVBox.add(self.baseVBox)
         self.baseVBox.show()
+        self.baseVBox2 = gtk.VBox()
+        self.baseHBoxForVBox.add(baseVBox2)
+        self.baseVBox2.show()
 
         self.titleBox = gui_components.LabelEntryBox("Title")
         self.baseVBox.add(self.titleBox.getHBox())
@@ -113,15 +119,11 @@ class GraphSettingsGUI:
         self.graphTypeBox.show()
         
         
-        self.fileToParseEntry = gui_components.LabelEntryBox("Enter File To Manipulate Directory")
-        self.baseVBox.add(self.fileToParseEntry.getHBox())
-        
-        
         self.dataParserButton = gtk.Button("Manipulate Data Files")
         self.dataParserButton.connect("clicked", self.hello, None) #   <---Open Data Parser()
         self.dataParserButtonBox = gtk.HBox()
         self.dataParserButtonBox.add(self.dataParserButton)
-        self.baseVBox.add(self.dataParserButtonBox)
+        self.baseVBox2.add(self.dataParserButtonBox)
         self.dataParserButton.show()
         self.dataParserButtonBox.show()
         
@@ -167,7 +169,7 @@ class GraphSettingsGUI:
         self.parseSettingsBaseBox.add(self.showAverageToggle)
         self.showAverageToggle.show()
         
-        self.baseVBox.add(self.parseSettingsBaseBox)
+        self.baseVBox2.add(self.parseSettingsBaseBox)
         self.parseSettingsBaseBox.show()
         
         
@@ -179,7 +181,7 @@ class GraphSettingsGUI:
         self.graphItButton.connect("clicked", self.hello, None) #   <---Run Graph It()
         self.graphItButtonBox = gtk.HBox()
         self.graphItButtonBox.add(self.graphItButton)
-        self.baseVBox.add(self.graphItButtonBox)
+        self.baseVBox2.add(self.graphItButtonBox)
         self.graphItButton.show()
         self.graphItButtonBox.show()
         
