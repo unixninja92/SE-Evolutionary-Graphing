@@ -161,13 +161,13 @@ class DataParsingGUI:
             self.phenotypicDiff.set_active(self.dataToParse.Config.PhenotypicDifference)
             self.phenotypicDiff.set_sensitive(False)
 
-            self.geneticDiff.set_text(self.dataToParse.Config.GeneticDifference)
+            self.geneticDiff.set_active(self.dataToParse.Config.GeneticDifference)
             self.geneticDiff.set_sensitive(False)
 
             gLSystem = self.dataToParse.Config.GLSystem
             isLSystem = gLSystem[0]
 
-            self.lSystem.set_text(isLSystem)
+            self.lSystem.set_active(isLSystem)
             self.lSystem.set_sensitive(False)
 
             if isLSystem:
