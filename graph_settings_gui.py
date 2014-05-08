@@ -31,10 +31,10 @@ class GraphSettingsGUI:
         self.window.add(self.baseHBoxForVBox)
         self.baseHBoxForVBox.show()
         self.baseVBox = gtk.VBox()
-        self.baseHBoxForVBox.add(self.baseVBox)
+        self.baseHBoxForVBox.pack_start(self.baseVBox, False, False, 5)
         self.baseVBox.show()
         self.baseVBox2 = gtk.VBox()
-        self.baseHBoxForVBox.add(self.baseVBox2)
+        self.baseHBoxForVBox.pack_start(self.baseVBox2, False, False, 5)
         self.baseVBox2.show()
 
         self.titleBox = gui_components.LabelEntryBox("Title")
