@@ -17,8 +17,15 @@ class SettingsInfo:
         self.comparegp = False
         self.plotBestVals = False
         self.plotAverages = False
+        self.title = "Untitled"
+        self.size = "12"
+        self.fontType = "Times New Roman"
+        self.color = "Red"
+        self.graphType = "Line"
+        self.xAxis = "Untitled"
+        self.yAxis = "Untitled"
 
-    def setConfig(self, aproximaion, ploteRanges, plotStandDev, fitnessOnYAxis, plotGenDiversity, plotPhenodiversity, comparegp, plotBestVals, plotAverages):
+    def setConfig(self, title, size, fontType, color, graphType, xAxis, yAxis, aproximaion, ploteRanges, plotStandDev, fitnessOnYAxis, plotGenDiversity, plotPhenodiversity, comparegp, plotBestVals, plotAverages):
         self.aproximaion = aproximaion
         self.ploteRanges = ploteRanges
         self.plotStandDev = plotStandDev
@@ -28,14 +35,19 @@ class SettingsInfo:
         self.comparegp = comparegp
         self.plotBestVals = plotBestVals
         self.plotAverages = plotAverages
+        self.title = title
+        self.size = size
+        self.fontType = fontType
+        self.color = color
+        self.graphType = graphType
+        self.xAxis = xAxis
+        self.yAxis = yAxis
 
 
 class GraphSettings:
-    def __init__(self, dataFile):
+    def __init__(self):
         self.settingsFileName = "lastGraphSettings.pkl"
         self.loadSettings()
-        self.dataFilePath = dataFile
-        self.data = pickle.load(open(dataFilePath), "rb")
 
     def loadSettings(self):
         if(os.path.isfile(self.settingsFileName)):
