@@ -161,7 +161,7 @@ class GraphSettingsGUI:
         self.parseSettingsBaseBox.pack_start(self.showAverageToggle, False, False, 5)
         self.showAverageToggle.show()
         
-        self.baseVBox.add(self.parseSettingsBaseBox)
+        self.baseVBox.pack_start(self.parseSettingsBaseBox, False, False, 5)
         self.parseSettingsBaseBox.show()
         
         
