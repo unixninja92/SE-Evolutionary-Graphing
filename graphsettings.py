@@ -9,15 +9,15 @@ import os
 
 class SettingsInfo:
     def __init__(self):
-        self.approximation = False
-        self.ploteRanges = True
+        self.approximation = True
+        self.ploteRanges = False
         self.plotStandDev = False
         self.fitnessOnYAxis = True
-        self.plotGenDiversity = False
-        self.plotPhenodiversity = False
+        self.plotGenDiversity = True
+        self.plotPhenodiversity = True
         self.comparegp = False
-        self.plotBestVals = False
-        self.plotAverages = False
+        self.plotBestVals = True
+        self.plotAverages = True
         self.title = "Untitled"
         self.size = 1
         self.fontType = 1
