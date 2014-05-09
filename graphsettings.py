@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import pickle
+import numpy
 import pylab
 import glob
 import string
@@ -45,6 +46,11 @@ class SettingsInfo:
 
 
 class GraphSettings:
+    fontSizeList = ["10", "12", "14", "16", "18", "20", "22", "24",]
+    fontTypeList = ["Arial", "Times New Roman", "Calibri", "Sans Serif", "Comic Sans"]
+    fontColorList = ["Red", "Orange", "Yellow", "Green", "Blue", "Purple"]
+    graphTypeList = ["Line", "Scatterplot", "Bar", "Pie Chart"]
+
     def __init__(self, dataFile):
         self.settingsFileName = "lastGraphSettings.pkl"
         self.loadSettings()
@@ -121,6 +127,17 @@ class GraphSettings:
             generationsProcessed = generationsProcessed + 1
         return (Averages, Minimums, Maximums, StandardDeviations)
     
+    def PutIntoBigMatrixFromFile(self, newArray, newArrayPos, matrixOfAllValues):
+        # precondition: the arrays are of the same size
+        entriesToProcess = len(newArray)
+        processedAlready = 0
+        while (processedAlready < entriesToProcess):
+            while processedAlready >= len(matrixOfAllValues):
+                matrixOfAllValues.append([])
+            matrixOfAllValues[processedAlready].append(float(newArray[newArrayPos][processedAlready]))
+            processedAlready    = processedAlready + 1
+        return(matrixOfAllValues)
+
     def PutIntoBigMatrix(self, newArray, matrixOfAllValues):
         # precondition: the arrays are of the same size
         entriesToProcess = len(newArray)
@@ -129,11 +146,15 @@ class GraphSettings:
             while processedAlready >= len(matrixOfAllValues):
                 matrixOfAllValues.append([])
             matrixOfAllValues[processedAlready].append(float(newArray[processedAlready]))
+            # print newArray[processedAlready]
+            print matrixOfAllValues[processedAlready]
             processedAlready    = processedAlready + 1
         return(matrixOfAllValues)
 
     def SubstractArrays(self, A1, A2):
         A3 = []
+        print A1
+        print A3
         thisIndexNext = 0
         while thisIndexNext < len(A1):
             nextElement = A1[thisIndexNext] - A2[thisIndexNext]
@@ -150,24 +171,19 @@ class GraphSettings:
             thisIndexNext = thisIndexNext + 1
         return (A3)
 
-    # def ProcessFromHereToHere(array, fromHere, toHere, intoThisMatrix):
-    # # begin by finding the "fromHere" line
-    # currentLineIndex = 0
-    # while fromHere not in array[currentLineIndex]:
-    #     currentLineIndex = currentLineIndex + 1
-    # # found it. now process until we find the "toHere" tag
-    # currentLineIndex = currentLineIndex + 1
-    # while toHere not in array[currentLineIndex]:
-    #     #read one line
-    #     currentLine = array[currentLineIndex]
-    #     # divide it into elements, based on spaces
-    #     currentValues = currentLine.split()
-    #     # we now have the data in an array, but they are in "run first" order.
-    #     # we need to turn it into a "generation first" order.
-    #     # storing them into the matrix will do that work.
-    #     PutIntoBigMatrix(currentValues, intoThisMatrix)
-    #     currentLineIndex = currentLineIndex + 1   
-    # return(intoThisMatrix)
+    def ProcessArrayToMatirx(self, array, intoThisMatrix):
+        for currentLine in array:
+            if isinstance(currentLine, list):
+                currentValues = currentLine
+            else:
+                currentValues = [currentLine]
+            # divide it into elements, based on spaces
+            # currentValues = currentLine.split()
+            # we now have the data in an array, but they are in "run first" order.
+            # we need to turn it into a "generation first" order.
+            # storing them into the matrix will do that work.
+            self.PutIntoBigMatrix(currentValues, intoThisMatrix)
+        return(intoThisMatrix)
 
     # def ReadDataFromFile(a, b, c, d):
     #     userAnswer = raw_input("Enter file name:")
@@ -196,8 +212,8 @@ class GraphSettings:
         else:
             fitnessAxis   = ax1
             diversityAxis = ax2
-        keepGettingData = True
-        while keepGettingData: # this loop controls how many lines are going to be drawn in the plot.
+        # keepGettingData = True
+        for datSet in self.data: # this loop controls how many lines are going to be drawn in the plot.
             bigArrayOfBests    = []
             bigArrayOfAverages = []
             bigArrayOfGeneticDiversities = []
@@ -215,31 +231,38 @@ class GraphSettings:
             labelForPhenotypicDiversities ="_Phenotypic_Diversity"
             labelForDiversityDifference ="_difference"
             labelForDiversityRatio      ="ration"
-            for i in self.data:
-                self.PutIntoBigMatrix(i[0], bigArrayOfBests)
-                self.PutIntoBigMatrix(i[1], bigArrayOfAverages)
-                self.PutIntoBigMatrix(i[2], bigArrayOfGeneticDiversities)
-                self.PutIntoBigMatrix(i[3], bigArrayOfPhenotypicDiversities)
+            # for i in self.data:
+            self.ProcessArrayToMatirx(datSet[0], bigArrayOfBests)
+            # self.PutIntoBigMatrix(i[0], bigArrayOfBests)
+            # print "Bests"
+            self.ProcessArrayToMatirx(datSet[1], bigArrayOfAverages)
+            # print "Averages"
+            self.ProcessArrayToMatirx(datSet[2], bigArrayOfGeneticDiversities)
+            # print "Genetic"
+            self.ProcessArrayToMatirx(datSet[3], bigArrayOfPhenotypicDiversities)
+                # print "Phenotypic"
             arrayOfXValues = [x for x in range(len(matrixForBests))]
-            arrayOfDiversityDifferences = self.SubstractArrays(bigArrayOfGeneticDiversities, bigArrayOfPhenotypicDiversities)
-            arrayOfDiversityRatios      = self.DivideArrays(bigArrayOfGeneticDiversities, bigArrayOfPhenotypicDiversities)
-            self.PutIntoBigMatrix(arrayOfDiversityDifferences, matrixForDiversityDifferences)
-            self.PutIntoBigMatrix(arrayOfDiversityRatios, matrixForDiversityRatios)
+            # arrayOfDiversityDifferences = self.SubstractArrays(bigArrayOfGeneticDiversities, bigArrayOfPhenotypicDiversities)
+            # arrayOfDiversityRatios      = self.DivideArrays(bigArrayOfGeneticDiversities, bigArrayOfPhenotypicDiversities)
+            # self.PutIntoBigMatrix(arrayOfDiversityDifferences, matrixForDiversityDifferences)
+            # self.PutIntoBigMatrix(arrayOfDiversityRatios, matrixForDiversityRatios)
             if self.Settings.plotGenDiversity:
                 plotsSoFar = self.LinesDrawer(matrixForGeneticDiversities, labelForGeneticDiversities, plotsSoFar, diversityAxis, arrayOfXValues[0])
             if self.Settings.plotPhenodiversity:
                 plotsSoFar = self.LinesDrawer(matrixForPhenotypicDiversities, labelForPhenotypicDiversities, plotsSoFar, diversityAxis, arrayOfXValues[0])
             if self.Settings.comparegp:
+                print "Diversity differences..."
                 plotsSoFar = self.LinesDrawer(matrixForPhenotypicDiversities, labelForDiversityDifference, plotsSoFar, diversityAxis, arrayOfXValues[0])
                 plotsSoFar = plotsSoFar - 1
+                print "Diversity ratios..."
                 plotsSoFar = self.LinesDrawer(matrixForPhenotypicDiversities, labelForDiversityRatio, plotsSoFar, diversityAxis, arrayOfXValues[0])
                 plotsSoFar = plotsSoFar - 1
             if self.Settings.plotBestVals:
                 plotsSoFar = self.LinesDrawer(matrixForBests, labelForBests, plotsSoFar, fitnessAxis, arrayOfXValues[0])
             if self.Settings.plotAverages:
                plotsSoFar = self.LinesDrawer(matrixForAverages, labelForAverages, plotsSoFar, fitnessAxis, arrayOfXValues[0])
-            keepGettingData = False
-        sizeMe = 50
+            # keepGettingData = False
+        sizeMe = self.fontSizeList[self.Settings.size]
         fitnessAxis.set_ylabel('fitness score', fontsize=sizeMe)
         ax1.set_xlabel("generation", fontsize=sizeMe)
         diversityAxis.set_ylabel('diversity', fontsize=sizeMe)
