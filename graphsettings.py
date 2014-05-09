@@ -154,8 +154,8 @@ class GraphSettings:
 
     def SubstractArrays(self, A1, A2):
         A3 = []
-        print A1
-        print A2
+        # print A1
+        # print A2
         thisIndexNext = 0
         while thisIndexNext < len(A1):
             nextElement = A1[0][thisIndexNext] - A2[0][thisIndexNext]
@@ -167,7 +167,7 @@ class GraphSettings:
         A3 = []
         thisIndexNext = 0
         while thisIndexNext < len(A1):
-            nextElement = A1[thisIndexNext] / A2[thisIndexNext]
+            nextElement = A1[0][thisIndexNext] / A2[0][thisIndexNext]
             A3.append(nextElement)
             thisIndexNext = thisIndexNext + 1
         return (A3)
@@ -245,9 +245,9 @@ class GraphSettings:
                 # print "Phenotypic"
             arrayOfXValues = [x for x in range(len(matrixForBests))]
             arrayOfDiversityDifferences = self.SubstractArrays(bigArrayOfGeneticDiversities, bigArrayOfPhenotypicDiversities)
-            # arrayOfDiversityRatios      = self.DivideArrays(bigArrayOfGeneticDiversities, bigArrayOfPhenotypicDiversities)
-            # self.PutIntoBigMatrix(arrayOfDiversityDifferences, matrixForDiversityDifferences)
-            # self.PutIntoBigMatrix(arrayOfDiversityRatios, matrixForDiversityRatios)
+            arrayOfDiversityRatios      = self.DivideArrays(bigArrayOfGeneticDiversities, bigArrayOfPhenotypicDiversities)
+            self.PutIntoBigMatrix(arrayOfDiversityDifferences, matrixForDiversityDifferences)
+            self.PutIntoBigMatrix(arrayOfDiversityRatios, matrixForDiversityRatios)
             if self.Settings.plotGenDiversity:
                 plotsSoFar = self.LinesDrawer(matrixForGeneticDiversities, labelForGeneticDiversities, plotsSoFar, diversityAxis, arrayOfXValues[0])
             if self.Settings.plotPhenodiversity:
