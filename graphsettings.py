@@ -22,11 +22,10 @@ class SettingsInfo:
         self.size = 1
         self.fontType = 1
         self.color = 0
-        self.graphType = 0
         self.xAxis = "Untitled"
         self.yAxis = "Untitled"
 
-    def setConfig(self, title, size, fontType, color, graphType, xAxis, yAxis, approximation, ploteRanges, plotStandDev, fitnessOnYAxis, plotGenDiversity, plotPhenodiversity, comparegp, plotBestVals, plotAverages):
+    def setConfig(self, title, size, fontType, color, xAxis, yAxis, approximation, ploteRanges, plotStandDev, fitnessOnYAxis, plotGenDiversity, plotPhenodiversity, comparegp, plotBestVals, plotAverages):
         self.approximation = approximation
         self.ploteRanges = ploteRanges
         self.plotStandDev = plotStandDev
@@ -40,7 +39,6 @@ class SettingsInfo:
         self.size = size
         self.fontType = fontType
         self.color = color
-        self.graphType = graphType
         self.xAxis = xAxis
         self.yAxis = yAxis
 
@@ -49,7 +47,6 @@ class GraphSettings:
     fontSizeList = ["10", "12", "14", "16", "18", "20", "22", "24",]
     fontTypeList = ["Arial", "Times New Roman", "Calibri", "Sans Serif", "Comic Sans"]
     fontColorList = ["blue", "green", "red", "cyan", "magenta", "yellow", "black", "white"]
-    graphTypeList = ["Line", "Scatterplot", "Bar", "Pie Chart"]
     arrayOfPlotCharacters = ['o', 'D','+','*','1','2','3','4','5','>','<','^','|','d']
 
     def __init__(self, dataFile):
@@ -173,40 +170,13 @@ class GraphSettings:
             A3.append(nextElement)
             thisIndexNext = thisIndexNext + 1
         return (A3)
-
-    # def ProcessArrayToMatirx(self, array, intoThisMatrix):
-    #     for currentLine in array:
-    #         # if isinstance(currentLine, list):
-    #         #     print "isList"
-    #         currentValues = currentLine
-    #         # else:
-    #         #     currentValues = [currentLine]
-    #         # divide it into elements, based on spaces
-    #         # currentValues = currentLine.split()
-    #         # we now have the data in an array, but they are in "run first" order.
-    #         # we need to turn it into a "generation first" order.
-    #         # storing them into the matrix will do that work.
-    #         self.PutIntoBigMatrix(currentValues, intoThisMatrix)
-    #     return(intoThisMatrix)
-
-    # def ReadDataFromFile(a, b, c, d):
-    #     userAnswer = raw_input("Enter file name:")
-    #     fileHandle = open(userAnswer)
-    #     fileAsArray = fileHandle.readlines()
-    #     fileHandle.close()
-    #     ProcessFromHereToHere(fileAsArray, "Bests", "Averages", a)
-    #     ProcessFromHereToHere(fileAsArray, "Averages", "Genetic Differences", b)
-    #     ProcessFromHereToHere(fileAsArray, "Genetic Differences", "Phenotypic Differences", c)
-    #     ProcessFromHereToHere(fileAsArray, "Phenotypic Differences", "End", d)
-    #     return(a, b, c, d)
     
     def graph(self):
-        # arrayOfPlotCharacters = ['o', 'D','+','*','0','1','2','3','4','5','>','<','^','|','d']
 # these are the characters that define how the plot lines will look like.
 # if there are more data sets than characters here, add more lines, or modify the code
 # so that it loops around.
 # these control characters can be found at http://www.loria.fr/~rougier/teaching/matplotlib/#line-styles
-        arrayOfPlotCharacters = ['o', 'D','*','+','X','0','1','2','3','4','5','>','<','^','|','d']
+        # arrayOfPlotCharacters = ['o', 'D','*','+','X','0','1','2','3','4','5','>','<','^','|','d']
         plotsSoFar      = 0 # so that we know which control character to use for the lines.
         fig, ax1 = pylab.subplots()
         ax2 = ax1.twinx()
@@ -229,13 +199,13 @@ class GraphSettings:
             matrixForPhenotypicDiversities = [[]]
             matrixForDiversityDifferences =[[]]
             matrixForDiversityRatios = [[]]
-            # leyendLabel = "legend line"
-            labelForBests = "_Best"
-            labelForAverages ="_Average"
-            labelForGeneticDiversities ="_Genetic_Diversity"
-            labelForPhenotypicDiversities ="_Phenotypic_Diversity"
-            labelForDiversityDifference ="_difference"
-            labelForDiversityRatio      ="_ration"
+            legendLabel = "stuff"
+            labelForBests = legendLabel+"_Best"
+            labelForAverages =legendLabel+"_Average"
+            labelForGeneticDiversities =legendLabel+"_Genetic_Diversity"
+            labelForPhenotypicDiversities =legendLabel+"_Phenotypic_Diversity"
+            labelForDiversityDifference =legendLabel+"_difference"
+            labelForDiversityRatio      =legendLabel+"_ration"
             # for i in self.data:
             self.PutIntoBigMatrix(bigArrayOfBests, matrixForBests)
             # self.PutIntoBigMatrix(i[0], bigArrayOfBests)
@@ -272,7 +242,8 @@ class GraphSettings:
         fitnessAxis.set_ylabel('fitness score', fontsize=sizeMe)
         ax1.set_xlabel("generation", fontsize=sizeMe)
         diversityAxis.set_ylabel('diversity', fontsize=sizeMe)
-        ax2.legend(loc='upper right', fancybox=True, prop={'size':sizeMe})#.get_frame().set_alpha(0.5)
+        # ax1.title(self.Settings.title, labelsize=sizeMe)
+        ax2.legend(loc='upper right', fancybox=True, prop={'size':sizeMe}).get_frame().set_alpha(0.5)
         ax2.tick_params(axis='both', which='major', labelsize=sizeMe)
         ax1.tick_params(axis='both', which='major', labelsize=sizeMe)
         #ax1.legend(loc='upper left' , fancybox=True, prop={'size':sizeMe}).get_frame().set_alpha(0.5)

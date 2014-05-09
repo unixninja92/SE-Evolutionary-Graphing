@@ -20,7 +20,7 @@ class GraphSettingsGUI:
     
     #Function to open graph
     def graphItOpen(self, widget, data=None):
-        self.importedSettings.Settings.setConfig(self.titleBox.get_text(), self.fontSizeComboBox.get_active(), self.fontComboBox.get_active(), self.fontColorComboBox.get_active(), self.graphTypeComboBox.get_active(), self.xTitleBox.get_text(), self.yTitleBox.get_text(), self.showApproximationToggle.get_active(), self.showRangeToggle.get_active(), self.showSDToggle.get_active(), False, self.showGDToggle.get_active(), self.showPDToggle.get_active(), self.compareGDPDToggle.get_active(), self.showBestToggle.get_active(), self.showAverageToggle.get_active())
+        self.importedSettings.Settings.setConfig(self.titleBox.get_text(), self.fontSizeComboBox.get_active(), self.fontComboBox.get_active(), self.fontColorComboBox.get_active(), self.xTitleBox.get_text(), self.yTitleBox.get_text(), self.showApproximationToggle.get_active(), self.showRangeToggle.get_active(), self.showSDToggle.get_active(), False, self.showGDToggle.get_active(), self.showPDToggle.get_active(), self.compareGDPDToggle.get_active(), self.showBestToggle.get_active(), self.showAverageToggle.get_active())
         self.importedSettings.saveSettings()
         self.importedSettings.graph()
         
@@ -35,7 +35,6 @@ class GraphSettingsGUI:
         fontSizeList = ["10", "12", "14", "16", "18", "20", "22", "24",]
         fontTypeList = ["Arial", "Times New Roman", "Calibri", "Sans Serif", "Comic Sans"]
         fontColorList = ["Blue", "Green", "Red", "Cyan", "Magenta", "Yellow", "Black", "White"]
-        graphTypeList = ["Line", "Scatterplot", "Bar", "Pie Chart"]
         
         
         #File from data parser
@@ -131,23 +130,6 @@ class GraphSettingsGUI:
         self.fontColorComboBox.show()
         self.fontColorLabel.show()
         self.fontColorBox.show()
-        
-        #Creates combo box for graph type and stores entry
-        self.graphTypeComboBox = gtk.combo_box_new_text()
-        for x in range(0, 4):
-            i = x
-            j = x
-            self.graphTypeComboBox.insert_text(j, graphTypeList[i])
-        self.graphTypeComboBox.set_active(self.importedSettings.Settings.graphType)
-        self.graphTypeComboBoxEntry = self.graphTypeComboBox.get_active_text()
-        self.graphTypeLabel = gtk.Label("Graph Type")
-        self.graphTypeBox = gtk.HBox()
-        self.graphTypeBox.pack_start(self.graphTypeLabel, False, False, 5)
-        self.graphTypeBox.pack_start(self.graphTypeComboBox, False, False, 5)
-        self.baseVBox2.pack_start(self.graphTypeBox, False, False, 5)
-        self.graphTypeComboBox.show()
-        self.graphTypeLabel.show()
-        self.graphTypeBox.show()
         
         
         #Creates holder box for toggle settings
