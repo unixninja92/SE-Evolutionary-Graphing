@@ -257,18 +257,18 @@ class setBox:
         self.setVBox.pack_start(self.scrollSets, True, True, 0)
         self.scrollSets.show()
 
-        self.treestore = gtk.TreeStore(str)
+        self.treeStore = gtk.TreeStore(str)
 
-        self.setList = gtk.TreeView(self.treestore)
+        self.setList = gtk.TreeView(self.treeStore)
 
-        self.fileCol = gtk.TreeViewColumn("Folders")
-        self.fileCol.Title = "Run " + str(self.numSet)
+        self.folderCol = gtk.TreeViewColumn("Folders")
+        self.folderCol.Title = "Run " + str(self.numSet)
 
-        self.fileCell = gtk.CellRendererText()
-        self.fileCol.pack_start(self.fileCell, True)
+        self.folderCell = gtk.CellRendererText()
+        self.folderCol.pack_start(self.folderCell, True)
 
-        self.fileIter = self.setList.append_column(self.fileCol)
-        self.fileCol.add_attribute(self.fileCell, "text", 0)
+        self.setList.append_column(self.folderCol)
+        self.folderCol.add_attribute(self.folderCell, "text", 0)
 
         print("new set!!")
 
@@ -304,16 +304,16 @@ class setBox:
         if response == gtk.RESPONSE_OK:
             for f in fileSelect.get_filenames():
                 self.fileList.append(f)
-                self.treestore.append(None, [f])
+                self.treeStore.append(None, [f])
         fileSelect.destroy()
         print(sets)
 
     def removeFiles(self, widget, data):
-        tree_selection = self.setList.get_selection()
-        (model, pathlist) = tree_selection.get_selected_rows()
-        tree_iter = model.get_iter(pathlist[0])
-        filePath = model.get_value(tree_iter,0)
-        self.treestore.remove(tree_iter)
+        treeSelection = self.setList.get_selection()
+        (model, pathlist) = treeSelection.get_selected_rows()
+        treeIter = model.get_iter(pathlist[0])
+        filePath = model.get_value(treeIter,0)
+        self.treeStore.remove(treeIter)
         del self.fileList[self.fileList.index(filePath)]
         print("remove")
         print(filePath)
