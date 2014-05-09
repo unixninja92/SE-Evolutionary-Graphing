@@ -174,20 +174,20 @@ class GraphSettings:
             thisIndexNext = thisIndexNext + 1
         return (A3)
 
-    def ProcessArrayToMatirx(self, array, intoThisMatrix):
-        for currentLine in array:
-            if isinstance(currentLine, list):
-                print "isList"
-                currentValues = currentLine
-            else:
-                currentValues = [currentLine]
-            # divide it into elements, based on spaces
-            # currentValues = currentLine.split()
-            # we now have the data in an array, but they are in "run first" order.
-            # we need to turn it into a "generation first" order.
-            # storing them into the matrix will do that work.
-            self.PutIntoBigMatrix(currentValues, intoThisMatrix)
-        return(intoThisMatrix)
+    # def ProcessArrayToMatirx(self, array, intoThisMatrix):
+    #     for currentLine in array:
+    #         # if isinstance(currentLine, list):
+    #         #     print "isList"
+    #         currentValues = currentLine
+    #         # else:
+    #         #     currentValues = [currentLine]
+    #         # divide it into elements, based on spaces
+    #         # currentValues = currentLine.split()
+    #         # we now have the data in an array, but they are in "run first" order.
+    #         # we need to turn it into a "generation first" order.
+    #         # storing them into the matrix will do that work.
+    #         self.PutIntoBigMatrix(currentValues, intoThisMatrix)
+    #     return(intoThisMatrix)
 
     # def ReadDataFromFile(a, b, c, d):
     #     userAnswer = raw_input("Enter file name:")
@@ -237,14 +237,14 @@ class GraphSettings:
             labelForDiversityDifference ="_difference"
             labelForDiversityRatio      ="_ration"
             # for i in self.data:
-            self.ProcessArrayToMatirx(bigArrayOfBests, matrixForBests)
+            self.PutIntoBigMatrix(bigArrayOfBests, matrixForBests)
             # self.PutIntoBigMatrix(i[0], bigArrayOfBests)
             # print "Bests"
-            self.ProcessArrayToMatirx(bigArrayOfAverages, matrixForAverages)
+            self.PutIntoBigMatrix(bigArrayOfAverages, matrixForAverages)
             # print "Averages"
-            self.ProcessArrayToMatirx(bigArrayOfGeneticDiversities, matrixForGeneticDiversities)
+            self.PutIntoBigMatrix(bigArrayOfGeneticDiversities, matrixForGeneticDiversities)
             # print "Genetic"
-            self.ProcessArrayToMatirx(bigArrayOfPhenotypicDiversities, matrixForPhenotypicDiversities)
+            self.PutIntoBigMatrix(bigArrayOfPhenotypicDiversities, matrixForPhenotypicDiversities)
                 # print "Phenotypic"
             arrayOfXValues = [x for x in range(len(matrixForBests))]
             arrayOfDiversityDifferences = self.SubstractArrays(bigArrayOfGeneticDiversities, bigArrayOfPhenotypicDiversities)
@@ -267,6 +267,7 @@ class GraphSettings:
             if self.Settings.plotAverages:
                plotsSoFar = self.LinesDrawer(matrixForAverages, labelForAverages, plotsSoFar, fitnessAxis, arrayOfXValues[0])
             # keepGettingData = False
+            print matrixForBests
         sizeMe = self.fontSizeList[self.Settings.size]
         fitnessAxis.set_ylabel('fitness score', fontsize=sizeMe)
         ax1.set_xlabel("generation", fontsize=sizeMe)
@@ -275,4 +276,5 @@ class GraphSettings:
         ax2.tick_params(axis='both', which='major', labelsize=sizeMe)
         ax1.tick_params(axis='both', which='major', labelsize=sizeMe)
         #ax1.legend(loc='upper left' , fancybox=True, prop={'size':sizeMe}).get_frame().set_alpha(0.5)
+        print self.data
         pylab.show()
