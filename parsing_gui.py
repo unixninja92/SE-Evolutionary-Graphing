@@ -162,7 +162,7 @@ class DataParsingGUI:
 
                 self.expansionBox.set_text(gLSystem[3])
                 self.expansionBox.set_sensitive(False)
-                
+
         fileSelect.destroy()
         
         #have thing for both data that needs to be parsed and 
@@ -179,7 +179,7 @@ class DataParsingGUI:
         self.dataToParse.setConfig(sets, self.startGen.get_text(), self.geneticDiff.get_active(), [self.lSystem.get_active(), self.nonterminalBox.get_text(), self.terminalBox.get_text(), self.expansionBox.get_text()], self.phenotypicDiff.get_active())
         progress = ParserProgress()
         self.dataToParse.parseData(progress)
-        proc = subprocess.Popen(["python graph_settings_gui.py %s" % self.dataToParse.FileToSave], bufsize=2048, shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+        proc = subprocess.Popen(["python graph_settings_gui.py %s" % self.dataToParse.FileToSave.replace(' ', '\ ')], bufsize=2048, shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
         self.window.destroy()
 
     def isGenetic(self, widget, data):
@@ -313,13 +313,17 @@ class ParserProgress:
 
         vbox = gtk.VBox(False, 5)
 
+        self.progressTExt = gtk.Label("Data is being parsed...")
+        vbox.pack_start(self.progressTExt)
+        self.progressTExt.show()
+
         self.dirbar = gtk.ProgressBar()
-        vbox.pack_start(self.dirbar)
+        # vbox.pack_start(self.dirbar)
 
         self.filebar = gtk.ProgressBar()
-        self.filebar.set_text("1/?")
+        # self.filebar.set_text("1/?")
         # self.filebar.set_fraction(.01)
-        vbox.pack_start(self.filebar)
+        # vbox.pack_start(self.filebar)
 
         self.window.add(vbox)
         self.window.show_all()

@@ -19,7 +19,7 @@ class GraphSettingsGUI:
     
     #Function to open graph
     def graphItOpen(self, widget, data=None):
-        self.importedSettings.Settings.setConfig(self.titleBox.get_text(), self.fontSizeComboBoxEntry, self.fontComboBoxEntry, self.fontColorComboBoxEntry, self.graphTypeComboBoxEntry, self.xTitleBox.get_text(), self.yTitleBox.get_text(), self.showApproximationToggle.get_active(), self.showRangeToggle.get_active(), self.showSDToggle.get_active(), False, self.showGDToggle.get_active(), self.showPDToggle.get_active(), self.compareGDPDToggle.get_active(), self.showBestToggle.get_active(), self.showAverageToggle.get_active())
+        self.importedSettings.Settings.setConfig(self.titleBox.get_text(), self.fontSizeComboBox.get_active(), self.fontComboBox.get_active(), self.fontColorComboBox.get_active(), self.graphTypeComboBox.get_active(), self.xTitleBox.get_text(), self.yTitleBox.get_text(), self.showApproximationToggle.get_active(), self.showRangeToggle.get_active(), self.showSDToggle.get_active(), False, self.showGDToggle.get_active(), self.showPDToggle.get_active(), self.compareGDPDToggle.get_active(), self.showBestToggle.get_active(), self.showAverageToggle.get_active())
         self.importedSettings.saveSettings()
         self.importedSettings.graph()
 

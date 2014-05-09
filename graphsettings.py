@@ -54,12 +54,15 @@ class GraphSettings:
 
     def loadSettings(self):
         if(os.path.isfile(self.settingsFileName)):
-            self.Settings = pickle.load(open(self.settingsFileName),"rb")
+            self.Settings = pickle.load(open(self.settingsFileName,"rb"))
         else:
             self.Settings = SettingsInfo()
 
     def saveSettings(self):
         pickle.dump(self.Settings, open(self.settingsFileName, "w+b"), 2)
+
+    def extractLists(self):
+        self.data[0]
 
 
     def plotter(self, valuesInXAxis, valuesInYAxis, plotsSoFar, generalLabelForLeyend, yAxis):
@@ -68,7 +71,7 @@ class GraphSettings:
         npArrayOfXValues = numpy.array(valuesInXAxis)
         yAxis.plot(valuesInXAxis, valuesInYAxis, arrayOfPlotCharacters[plotsSoFar], label=generalLabelForLeyend, lw=sizeMe/4, ms=sizeMe)
         yAxis.plot(valuesInXAxis, valuesInYAxis, lw=sizeMe/4, ms=sizeMe)
-        if self.aproximaion:
+        if self.Settings.aproximaion:
             numericArray = []
             for x in valuesInYAxis:
                 numericArray.append(float(x))
@@ -84,15 +87,15 @@ class GraphSettings:
 
     def LinesDrawer(self, matrixOfValues, labelForLegend, plotsSoFar, yAxis, beginningXValue = 0):
     #print "the matrix is", matrixOfValues
-        Averages, Minimums, Maximums, StandardDeviations = LinesGenerator(matrixOfValues)
+        Averages, Minimums, Maximums, StandardDeviations = self.LinesGenerator(matrixOfValues)
         arrayOfXValues = range(beginningXValue, beginningXValue + len(Averages))
         ticker = arrayOfPlotCharacters[plotsSoFar]
-        plotter(arrayOfXValues, Averages, plotsSoFar, labelForLegend, yAxis)
-        if self.ploteRanges:
+        self.plotter(arrayOfXValues, Averages, plotsSoFar, labelForLegend, yAxis)
+        if self.Settings.ploteRanges:
             lowRange  = [a - b for a, b in zip(Averages, Minimums)]
             highRange = [a - b for a, b in zip(Maximums, Averages)]
             pylab.errorbar(arrayOfXValues, Averages, yerr= [lowRange, highRange])
-        if self.plotStandDev:
+        if self.Settings.plotStandDev:
             lowDev  = [a - b for a, b in zip(Averages, StandardDeviations)]
             highDev = [a + b for a, b in zip(Averages, StandardDeviations)]
             pylab.fill_between(arrayOfXValues, highDev, lowDev, facecolor='grey', alpha=0.5, )
@@ -118,6 +121,64 @@ class GraphSettings:
             generationsProcessed = generationsProcessed + 1
         return (Averages, Minimums, Maximums, StandardDeviations)
     
+    def PutIntoBigMatrix(self, newArray, matrixOfAllValues):
+        # precondition: the arrays are of the same size
+        entriesToProcess = len(newArray)
+        processedAlready = 0
+        while (processedAlready < entriesToProcess):
+            while processedAlready >= len(matrixOfAllValues):
+                matrixOfAllValues.append([])
+            matrixOfAllValues[processedAlready].append(float(newArray[processedAlready]))
+            processedAlready    = processedAlready + 1
+        return(matrixOfAllValues)
+
+    def SubstractArrays(self, A1, A2):
+        A3 = []
+        thisIndexNext = 0
+        while thisIndexNext < len(A1):
+            nextElement = A1[thisIndexNext] - A2[thisIndexNext]
+            A3.append(nextElement)
+            thisIndexNext = thisIndexNext + 1
+        return (A3)
+
+    def DivideArrays(self, A1, A2):
+        A3 = []
+        thisIndexNext = 0
+        while thisIndexNext < len(A1):
+            nextElement = A1[thisIndexNext] / A2[thisIndexNext]
+            A3.append(nextElement)
+            thisIndexNext = thisIndexNext + 1
+        return (A3)
+
+    # def ProcessFromHereToHere(array, fromHere, toHere, intoThisMatrix):
+    # # begin by finding the "fromHere" line
+    # currentLineIndex = 0
+    # while fromHere not in array[currentLineIndex]:
+    #     currentLineIndex = currentLineIndex + 1
+    # # found it. now process until we find the "toHere" tag
+    # currentLineIndex = currentLineIndex + 1
+    # while toHere not in array[currentLineIndex]:
+    #     #read one line
+    #     currentLine = array[currentLineIndex]
+    #     # divide it into elements, based on spaces
+    #     currentValues = currentLine.split()
+    #     # we now have the data in an array, but they are in "run first" order.
+    #     # we need to turn it into a "generation first" order.
+    #     # storing them into the matrix will do that work.
+    #     PutIntoBigMatrix(currentValues, intoThisMatrix)
+    #     currentLineIndex = currentLineIndex + 1   
+    # return(intoThisMatrix)
+
+    # def ReadDataFromFile(a, b, c, d):
+    #     userAnswer = raw_input("Enter file name:")
+    #     fileHandle = open(userAnswer)
+    #     fileAsArray = fileHandle.readlines()
+    #     fileHandle.close()
+    #     ProcessFromHereToHere(fileAsArray, "Bests", "Averages", a)
+    #     ProcessFromHereToHere(fileAsArray, "Averages", "Genetic Differences", b)
+    #     ProcessFromHereToHere(fileAsArray, "Genetic Differences", "Phenotypic Differences", c)
+    #     ProcessFromHereToHere(fileAsArray, "Phenotypic Differences", "End", d)
+    #     return(a, b, c, d)
     
     def graph(self):
         # arrayOfPlotCharacters = ['o', 'D','+','*','0','1','2','3','4','5','>','<','^','|','d']
@@ -129,7 +190,7 @@ class GraphSettings:
         plotsSoFar      = 0 # so that we know which control character to use for the lines.
         fig, ax1 = pylab.subplots()
         ax2 = ax1.twinx()
-        if self.fitnessOnYAxis:
+        if self.Settings.fitnessOnYAxis:
             fitnessAxis   = ax2
             diversityAxis = ax1
         else:
@@ -154,27 +215,36 @@ class GraphSettings:
             labelForPhenotypicDiversities ="_Phenotypic_Diversity"
             labelForDiversityDifference ="_difference"
             labelForDiversityRatio      ="ration"
-            if self.plotGenDiversity:
-                plotsSoFar = LinesDrawer(matrixForGeneticDiversities, labelForGeneticDiversities, plotsSoFar, diversityAxis, arrayOfXValues[0])
-            if self.plotPhenodiversity:
-                plotsSoFar = LinesDrawer(matrixForPhenotypicDiversities, labelForPhenotypicDiversities, plotsSoFar, diversityAxis, arrayOfXValues[0])
-            if self.comparegp:
-                plotsSoFar = LinesDrawer(matrixForPhenotypicDiversities, labelForDiversityDifference, plotsSoFar, diversityAxis, arrayOfXValues[0])
+            for i in self.data:
+                self.PutIntoBigMatrix(i[0], bigArrayOfBests)
+                self.PutIntoBigMatrix(i[1], bigArrayOfAverages)
+                self.PutIntoBigMatrix(i[2], bigArrayOfGeneticDiversities)
+                self.PutIntoBigMatrix(i[3], bigArrayOfPhenotypicDiversities)
+            arrayOfXValues = [x for x in range(len(matrixForBests))]
+            arrayOfDiversityDifferences = self.SubstractArrays(bigArrayOfGeneticDiversities, bigArrayOfPhenotypicDiversities)
+            arrayOfDiversityRatios      = self.DivideArrays(bigArrayOfGeneticDiversities, bigArrayOfPhenotypicDiversities)
+            self.PutIntoBigMatrix(arrayOfDiversityDifferences, matrixForDiversityDifferences)
+            self.PutIntoBigMatrix(arrayOfDiversityRatios, matrixForDiversityRatios)
+            if self.Settings.plotGenDiversity:
+                plotsSoFar = self.LinesDrawer(matrixForGeneticDiversities, labelForGeneticDiversities, plotsSoFar, diversityAxis, arrayOfXValues[0])
+            if self.Settings.plotPhenodiversity:
+                plotsSoFar = self.LinesDrawer(matrixForPhenotypicDiversities, labelForPhenotypicDiversities, plotsSoFar, diversityAxis, arrayOfXValues[0])
+            if self.Settings.comparegp:
+                plotsSoFar = self.LinesDrawer(matrixForPhenotypicDiversities, labelForDiversityDifference, plotsSoFar, diversityAxis, arrayOfXValues[0])
                 plotsSoFar = plotsSoFar - 1
-                plotsSoFar = LinesDrawer(matrixForPhenotypicDiversities, labelForDiversityRatio, plotsSoFar, diversityAxis, arrayOfXValues[0])
+                plotsSoFar = self.LinesDrawer(matrixForPhenotypicDiversities, labelForDiversityRatio, plotsSoFar, diversityAxis, arrayOfXValues[0])
                 plotsSoFar = plotsSoFar - 1
-            if self.plotBestVals:
-                plotsSoFar = LinesDrawer(matrixForBests, labelForBests, plotsSoFar, fitnessAxis, arrayOfXValues[0])
-            if booleanaverages:
-               plotsSoFar = LinesDrawer(matrixForAverages, labelForAverages, plotsSoFar, fitnessAxis, arrayOfXValues[0])
+            if self.Settings.plotBestVals:
+                plotsSoFar = self.LinesDrawer(matrixForBests, labelForBests, plotsSoFar, fitnessAxis, arrayOfXValues[0])
+            if self.Settings.plotAverages:
+               plotsSoFar = self.LinesDrawer(matrixForAverages, labelForAverages, plotsSoFar, fitnessAxis, arrayOfXValues[0])
             keepGettingData = False
         sizeMe = 50
         fitnessAxis.set_ylabel('fitness score', fontsize=sizeMe)
         ax1.set_xlabel("generation", fontsize=sizeMe)
         diversityAxis.set_ylabel('diversity', fontsize=sizeMe)
-        ax2.legend(loc='upper right', fancybox=True, prop={'size':sizeMe}).get_frame().set_alpha(0.5)
+        ax2.legend(loc='upper right', fancybox=True, prop={'size':sizeMe})#.get_frame().set_alpha(0.5)
         ax2.tick_params(axis='both', which='major', labelsize=sizeMe)
         ax1.tick_params(axis='both', which='major', labelsize=sizeMe)
         #ax1.legend(loc='upper left' , fancybox=True, prop={'size':sizeMe}).get_frame().set_alpha(0.5)
         pylab.show()
-        
