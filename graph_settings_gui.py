@@ -5,6 +5,7 @@ import gtk
 import gui_components
 import graphsettings
 import sys
+import subprocess
 
 class GraphSettingsGUI:
     
@@ -24,7 +25,7 @@ class GraphSettingsGUI:
         self.importedSettings.graph()
         
     def newData(self, widget, data):
-        proc = subprocess.Popen(["python parsing_gui.py %s" % self.dataToParse.FileToSave.replace(' ', '\ ')], bufsize=2048, shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+        proc = subprocess.Popen(["python parsing_gui.py"], bufsize=2048, shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
         self.window.destroy()
 
     def __init__(self):
@@ -214,7 +215,7 @@ class GraphSettingsGUI:
         
         #Creates button to open data parser
         self.dataParserButton = gtk.Button("Manipulate Data Files")
-        self.dataParserButton.connect("clicked", self.hello, None) #   <---Open Data Parser()
+        self.dataParserButton.connect("clicked", self.newData, None) #   <---Open Data Parser()
         self.dataParserButtonBox = gtk.HBox()
         self.dataParserButtonBox.pack_start(self.dataParserButton, False, False, 5)
         self.baseVBox.pack_start(self.dataParserButtonBox, False, False, 5)

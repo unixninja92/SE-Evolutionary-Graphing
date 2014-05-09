@@ -76,7 +76,7 @@ class GraphSettings:
     #print "the x values are:", valuesInXAxis
         sizeMe=15
         npArrayOfXValues = numpy.array(valuesInXAxis)
-        yAxis.plot(valuesInXAxis, valuesInYAxis, 'k'+self.arrayOfPlotCharacters[plotsSoFar], color=self.fontColorList[self.Settings.color], label=generalLabelForLeyend, lw=sizeMe/4, ms=sizeMe)
+        yAxis.plot(valuesInXAxis, valuesInYAxis, 'k'+self.arrayOfPlotCharacters[plotsSoFar], label=generalLabelForLeyend, lw=sizeMe/4, ms=sizeMe) #, color=self.fontColorList[self.Settings.color]
         yAxis.plot(valuesInXAxis, valuesInYAxis, lw=sizeMe/4, ms=sizeMe)
         if self.Settings.approximation:
             numericArray = []
@@ -229,7 +229,8 @@ class GraphSettings:
             matrixForPhenotypicDiversities = [[]]
             matrixForDiversityDifferences =[[]]
             matrixForDiversityRatios = [[]]
-            labelForBests ="_Best"
+            # leyendLabel = "legend line"
+            labelForBests = "_Best"
             labelForAverages ="_Average"
             labelForGeneticDiversities ="_Genetic_Diversity"
             labelForPhenotypicDiversities ="_Phenotypic_Diversity"
