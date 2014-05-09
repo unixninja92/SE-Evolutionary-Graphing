@@ -48,8 +48,9 @@ class SettingsInfo:
 class GraphSettings:
     fontSizeList = ["10", "12", "14", "16", "18", "20", "22", "24",]
     fontTypeList = ["Arial", "Times New Roman", "Calibri", "Sans Serif", "Comic Sans"]
-    fontColorList = ["Red", "Orange", "Yellow", "Green", "Blue", "Purple"]
+    fontColorList = ["blue", "green", "red", "cyan", "magenta", "yellow", "black", "white"]
     graphTypeList = ["Line", "Scatterplot", "Bar", "Pie Chart"]
+    arrayOfPlotCharacters = ['o', 'D','+','*','1','2','3','4','5','>','<','^','|','d']
 
     def __init__(self, dataFile):
         self.settingsFileName = "lastGraphSettings.pkl"
@@ -75,9 +76,9 @@ class GraphSettings:
     #print "the x values are:", valuesInXAxis
         sizeMe=15
         npArrayOfXValues = numpy.array(valuesInXAxis)
-        yAxis.plot(valuesInXAxis, valuesInYAxis, arrayOfPlotCharacters[plotsSoFar], label=generalLabelForLeyend, lw=sizeMe/4, ms=sizeMe)
+        yAxis.plot(valuesInXAxis, valuesInYAxis, 'k'+self.arrayOfPlotCharacters[plotsSoFar], color=self.fontColorList[self.Settings.color], label=generalLabelForLeyend, lw=sizeMe/4, ms=sizeMe)
         yAxis.plot(valuesInXAxis, valuesInYAxis, lw=sizeMe/4, ms=sizeMe)
-        if self.Settings.aproximaion:
+        if self.Settings.approximation:
             numericArray = []
             for x in valuesInYAxis:
                 numericArray.append(float(x))
@@ -95,7 +96,7 @@ class GraphSettings:
     #print "the matrix is", matrixOfValues
         Averages, Minimums, Maximums, StandardDeviations = self.LinesGenerator(matrixOfValues)
         arrayOfXValues = range(beginningXValue, beginningXValue + len(Averages))
-        ticker = arrayOfPlotCharacters[plotsSoFar]
+        ticker = self.arrayOfPlotCharacters[plotsSoFar]
         self.plotter(arrayOfXValues, Averages, plotsSoFar, labelForLegend, yAxis)
         if self.Settings.ploteRanges:
             lowRange  = [a - b for a, b in zip(Averages, Minimums)]
@@ -121,8 +122,8 @@ class GraphSettings:
             arrayOfASingleGeneration   = matrixOfValues[generationsProcessed]
             npArrayOfASingleGeneration = numpy.array(arrayOfASingleGeneration)
             Averages.append(numpy.mean(npArrayOfASingleGeneration))
-            Minimums.append(numpy.min(npArrayOfASingleGeneration))
-            Maximums.append(numpy.max(npArrayOfASingleGeneration))
+            # Minimums.append(numpy.min(npArrayOfASingleGeneration))
+            # Maximums.append(numpy.max(npArrayOfASingleGeneration))
             StandardDeviations.append(numpy.std(npArrayOfASingleGeneration))
             generationsProcessed = generationsProcessed + 1
         return (Averages, Minimums, Maximums, StandardDeviations)
@@ -147,17 +148,17 @@ class GraphSettings:
                 matrixOfAllValues.append([])
             matrixOfAllValues[processedAlready].append(float(newArray[processedAlready]))
             # print newArray[processedAlready]
-            print matrixOfAllValues[processedAlready]
+            # print matrixOfAllValues[processedAlready]
             processedAlready    = processedAlready + 1
         return(matrixOfAllValues)
 
     def SubstractArrays(self, A1, A2):
         A3 = []
         print A1
-        print A3
+        print A2
         thisIndexNext = 0
         while thisIndexNext < len(A1):
-            nextElement = A1[thisIndexNext] - A2[thisIndexNext]
+            nextElement = A1[0][thisIndexNext] - A2[0][thisIndexNext]
             A3.append(nextElement)
             thisIndexNext = thisIndexNext + 1
         return (A3)
@@ -174,6 +175,7 @@ class GraphSettings:
     def ProcessArrayToMatirx(self, array, intoThisMatrix):
         for currentLine in array:
             if isinstance(currentLine, list):
+                print "isList"
                 currentValues = currentLine
             else:
                 currentValues = [currentLine]
@@ -230,7 +232,7 @@ class GraphSettings:
             labelForGeneticDiversities ="_Genetic_Diversity"
             labelForPhenotypicDiversities ="_Phenotypic_Diversity"
             labelForDiversityDifference ="_difference"
-            labelForDiversityRatio      ="ration"
+            labelForDiversityRatio      ="_ration"
             # for i in self.data:
             self.ProcessArrayToMatirx(datSet[0], bigArrayOfBests)
             # self.PutIntoBigMatrix(i[0], bigArrayOfBests)
@@ -242,7 +244,7 @@ class GraphSettings:
             self.ProcessArrayToMatirx(datSet[3], bigArrayOfPhenotypicDiversities)
                 # print "Phenotypic"
             arrayOfXValues = [x for x in range(len(matrixForBests))]
-            # arrayOfDiversityDifferences = self.SubstractArrays(bigArrayOfGeneticDiversities, bigArrayOfPhenotypicDiversities)
+            arrayOfDiversityDifferences = self.SubstractArrays(bigArrayOfGeneticDiversities, bigArrayOfPhenotypicDiversities)
             # arrayOfDiversityRatios      = self.DivideArrays(bigArrayOfGeneticDiversities, bigArrayOfPhenotypicDiversities)
             # self.PutIntoBigMatrix(arrayOfDiversityDifferences, matrixForDiversityDifferences)
             # self.PutIntoBigMatrix(arrayOfDiversityRatios, matrixForDiversityRatios)

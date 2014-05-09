@@ -29,7 +29,7 @@ class GraphSettingsGUI:
         
         fontSizeList = ["10", "12", "14", "16", "18", "20", "22", "24",]
         fontTypeList = ["Arial", "Times New Roman", "Calibri", "Sans Serif", "Comic Sans"]
-        fontColorList = ["Red", "Orange", "Yellow", "Green", "Blue", "Purple"]
+        fontColorList = ["Blue", "Green", "Red", "Cyan", "Magenta", "Yellow", "Black", "White"]
         graphTypeList = ["Line", "Scatterplot", "Bar", "Pie Chart"]
         
         
@@ -43,6 +43,7 @@ class GraphSettingsGUI:
         self.window.connect("delete_event", self.delete_event)
         self.window.connect("destroy", self.destroy)
         self.window.set_border_width(10)
+        self.window.set_position(gtk.WIN_POS_CENTER)
         
         
         #Creates outline for GUI widgets        
