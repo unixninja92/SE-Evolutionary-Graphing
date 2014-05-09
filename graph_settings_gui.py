@@ -22,6 +22,10 @@ class GraphSettingsGUI:
         self.importedSettings.Settings.setConfig(self.titleBox.get_text(), self.fontSizeComboBox.get_active(), self.fontComboBox.get_active(), self.fontColorComboBox.get_active(), self.graphTypeComboBox.get_active(), self.xTitleBox.get_text(), self.yTitleBox.get_text(), self.showApproximationToggle.get_active(), self.showRangeToggle.get_active(), self.showSDToggle.get_active(), False, self.showGDToggle.get_active(), self.showPDToggle.get_active(), self.compareGDPDToggle.get_active(), self.showBestToggle.get_active(), self.showAverageToggle.get_active())
         self.importedSettings.saveSettings()
         self.importedSettings.graph()
+        
+    def newData(self, widget, data):
+        proc = subprocess.Popen(["python parsing_gui.py %s" % self.dataToParse.FileToSave.replace(' ', '\ ')], bufsize=2048, shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+        self.window.destroy()
 
     def __init__(self):
         
