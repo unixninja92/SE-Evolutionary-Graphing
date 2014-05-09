@@ -112,7 +112,7 @@ class GraphSettingsGUI:
         
         #Creates combo box for font color
         self.fontColorComboBox = gtk.combo_box_new_text()
-        for x in range(0, 6):
+        for x in range(0, len(fontColorList)):
             i = x
             j = x
             self.fontColorComboBox.insert_text(j, fontColorList[i])

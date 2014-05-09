@@ -122,10 +122,12 @@ class GraphSettings:
             arrayOfASingleGeneration   = matrixOfValues[generationsProcessed]
             npArrayOfASingleGeneration = numpy.array(arrayOfASingleGeneration)
             Averages.append(numpy.mean(npArrayOfASingleGeneration))
-            # Minimums.append(numpy.min(npArrayOfASingleGeneration))
-            # Maximums.append(numpy.max(npArrayOfASingleGeneration))
+            Minimums.append(numpy.min(npArrayOfASingleGeneration))
+            Maximums.append(numpy.max(npArrayOfASingleGeneration))
             StandardDeviations.append(numpy.std(npArrayOfASingleGeneration))
             generationsProcessed = generationsProcessed + 1
+        print generationsProcessed
+        print Averages
         return (Averages, Minimums, Maximums, StandardDeviations)
     
     def PutIntoBigMatrixFromFile(self, newArray, newArrayPos, matrixOfAllValues):
@@ -158,7 +160,7 @@ class GraphSettings:
         # print A2
         thisIndexNext = 0
         while thisIndexNext < len(A1):
-            nextElement = A1[0][thisIndexNext] - A2[0][thisIndexNext]
+            nextElement = A1[thisIndexNext] - A2[thisIndexNext]
             A3.append(nextElement)
             thisIndexNext = thisIndexNext + 1
         return (A3)
@@ -167,7 +169,7 @@ class GraphSettings:
         A3 = []
         thisIndexNext = 0
         while thisIndexNext < len(A1):
-            nextElement = A1[0][thisIndexNext] / A2[0][thisIndexNext]
+            nextElement = A1[thisIndexNext] / A2[thisIndexNext]
             A3.append(nextElement)
             thisIndexNext = thisIndexNext + 1
         return (A3)
@@ -216,10 +218,10 @@ class GraphSettings:
             diversityAxis = ax2
         # keepGettingData = True
         for datSet in self.data: # this loop controls how many lines are going to be drawn in the plot.
-            bigArrayOfBests    = []
-            bigArrayOfAverages = []
-            bigArrayOfGeneticDiversities = []
-            bigArrayOfPhenotypicDiversities = []
+            bigArrayOfBests    = datSet[0]
+            bigArrayOfAverages = datSet[1]
+            bigArrayOfGeneticDiversities = datSet[2]
+            bigArrayOfPhenotypicDiversities = datSet[3]
             averageWithMoreData = True
             matrixForBests    = [[]] # first index for the generation, second index for the values.
             matrixForAverages = [[]]
@@ -234,14 +236,14 @@ class GraphSettings:
             labelForDiversityDifference ="_difference"
             labelForDiversityRatio      ="_ration"
             # for i in self.data:
-            self.ProcessArrayToMatirx(datSet[0], bigArrayOfBests)
+            self.ProcessArrayToMatirx(bigArrayOfBests, matrixForBests)
             # self.PutIntoBigMatrix(i[0], bigArrayOfBests)
             # print "Bests"
-            self.ProcessArrayToMatirx(datSet[1], bigArrayOfAverages)
+            self.ProcessArrayToMatirx(bigArrayOfAverages, matrixForAverages)
             # print "Averages"
-            self.ProcessArrayToMatirx(datSet[2], bigArrayOfGeneticDiversities)
+            self.ProcessArrayToMatirx(bigArrayOfGeneticDiversities, matrixForGeneticDiversities)
             # print "Genetic"
-            self.ProcessArrayToMatirx(datSet[3], bigArrayOfPhenotypicDiversities)
+            self.ProcessArrayToMatirx(bigArrayOfPhenotypicDiversities, matrixForPhenotypicDiversities)
                 # print "Phenotypic"
             arrayOfXValues = [x for x in range(len(matrixForBests))]
             arrayOfDiversityDifferences = self.SubstractArrays(bigArrayOfGeneticDiversities, bigArrayOfPhenotypicDiversities)
